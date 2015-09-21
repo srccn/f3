@@ -1,0 +1,59 @@
+<html>
+    <head>
+    </head>
+    <body>
+    
+        <div style="float: left;">
+            <h3>loan infomation input</h3>
+            <hr>
+            <form name="inputForm" type="post" action="/f3/calculate">
+                <label for="price">Mortgage Type</label>
+                  <input type="radio" name="mortgageType" value="purchase" checked> Puchase
+                  <input type="radio" name="mortgageType" value="rtrefinance"> Rate Term Refinance
+                  <input type="radio" name="mortgageType" value="cashrefinance"> Cash Out Refinance <br>
+                <label for="price">Price</label>
+                <input type=text value="300000" id="price" name="price"> <br>
+                <label for="loanAmount">Loan Amount</label>
+                <input type=text value="240000" id="loanAmount" name="loanAmount"><br>
+                <label for="zipCode">ZipCode</label>
+                <input type=text value="02460" id="zipCode" name="zipCode"><br>
+                <label for="propertyType">Property Type</label>
+                <select id="propertyType" name="properyType">
+                    <option value="one_unit">One Unit</option>
+                    <option value="two_unit">Two Unit</option>
+                    <option value="three_unit">Three Unit</option>
+                    <option value="four_unit">Four Unit</option>
+                    <option value="Condo">Condo</option>
+                </select> <br>
+                <label for="propertyOccupancy">Property Occupancy</label>
+                <select id="propertyOccupancy" name="properyOccupancy">
+                    <option value="one_unit">Primary Home</option>
+                    <option value="two_unit">Secondary Home</option>
+                    <option value="three_unit">Investment</option>
+                </select> <br>
+                <label for="CrediteScore">Credite Score</label>
+                <select id="lockDays" name="lockDays">
+                    <option value="740"> > 740 </option>
+                    <!--
+                    <option value="45" selected>45 Days</option>
+                    <option value="60">60 Days</option>
+                    -->    
+                </select> <br>
+                
+                <label for="propertyType">Lock Days</label>
+                <select id="lockDays" name="lockDays">
+                    <option value="30">30 Days</option>
+                    <option value="45" selected>45 Days</option>
+                    <option value="60">60 Days</option>
+                </select> <br>
+                <input type=checkbox name="fixed30" id="fixed30" value="fixed30">30y Fixed
+                <input type=checkbox name="fixed15" id="fixed15" value="fixed15">15y Fixed
+                <input type=checkbox name="arm51" id="arm51" value="arm51">5-1 ARM
+                <input type=checkbox name="arm71" id="arm71" value="arm71">7-1 ARM <br>
+                <hr>
+                <input type=submit name="submit" id="submit" value="Calculate Result">
+            </form>
+        </div>
+    </body>
+
+</html>
