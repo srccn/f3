@@ -1,6 +1,6 @@
 <?php
 
-class Util extend BaseController {
+class Util extends BaseController {
 
 	protected $f3;
 	protected $db;
@@ -9,6 +9,10 @@ class Util extend BaseController {
         $id=0;
         
         return $id;
+    }
+    
+    static function resultString($resultArray) {
+         return $resultArray[0]['result'];
     }
 }
 
