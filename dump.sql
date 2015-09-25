@@ -26,13 +26,11 @@ DROP TABLE IF EXISTS `adj_ltv_cc`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `adj_ltv_cc` (
   `purchaser_id` int(11) NOT NULL,
-  `ltv_upper` decimal(10,3) NOT NULL,
-  `ltv_lower` decimal(10,3) NOT NULL,
-  `cc_upper` int(11) NOT NULL,
-  `cc_lower` int(11) NOT NULL,
+  `ltv_value` decimal(10,3) NOT NULL,
+  `cc_value` int(11) NOT NULL,
   `adjust` decimal(10,3) NOT NULL,
-  PRIMARY KEY (`purchaser_id`,`ltv_upper`,`ltv_lower`,`cc_upper`,`cc_lower`),
-  KEY `fk_ltv_1_idx` (`purchaser_id`,`cc_upper`,`cc_lower`)
+  PRIMARY KEY (`purchaser_id`,`ltv_value`,`cc_value`),
+  KEY `fk_ltv_1_idx` (`purchaser_id`,`cc_value`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='latin1_swedish_ci';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -42,7 +40,7 @@ CREATE TABLE `adj_ltv_cc` (
 
 LOCK TABLES `adj_ltv_cc` WRITE;
 /*!40000 ALTER TABLE `adj_ltv_cc` DISABLE KEYS */;
-INSERT INTO `adj_ltv_cc` VALUES (2,60.000,0.100,719,700,0.250),(2,60.000,0.100,739,720,0.250),(2,60.000,0.100,800,740,0.250),(2,70.000,60.100,719,700,-0.500),(2,70.000,60.100,739,720,0.000),(2,70.000,60.100,800,740,0.000),(2,75.000,70.100,719,700,-0.750),(2,75.000,70.100,739,720,-0.250),(2,75.000,70.100,800,740,0.000),(2,80.000,75.100,719,700,-1.000),(2,80.000,75.100,739,720,-0.050),(2,80.000,75.100,800,740,-0.250),(2,85.000,85.100,719,700,-1.000),(2,85.000,85.100,739,720,-0.050),(2,85.000,85.100,800,740,-0.250),(2,90.000,85.100,719,700,-1.000),(2,90.000,85.100,739,720,-0.050),(2,90.000,85.100,800,740,-0.250),(2,95.000,90.100,719,700,-1.000),(2,95.000,90.100,739,720,-0.050),(2,95.000,90.100,800,740,-0.250),(2,100.000,95.100,719,700,-1.000),(2,100.000,95.100,739,720,-0.050),(2,100.000,95.100,800,740,-0.250);
+INSERT INTO `adj_ltv_cc` VALUES (2,0.600,700,0.250),(2,0.600,720,0.250),(2,0.600,740,0.250),(2,0.700,700,-0.500),(2,0.700,720,0.000),(2,0.700,740,0.000),(2,0.750,700,-0.750),(2,0.750,720,-0.250),(2,0.750,740,0.000),(2,0.800,700,-1.000),(2,0.800,720,-0.050),(2,0.800,740,-0.250),(2,0.850,700,-1.000),(2,0.850,720,-0.050),(2,0.850,740,-0.250),(2,0.900,700,-1.000),(2,0.900,720,-0.050),(2,0.900,740,-0.250),(2,0.950,700,-1.000),(2,0.950,720,-0.050),(2,0.950,740,-0.250),(2,1.000,700,-1.000),(2,1.000,720,-0.050),(2,1.000,740,-0.250);
 /*!40000 ALTER TABLE `adj_ltv_cc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -57,9 +55,8 @@ CREATE TABLE `adj_ltv_cc_pmi` (
   `purchaser_id` int(11) NOT NULL,
   `ltv_lower` decimal(11,3) DEFAULT '95.010',
   `cc_lower` int(10) NOT NULL,
-  `cc_upper` int(10) NOT NULL,
   `adjust` decimal(11,3) DEFAULT NULL,
-  PRIMARY KEY (`purchaser_id`,`cc_lower`,`cc_upper`)
+  PRIMARY KEY (`purchaser_id`,`cc_lower`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -69,7 +66,7 @@ CREATE TABLE `adj_ltv_cc_pmi` (
 
 LOCK TABLES `adj_ltv_cc_pmi` WRITE;
 /*!40000 ALTER TABLE `adj_ltv_cc_pmi` DISABLE KEYS */;
-INSERT INTO `adj_ltv_cc_pmi` VALUES (2,95.010,0,619,-3.000),(2,95.010,620,639,-2.750),(2,95.010,640,659,-2.375),(2,95.010,660,679,-2.125),(2,95.010,680,699,-1.750),(2,95.010,700,719,-1.250),(2,95.010,720,739,-1.250),(2,95.010,740,800,-1.000);
+INSERT INTO `adj_ltv_cc_pmi` VALUES (2,95.010,0,-3.000),(2,95.010,620,-2.750),(2,95.010,640,-2.375),(2,95.010,660,-2.125),(2,95.010,680,-1.750),(2,95.010,700,-1.250),(2,95.010,720,-1.250),(2,95.010,740,-1.000);
 /*!40000 ALTER TABLE `adj_ltv_cc_pmi` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,8 +138,7 @@ DROP TABLE IF EXISTS `def_cc_range`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `def_cc_range` (
   `id` int(11) NOT NULL,
-  `cc_lower` int(11) DEFAULT NULL,
-  `cc_upper` int(11) DEFAULT NULL,
+  `cc_value` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -153,6 +149,7 @@ CREATE TABLE `def_cc_range` (
 
 LOCK TABLES `def_cc_range` WRITE;
 /*!40000 ALTER TABLE `def_cc_range` DISABLE KEYS */;
+INSERT INTO `def_cc_range` VALUES (1,800),(2,780),(3,760),(4,740),(6,720),(7,700),(8,680),(9,660),(10,640),(11,620),(12,600);
 /*!40000 ALTER TABLE `def_cc_range` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -191,8 +188,7 @@ DROP TABLE IF EXISTS `def_ltv_range`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `def_ltv_range` (
   `id` int(11) NOT NULL,
-  `ltv_lower` decimal(11,3) DEFAULT NULL,
-  `ltv_upper` decimal(11,3) DEFAULT NULL,
+  `ltv_value` decimal(11,3) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -203,6 +199,7 @@ CREATE TABLE `def_ltv_range` (
 
 LOCK TABLES `def_ltv_range` WRITE;
 /*!40000 ALTER TABLE `def_ltv_range` DISABLE KEYS */;
+INSERT INTO `def_ltv_range` VALUES (1,0.970),(2,0.950),(3,0.900),(4,0.850),(5,0.800),(6,0.750),(7,0.700),(8,0.600),(9,0.000);
 /*!40000 ALTER TABLE `def_ltv_range` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -228,6 +225,84 @@ LOCK TABLES `def_property_unit` WRITE;
 /*!40000 ALTER TABLE `def_property_unit` DISABLE KEYS */;
 INSERT INTO `def_property_unit` VALUES (5,'condo'),(4,'four_unit'),(1,'one_unit'),(3,'three_unit'),(2,'two_unit');
 /*!40000 ALTER TABLE `def_property_unit` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `fee_attorney`
+--
+
+DROP TABLE IF EXISTS `fee_attorney`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fee_attorney` (
+  `id` int(11) NOT NULL,
+  `purchase` int(11) DEFAULT NULL,
+  `refinance` int(11) DEFAULT NULL,
+  `state` char(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fee_attorney`
+--
+
+LOCK TABLES `fee_attorney` WRITE;
+/*!40000 ALTER TABLE `fee_attorney` DISABLE KEYS */;
+INSERT INTO `fee_attorney` VALUES (1,490,465,'MA');
+/*!40000 ALTER TABLE `fee_attorney` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `fee_recording`
+--
+
+DROP TABLE IF EXISTS `fee_recording`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fee_recording` (
+  `id` int(11) NOT NULL,
+  `state` char(2) NOT NULL,
+  `purchase` int(11) DEFAULT NULL,
+  `refinance` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fee_recording`
+--
+
+LOCK TABLES `fee_recording` WRITE;
+/*!40000 ALTER TABLE `fee_recording` DISABLE KEYS */;
+INSERT INTO `fee_recording` VALUES (1,'MA',300,100),(2,'NH',299,99),(3,'ME',298,98),(4,'CT',297,97),(5,'RI',296,96),(6,'VT',295,95);
+/*!40000 ALTER TABLE `fee_recording` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `fee_recording_other`
+--
+
+DROP TABLE IF EXISTS `fee_recording_other`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fee_recording_other` (
+  `id` int(11) NOT NULL,
+  `state` char(2) NOT NULL,
+  `purchase` int(11) DEFAULT NULL,
+  `refinance` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fee_recording_other`
+--
+
+LOCK TABLES `fee_recording_other` WRITE;
+/*!40000 ALTER TABLE `fee_recording_other` DISABLE KEYS */;
+INSERT INTO `fee_recording_other` VALUES (1,'MA',65,30),(2,'NH',65,30),(3,'ME',65,30),(4,'CT',65,30),(5,'RI',65,30),(6,'VT',63,28);
+/*!40000 ALTER TABLE `fee_recording_other` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -697,4 +772,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-09-23  0:03:07
+-- Dump completed on 2015-09-24 23:33:17

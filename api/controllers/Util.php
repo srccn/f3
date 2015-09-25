@@ -12,7 +12,14 @@ class Util extends BaseController {
     }
     
     static function resultString($resultArray) {
-         return $resultArray[0]['result'];
+        $result="";
+        $size = count($resultArray);
+        for ($i=0;$i<$size-1;$i++){
+            $result = $result . $resultArray[$i]['result'] . ",";
+        }
+        $result = $result . $resultArray[$size-1]['result'] ;
+        
+        return $result;
     }
 }
 

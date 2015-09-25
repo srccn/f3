@@ -28,9 +28,9 @@ class  PropertyController extends BaseController {
         $this->numberUnit='two_unit';
         $this->type='house';
         $this->occType='primary';
-        $this->purchaseType='refinance';
+        $this->purchaseType='purchase';
         $this->loanAmount=350000;
-        $this->zip='00501';
+        $this->zip='02460';
         $this->marketPrice=430000;
     
     }
@@ -50,11 +50,45 @@ class  PropertyController extends BaseController {
 	function isConfirmingLoan(){
 	
 	}
+    
+    function getRecordingFee() {
+        //input state, purchase or refinance, lookup default 350, 65.
+        $state = $this->getState();
+        $result = $this->db->exec ("select $this->purchaseType as result from fee_recording where state='$state'");
+        var_dump($state);
+        if ( ! $result ) {
+            return 350;
+        } else {
+            //var_dump($result);
+            return Util::resultString($result);
+        }
+        
+    }
+    
+    function getRecordingOtherFee(){
+        //input state, purchase or refinance, lookup default 350, 65.
+        $state = $this->getState();
+        $result = $this->db->exec ("select $this->purchaseType as result from fee_recording_other where state='$state'");
+        if ( ! $result ) {
+            return 65;
+        } else {
+            //var_dump($result);
+            return Util::resultString($result);
+        }
 
-	function getStateByZipCode($zip) {
-	
-	}
-	
+    }
+    
+    function getAttoneyFee(){
+        $state = $this->getState();
+        $result = $this->db->exec ("select $this->purchaseType as result from fee_attorney where state='$state'");
+        if ( ! $result ) {
+            return 490 * 2;
+        } else {
+            //var_dump($result);
+            return Util::resultString($result);
+        }
+    }
+
 	function getLTV(){
 	    return round($this->loanAmount/$this->marketPrice, 2) ;
 	}
@@ -123,6 +157,9 @@ class  PropertyController extends BaseController {
         var_dump($this->getLoanLimitByZipCode($this->zip, $this->numberUnit));
         var_dump($this->getLenderInsuranceFee());
         var_dump($this->getTitleInsuranceFee());
+        var_dump($this->getRecordingFee());
+        var_dump($this->getRecordingOtherFee());
+        var_dump($this->getAttoneyFee());
     }
 
 }
