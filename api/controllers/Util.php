@@ -5,12 +5,15 @@ class Util extends BaseController {
 	protected $f3;
 	protected $db;
 
-    static function getLoadTypeId($term, $isConfirming, $purchaseOrRef, $fixOrArm) {
-        $id=0;
-        
-        return $id;
-    }
-    
+
+	static function getSumValue($array) {
+		$sum=0;
+	    foreach ($array as $key => $value) {
+            $sum += $value;
+        }
+		return $sum;
+	}
+	
     static function resultString($resultArray) {
         $result="";
         $size = count($resultArray);

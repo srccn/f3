@@ -4,6 +4,7 @@ class BaseController {
 
 	protected $f3;
 	protected $db;
+	protected $logger;
 		
     function __construct () {
 		$f3 = Base::instance();
@@ -14,8 +15,12 @@ class BaseController {
 		if (!$db) {
 		    die("Database object createion failed.");
 		}
+		
+		$logger = new Log('error.log');
+		
 		$this->f3 = $f3;
 		$this->db = $db;
+		$this->logger = $logger;
 	}
 
 }

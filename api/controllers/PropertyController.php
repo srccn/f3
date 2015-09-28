@@ -15,6 +15,8 @@ class  PropertyController extends BaseController {
     protected $loanName; //fixed30, fixed15, arm51, arm71
 	protected $LTV;
 	protected $isConfirming;
+	protected $fees;
+	protected $adjusts;
 	
     
     function setInput($inputs ){
@@ -68,55 +70,65 @@ class  PropertyController extends BaseController {
         //var_dump ( $state );
         return Util::resultString($state);
     }
-	
-	function isConfirmingLoan(){
-	
-	}
-    
-    function getRecordingFee() {
-        //input state, purchase or refinance, lookup default 350, 65.
-        $state = $this->getState();
-        $result = $this->db->exec ("select $this->purchaseType as result from fee_recording where state='$state'");
-        if ( ! $result ) {
-            return 350;
-        } else {
-            //var_dump($result);
-            return Util::resultString($result);
-        }
-        
-    }
-    
-    function getRecordingOtherFee(){
-        //input state, purchase or refinance, lookup default 350, 65.
-        $state = $this->getState();
-        $result = $this->db->exec ("select $this->purchaseType as result from fee_recording_other where state='$state'");
-        if ( ! $result ) {
-            return 65;
-        } else {
-            //var_dump($result);
-            return Util::resultString($result);
-        }
-
-    }
-    
-    function getAttoneyFee(){
-        $state = $this->getState();
-        $result = $this->db->exec ("select $this->purchaseType as result from fee_attorney where state='$state'");
-        if ( ! $result ) {
-            return 490 * 2;
-        } else {
-            //var_dump($result);
-            return Util::resultString($result);
-        }
-    }
 
 	function getLTV(){
         $this->LTV = round($this->loanAmount/$this->marketPrice, 2) ;
 	    return  $this->LTV ;
 	}
-    
-    function getAppraisalFee() {
+	
+    function getRecordingFee() {
+        //input state, purchase or refinance, lookup default 350, 65.
+		$feeName = "RecordingFee";
+		$returnVal = null ;
         $state = $this->getState();
+        $result = $this->db->exec ("select $this->purchaseType as result from fee_recording where state='$state'");
+        if ( ! $result ) {
+            $returnVal = 350;
+        } else {
+            //var_dump($result);
+            $returnVal = intval ( Util::resultString($result) );
+        }
+		$this->fees[$feeName] = $returnVal;
+        return $returnVal;
+    }
+    
+    function getRecordingOtherFee(){
+        //input state, purchase or refinance, lookup default 350, 65.
+		$feeName = "RecordingOtherFee";
+		$returnVal = null;
+
+		$state = $this->getState();
+        $result = $this->db->exec ("select $this->purchaseType as result from fee_recording_other where state='$state'");
+        if ( ! $result ) {
+            $returnVal =  65;
+        } else {
+            //var_dump($result);
+            $returnVal = intval(  Util::resultString($result) );
+        }
+		$this->fees[$feeName] = $returnVal;
+        return $returnVal;
+    }
+    
+    function getAttoneyFee(){
+		$feeName = "AttoneyFee";
+		$returnVal = null;
+
+		$state = $this->getState();
+        $result = $this->db->exec ("select $this->purchaseType as result from fee_attorney where state='$state'");
+        if ( ! $result ) {
+            $returnVal =  490 * 2; //double default for unlisted state
+        } else {
+            $returnVal = intval( Util::resultString($result) );
+        }
+		$this->fees[$feeName] = $returnVal;
+        return $returnVal;
+	}
+
+    function getAppraisalFee() {
+		$feeName = "AppraisalFee";
+		$returnVal = null;
+
+		$state = $this->getState();
         $fee=0;
         switch ($this->numberUnit) {
             case "condo":
@@ -143,32 +155,39 @@ class  PropertyController extends BaseController {
         if ($state != "MA") {
             $fee +=125;
         }
-        return $fee;
+		$returnVal = $fee;
+		$this->fees[$feeName] = $returnVal;
+        return $returnVal;
     }
     
     function getLenderInsuranceFee() {
-        $result = 0;
+		$feeName = "LenderInsuranceFee";
+		$returnVal = 0;
+		
         if ($this->purchaseType == "refinance") {
-            $result = round($this->loanAmount * 0.15/100 ,0);
+            $returnVal = round($this->loanAmount * 0.15/100 ,0);
         }
         if ($this->purchaseType == "purchase") {
-            $result = round($this->loanAmount * 0.25/100, 0 );
+            $returnVal = round($this->loanAmount * 0.25/100, 0 );
         }
         
-        return $result;
-        
+		$this->fees[$feeName] = $returnVal;
+        return $returnVal;
     }
     
     function getTitleInsuranceFee(){
-        $result = 0;
+		$feeName = "TitleInsuranceFee";
+		$returnVal = 0;
+		
         if ($this->purchaseType == "refinance") {
-            $reuslt = 0;
+            $returnVal = 0;
         }
         if ($this->purchaseType == "purchase") {
             $lenderInsuranceFee = $this->getLenderInsuranceFee();
-            $result = round($this->marketPrice * 0.4/100 + 175 - $lenderInsuranceFee, 0 );
+            $returnVal = round($this->marketPrice * 0.4/100 + 175 - $lenderInsuranceFee, 0 );
         }
-        return $result;
+		$this->fees[$feeName] = $returnVal;
+        return $returnVal;
     }
     
     function printProperty(){
@@ -189,6 +208,9 @@ class  PropertyController extends BaseController {
     }
     
     function getLtvCcAdj(){
+		$adjName = "LtvCcAdj";
+		$returnVal = 0;
+		
         $this->getLTV();
         $result = $this->db->exec(
             "select adjust as result 
@@ -198,11 +220,17 @@ class  PropertyController extends BaseController {
              order by ltv_value asc, cc_value desc
              limit 1
         ");
-        return Util::resultString($result);
+		
+		$returnVal = floatval(Util::resultString($result));
+		$this->adjusts[$adjName] = $returnVal;
+        return $returnVal;
     }
     
     function getLtvCcPmiAdj($purchaserId){
-        $this->getLTV();
+		$adjName = "LtvCcPmiAdj";
+		$returnVal = 0;
+
+		$this->getLTV();
         $result = $this->db->exec(
             "select adjust as result 
              from   adj_ltv_cc_pmi 
@@ -214,14 +242,20 @@ class  PropertyController extends BaseController {
         ");
         
         if (! $result ) {
-            return 0;
+            $returnVal =  0;
         } else {
-            return Util::resultString($result);
+            $returnVal = floatval (Util::resultString($result));
         }
+		
+		$returnVal = floatval(Util::resultString($result));
+		$this->adjusts[$adjName] = $returnVal;
+        return $returnVal;
     }
     
     function getLtvOtherAdj($purchaserId){
-        $return_adj=0;
+		$adjName = "LtvOtherAdj";
+		$returnVal = 0;
+
         $result = $this->db->exec(
             "select adjust_condo, 
                     adjust_invest,
@@ -234,28 +268,29 @@ class  PropertyController extends BaseController {
         ");
         
         if ($this->type == "condo") {
-            $return_adj += $result[0]["adjust_condo"];
+            $returnVal += $result[0]["adjust_condo"];
         }
         if ($this->occType == "investment") {
-            $return_adj += $result[0]["adjust_invest"];
+            $returnVal += $result[0]["adjust_invest"];
         }
         if ($this->numberUnit == "two_unit") {
-            $return_adj += $result[0]["adjust_2Units"];
+            $returnVal += $result[0]["adjust_2Units"];
         }
         if ($this->numberUnit == "three_unit" ||
             $this->numberUnit == "four_unit"
            ) {
-            $return_adj += $result[0]["adjust_34Units"];
+            $returnVal += $result[0]["adjust_34Units"];
         }
         if (strpos($this->loanName, 'arm') !== FALSE) {
             $return_adj += $result[0]["adjust_arm"];
             if ($this->LTV > 0.9) {
-                $return_adj += $result[0]["adjust_highBalanceArm"];
+                $returnVal += $result[0]["adjust_highBalanceArm"];
             }
         }
         
         //echo $return_adj . "<br><br>" ;
-        return $return_adj;
+		$this->adjusts[$adjName] = $returnVal;
+        return $returnVal;
         
     }
     
@@ -277,11 +312,53 @@ class  PropertyController extends BaseController {
         
         if ( !$result ) die("Failed to find loan type : " . $this->loanName);
         
-        return Util::resultString($result);
+        return intval (Util::resultString($result));
         
     }
     
+	function getStateGroupedSRP($purchaserId) {
+		
+		$loanTypeId = $this->getLoanTypeId();
+		
+		//set reference base
+		if (strpos($this->loanName, 'fix') !== FALSE) {
+		    $baseRef = 1 ; //30dixed bases
+		} else {
+		    $baseRef = 9; //71 arm based
+		}
+		
+		echo "$this->zip" . "," . $this->loanAmount .",". $loanTypeId. ",".$purchaserId ."<br>";
+		
+		//find base SRP 
+        $result = $this->db->exec ("select GetGroupedSRPByZip(
+		                  '$this->zip',
+						  $baseRef ,
+						  $this->loanAmount,
+						  $purchaserId ) as result ");
+		
+        if ( ! $result ) die("Failed to find SRP : " . "$this->zip  $this->loanAmount $loanTypeId ");
+		
+		//find SRP deduction from base if applicable:
+		$deduction = 0;
+		if ($loanTypeId != $baseRef ) {
+		
+			$deduction = $this->db->exec("
+				select deduction as result
+				from purchaser_srp_loan_type_ref
+				where purchaser_id = $purchaserId
+				  and loan_type_id = $loanTypeId
+				  and ref_loan_type_id = $baseRef 
+				  and hasdata = 0
+				");
+            if ( ! $deduction ) die("Failed to find SRP deduction : " . "$this->zip  $this->loanAmount $loanTypeId ");
+		}
+		
+		return floatval(Util::resultString($result)) - floatval(Util::resultString($deduction));
+	}
+	
+	
     function test () {
+		$this->logger->write(__FUNCTION__);
         //$this->setTest();
         $this->getLTV();
         $this->printProperty();
@@ -300,6 +377,11 @@ class  PropertyController extends BaseController {
         Util::dump("ltv cc pmi adjust",$this->getLtvCcPmiAdj(2));
         Util::dump("ltv other adjust",$this->getLtvOtherAdj(2));
         Util::dump("find loan type Id",$this->getLoanTypeId());
+        Util::dump("Find bank 2 SPR",$this->getStateGroupedSRP(2));
+		var_dump($this->fees);
+		echo "Total Fee is " . Util::getSumValue($this->fees) . "<br>";
+		var_dump($this->adjusts);
+		echo "Total adjust is " . Util::getSumValue($this->adjusts) . "<br>";
 
     }
 
