@@ -7,51 +7,66 @@
             <h3>loan infomation input</h3>
             <hr>
             <form name="inputForm" type="post" action="/f3/calculate">
-                <label for="price">Mortgage Type</label>
-                  <input type="radio" name="mortgageType" value="purchase" checked> Puchase
-                  <input type="radio" name="mortgageType" value="rtrefinance"> Rate Term Refinance
-                  <input type="radio" name="mortgageType" value="cashrefinance"> Cash Out Refinance <br>
-                <label for="price">Price</label>
-                <input type=text value="300000" id="price" name="price"> <br>
+                <label for="purchaseType">Mortgage Type</label>
+                  <input type="radio" id="purchaseType" name="purchaseType" value="purchase" checked> Puchase
+                  <input type="radio" name="purchaseType" value="rtrefinance"> Rate Term Refinance
+                  <input type="radio" name="purchaseType" value="cashrefinance"> Cash Out Refinance <br>
+                <label for="type">Property Type</label>
+                  <input type="radio" id="type" name="type" value="house" checked>House
+                  <input type="radio" name="type" value="condo"> Condo<br>
+                <label for="marketPrice">Market Pricece</label>
+                <input type=text value="300000" id="marketPrice" name="marketPrice"> <br>
                 <label for="loanAmount">Loan Amount</label>
                 <input type=text value="240000" id="loanAmount" name="loanAmount"><br>
-                <label for="zipCode">ZipCode</label>
-                <input type=text value="02460" id="zipCode" name="zipCode"><br>
-                <label for="propertyType">Property Type</label>
-                <select id="propertyType" name="properyType">
+                <label for="zip">Zip</label>
+                <input type=text value="02460" id="zip" name="zip"><br>
+                <label for="numberUnit">Number of Unit</label>
+                <select id="numberUnit" name="numberUnit">
                     <option value="one_unit">One Unit</option>
                     <option value="two_unit">Two Unit</option>
                     <option value="three_unit">Three Unit</option>
                     <option value="four_unit">Four Unit</option>
                     <option value="Condo">Condo</option>
                 </select> <br>
-                <label for="propertyOccupancy">Property Occupancy</label>
-                <select id="propertyOccupancy" name="properyOccupancy">
-                    <option value="one_unit">Primary Home</option>
-                    <option value="two_unit">Secondary Home</option>
-                    <option value="three_unit">Investment</option>
+                <label for="occType">Property Occupancy</label>
+                <select id="occType" name="occType">
+                    <option value="primary">Primary Home</option>
+                    <option value="commercial">Commercial</option>
+                    <option value="investment">Investment</option>
                 </select> <br>
-                <label for="CrediteScore">Credite Score</label>
-                <select id="lockDays" name="lockDays">
+                <label for="crediteScore">Credite Score</label>
+                <input type="text" name="creditScore" id="creditScore" value="740"></input><br>
+            <!--    
+                <select id="crediteScore" name="crediteScore">
                     <option value="740"> > 740 </option>
-                    <!--
+                    <option value="740"> > 740 </option>
                     <option value="45" selected>45 Days</option>
                     <option value="60">60 Days</option>
-                    -->    
                 </select> <br>
+            -->    
                 
-                <label for="propertyType">Lock Days</label>
+                <label for="lockDays">Lock Days</label>
                 <select id="lockDays" name="lockDays">
                     <option value="30">30 Days</option>
                     <option value="45" selected>45 Days</option>
                     <option value="60">60 Days</option>
                 </select> <br>
+                <label for="lockDays">select loan Type</label>
+                <select id="loanName" name="loanName">
+                    <option value="fixed30">30 years fixed</option>
+                    <option value="fixed15">15 years fixed</option>
+                    <option value="arm51">5/1 arm</option>
+                    <option value="arm71">7/1 arm</option>
+                </select>
+<!--            
                 <input type=checkbox name="fixed30" id="fixed30" value="fixed30">30y Fixed
                 <input type=checkbox name="fixed15" id="fixed15" value="fixed15">15y Fixed
                 <input type=checkbox name="arm51" id="arm51" value="arm51">5-1 ARM
                 <input type=checkbox name="arm71" id="arm71" value="arm71">7-1 ARM <br>
+-->
                 <hr>
-                <input type=submit name="submit" id="submit" value="Calculate Result">
+                <input type=submit id="submit" value="Calculate Result">
+
             </form>
         </div>
     </body>

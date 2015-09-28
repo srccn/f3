@@ -11,32 +11,54 @@ class  PropertyController extends BaseController {
 	protected $occType; //primary, commercial, investment
 	protected $purchaseType; //purchase, refinance
 	protected $loanAmount;
+	protected $creditScroe;
+    protected $loanName; //fixed30, fixed15, arm51, arm71
+	protected $LTV;
+	protected $isConfirming;
 	
-/*    
-    function __construct($numberUnit, $type, $occType, $purchaseType, $loanAmount,$zip, $marketPrice ){
+    
+    function setInput($inputs ){
         
-        $this->numberUnit = $numberUnit;
-        $this->type=$type;
-        $this->occType=$occType;
-        $this->purchaseType=$purchaseType;
-        $this->loanAmount=$loanAmount;
-        $this->zip=$zip;
-        $this->marketPrice=$marketPrice;
+        $this->numberUnit = $inputs["numberUnit"];
+        $this->type=$inputs["type"];
+        $this->occType=$inputs["occType"];
+        $this->purchaseType=$inputs["purchaseType"];
+        $this->loanAmount=$inputs["loanAmount"];
+        $this->zip=$inputs["zip"];
+        $this->marketPrice=$inputs["marketPrice"];
+        $this->creditScore=$inputs["creditScore"];
+        $this->loanName=$inputs["loanName"];
+
+        $this->getLTV();
+        $this->setIsConfirming();
+        
     }
-*/    
+    
     public function setTest () {    
         $this->numberUnit='two_unit';
         $this->type='house';
         $this->occType='primary';
         $this->purchaseType='purchase';
-        $this->loanAmount=350000;
+        $this->loanAmount=390000;
         $this->zip='02460';
-        $this->marketPrice=430000;
+        $this->marketPrice=400000;
+        $this->creditScore=780;
+        $this->loanName="fixed30";
     
     }
     
-	function getLoanLimitByZipCode($zip, $number_unit){
-	    $results = $this->db->exec("select GetConfirmingLoanUpperLimit('$zip' , '$number_unit') as result ");
+    function setIsConfirming(){
+        $upperLimit = $this->getLoanLimitByZipCode();
+        if ($this->loanAmount > $upperLimit) {
+            $this->isConfirming = 0;
+        } else {
+            $this->isConfirming = 1;
+        }
+        return $this->isConfirming;
+    }
+    
+	function getLoanLimitByZipCode(){
+	    $results = $this->db->exec("select GetConfirmingLoanUpperLimit('$this->zip' , '$this->numberUnit') as result ");
 		//var_dump($results[0]);
 		return Util::resultString($results);
 	}
@@ -55,7 +77,6 @@ class  PropertyController extends BaseController {
         //input state, purchase or refinance, lookup default 350, 65.
         $state = $this->getState();
         $result = $this->db->exec ("select $this->purchaseType as result from fee_recording where state='$state'");
-        var_dump($state);
         if ( ! $result ) {
             return 350;
         } else {
@@ -90,7 +111,8 @@ class  PropertyController extends BaseController {
     }
 
 	function getLTV(){
-	    return round($this->loanAmount/$this->marketPrice, 2) ;
+        $this->LTV = round($this->loanAmount/$this->marketPrice, 2) ;
+	    return  $this->LTV ;
 	}
     
     function getAppraisalFee() {
@@ -149,17 +171,136 @@ class  PropertyController extends BaseController {
         return $result;
     }
     
+    function printProperty(){
+        echo "<hr>";
+        print "number of Unit is : $this->numberUnit<br>";
+        echo "property type is : $this->type<br>";
+        echo "Occupancy is $this->occType<br>";
+        echo "Purchase od refinance is : $this->purchaseType<br>";
+        echo "Loan amount is : $this->loanAmount<br>";
+        echo "Property zip code is : $this->zip<br>";
+        echo "Property marcket price is : $this->marketPrice<br>";
+        echo "Credit Score is : $this->creditScore<br>";
+        echo "LTV is : $this->LTV<br>";
+        echo "is Confirming : $this->isConfirming<br>";
+        echo "loanName : $this->loanName<br>";
+        echo "<hr>";
+    
+    }
+    
+    function getLtvCcAdj(){
+        $this->getLTV();
+        $result = $this->db->exec(
+            "select adjust as result 
+             from   adj_ltv_cc 
+             where  ltv_value > $this->LTV and
+                    cc_value  < $this->creditScore
+             order by ltv_value asc, cc_value desc
+             limit 1
+        ");
+        return Util::resultString($result);
+    }
+    
+    function getLtvCcPmiAdj($purchaserId){
+        $this->getLTV();
+        $result = $this->db->exec(
+            "select adjust as result 
+             from   adj_ltv_cc_pmi 
+             where  ltv_value <= $this->LTV and
+                    cc_value  < $this->creditScore and
+                    purchaser_id = $purchaserId
+             order by ltv_value asc, cc_value desc
+             limit 1
+        ");
+        
+        if (! $result ) {
+            return 0;
+        } else {
+            return Util::resultString($result);
+        }
+    }
+    
+    function getLtvOtherAdj($purchaserId){
+        $return_adj=0;
+        $result = $this->db->exec(
+            "select adjust_condo, 
+                    adjust_invest,
+                    adjust_2Units,
+                    adjust_34Units,
+                    adjust_arm,
+                    adjust_highBalanceArm  
+            from adj_ltv_others 
+            where purchaser_id ='$purchaserId'
+        ");
+        
+        if ($this->type == "condo") {
+            $return_adj += $result[0]["adjust_condo"];
+        }
+        if ($this->occType == "investment") {
+            $return_adj += $result[0]["adjust_invest"];
+        }
+        if ($this->numberUnit == "two_unit") {
+            $return_adj += $result[0]["adjust_2Units"];
+        }
+        if ($this->numberUnit == "three_unit" ||
+            $this->numberUnit == "four_unit"
+           ) {
+            $return_adj += $result[0]["adjust_34Units"];
+        }
+        if (strpos($this->loanName, 'arm') !== FALSE) {
+            $return_adj += $result[0]["adjust_arm"];
+            if ($this->LTV > 0.9) {
+                $return_adj += $result[0]["adjust_highBalanceArm"];
+            }
+        }
+        
+        //echo $return_adj . "<br><br>" ;
+        return $return_adj;
+        
+    }
+    
+    function getLoanTypeId(){
+        if (strpos($this->loanName, 'fix') !== FALSE) { //fixed 
+            $result = $this->db->exec ("
+                select loan_type_id as result 
+                from loan_type 
+                where type_variable_name like '%$this->loanName%' and 
+                      confirming =$this->isConfirming"
+            );
+        } else { //arm
+            $result = $this->db->exec ("
+                select loan_type_id as result 
+                from loan_type 
+                where type_variable_name = '$this->loanName' "
+            );
+        }
+        
+        if ( !$result ) die("Failed to find loan type : " . $this->loanName);
+        
+        return Util::resultString($result);
+        
+    }
+    
     function test () {
-        $this->setTest();
-        var_dump($this->getState());
-        var_dump($this->getLTV());
-        var_dump($this->getAppraisalFee());
-        var_dump($this->getLoanLimitByZipCode($this->zip, $this->numberUnit));
-        var_dump($this->getLenderInsuranceFee());
-        var_dump($this->getTitleInsuranceFee());
-        var_dump($this->getRecordingFee());
-        var_dump($this->getRecordingOtherFee());
-        var_dump($this->getAttoneyFee());
+        //$this->setTest();
+        $this->getLTV();
+        $this->printProperty();
+        
+        Util::dump("State", $this->getState());
+        Util::dump("LTV", $this->getLTV());
+        Util::dump("Appraisal fee",$this->getAppraisalFee());
+        Util::dump("Confirming loan limit", $this->getLoanLimitByZipCode());
+        Util::dump("set confirming ", $this->setIsConfirming());
+        Util::dump("Lender Insurance fee",$this->getLenderInsuranceFee());
+        Util::dump("Title Insurance fee" ,$this->getTitleInsuranceFee());
+        Util::dump("Recording fee", $this->getRecordingFee());
+        Util::dump("Recording other fee",$this->getRecordingOtherFee());
+        Util::dump("Attorney fee",$this->getAttoneyFee());
+        Util::dump("ltv cc adjust",$this->getLtvCcAdj());
+        Util::dump("ltv cc pmi adjust",$this->getLtvCcPmiAdj(2));
+        Util::dump("ltv other adjust",$this->getLtvOtherAdj(2));
+        Util::dump("find loan type Id",$this->getLoanTypeId());
+
     }
 
 }

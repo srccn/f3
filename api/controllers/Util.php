@@ -21,6 +21,13 @@ class Util extends BaseController {
         
         return $result;
     }
+    
+    static function dump($message, $toDump) {
+        echo $message . " : " ;
+        var_dump($toDump);
+    }
+    
+    
 }
 
 ?>

@@ -18,18 +18,22 @@ class myClass extends BaseController {
     }
 
     function calculate() {
-        echo "calculate" ;
         $myRequest = $this->f3->get('REQUEST');
-        echo "zip           : " . $myRequest['zipCode'] . "<br>";
-        echo "Loan Amount   : " . $myRequest['loanAmount'] . "<br>";
-        echo "Property type : " . $myRequest['properyType'] . "<br>" ;
-        echo "Lock Days     : " . $myRequest['lockDays'] . "<br>" ;
-        echo "<h3>Is confirming loan or not</h3>";
+        //echo "zip           : " . $myRequest['zipCode'] . "<br>";
+        //echo "Loan Amount   : " . $myRequest['loanAmount'] . "<br>";
+        //echo "Property type : " . $myRequest['properyType'] . "<br>" ;
+        //echo "Lock Days     : " . $myRequest['lockDays'] . "<br>" ;
+        //echo "<h3>Is confirming loan or not</h3>";
 
-        $myQuery = new QueryDB;
-    $upperLimit = $myQuery->getConfirming($_REQUEST['zipCode'], $_REQUEST['properyType'], $_REQUEST['loanAmount']);
-    echo $upperLimit;    
+        foreach ($myRequest as $key => $value) {
+            echo "Key: $key; Value: $value<br>";
+        }
+        
+        $myProperty = new PropertyController;
+        $myProperty->setInput($myRequest);
+        $myProperty->test();
     }
+    
 }
 
 ?>

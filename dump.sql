@@ -53,10 +53,10 @@ DROP TABLE IF EXISTS `adj_ltv_cc_pmi`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `adj_ltv_cc_pmi` (
   `purchaser_id` int(11) NOT NULL,
-  `ltv_lower` decimal(11,3) DEFAULT '95.010',
-  `cc_lower` int(10) NOT NULL,
+  `ltv_value` decimal(11,3) NOT NULL,
+  `cc_value` int(10) NOT NULL,
   `adjust` decimal(11,3) DEFAULT NULL,
-  PRIMARY KEY (`purchaser_id`,`cc_lower`)
+  PRIMARY KEY (`purchaser_id`,`cc_value`,`ltv_value`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -66,7 +66,7 @@ CREATE TABLE `adj_ltv_cc_pmi` (
 
 LOCK TABLES `adj_ltv_cc_pmi` WRITE;
 /*!40000 ALTER TABLE `adj_ltv_cc_pmi` DISABLE KEYS */;
-INSERT INTO `adj_ltv_cc_pmi` VALUES (2,95.010,0,-3.000),(2,95.010,620,-2.750),(2,95.010,640,-2.375),(2,95.010,660,-2.125),(2,95.010,680,-1.750),(2,95.010,700,-1.250),(2,95.010,720,-1.250),(2,95.010,740,-1.000);
+INSERT INTO `adj_ltv_cc_pmi` VALUES (2,0.950,0,-3.000),(2,0.950,620,-2.750),(2,0.950,640,-2.375),(2,0.950,660,-2.125),(2,0.950,680,-1.750),(2,0.950,700,-1.250),(2,0.950,720,-1.250),(2,0.950,740,-1.000);
 /*!40000 ALTER TABLE `adj_ltv_cc_pmi` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -79,15 +79,14 @@ DROP TABLE IF EXISTS `adj_ltv_others`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `adj_ltv_others` (
   `purchaser_id` int(11) NOT NULL,
-  `ltv_lower` decimal(11,3) NOT NULL,
-  `ltv_upper` decimal(11,3) NOT NULL,
+  `ltv_value` decimal(11,3) NOT NULL,
   `adjust_condo` decimal(11,3) DEFAULT '0.000',
   `adjust_invest` decimal(11,3) DEFAULT '0.000',
   `adjust_2Units` decimal(11,3) DEFAULT '0.000',
   `adjust_34Units` decimal(11,3) DEFAULT '0.000',
   `adjust_arm` decimal(11,3) DEFAULT '0.000',
-  `adjust_highBalanceArm` decimal(11,3) DEFAULT NULL,
-  PRIMARY KEY (`purchaser_id`,`ltv_lower`,`ltv_upper`)
+  `adjust_highBalanceArm` decimal(11,3) DEFAULT '0.000',
+  PRIMARY KEY (`purchaser_id`,`ltv_value`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -97,6 +96,7 @@ CREATE TABLE `adj_ltv_others` (
 
 LOCK TABLES `adj_ltv_others` WRITE;
 /*!40000 ALTER TABLE `adj_ltv_others` DISABLE KEYS */;
+INSERT INTO `adj_ltv_others` VALUES (2,700.000,-0.200,-0.300,-0.400,-0.500,-0.600,-0.700);
 /*!40000 ALTER TABLE `adj_ltv_others` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -239,6 +239,7 @@ CREATE TABLE `fee_attorney` (
   `purchase` int(11) DEFAULT NULL,
   `refinance` int(11) DEFAULT NULL,
   `state` char(2) DEFAULT NULL,
+  `attorney_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -249,7 +250,7 @@ CREATE TABLE `fee_attorney` (
 
 LOCK TABLES `fee_attorney` WRITE;
 /*!40000 ALTER TABLE `fee_attorney` DISABLE KEYS */;
-INSERT INTO `fee_attorney` VALUES (1,490,465,'MA');
+INSERT INTO `fee_attorney` VALUES (1,490,465,'MA',0);
 /*!40000 ALTER TABLE `fee_attorney` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -361,7 +362,7 @@ CREATE TABLE `loan_type` (
 
 LOCK TABLES `loan_type` WRITE;
 /*!40000 ALTER TABLE `loan_type` DISABLE KEYS */;
-INSERT INTO `loan_type` VALUES (1,'30 Years Fixed Confirming','30','fixed30',1),(2,'20 Years Fixed Confirming','20','fixed20',1),(3,'15 Years Fixed Confirming','15','fixed15',1),(4,'10 Years Fixed Confirming','10','fixed10',1),(5,'25 Years Fixed Comfirming','25','fixed25',1),(6,'1ARM','30','arm1',1),(7,'3-1ARM','30','arm31',1),(8,'5-1ARM','30','arm51',1),(9,'7-1ARM','30','amr71',1),(10,'10-1ARM','30','amr101',1),(11,'30 Years FHA ','30','fha30',1),(12,'30 Years VA','30','va30',1),(13,'30 Years Fixed non-confirming','30','ncfixed30',0),(14,'20 Years Fixed non-confirming','20','ncfixed20',0),(15,'15 Years Fixed non-confirming','15','ncfixed15',0),(16,'10 Years Fixed non-confirming','10','ncfixed10',0),(17,'25 Years Fixed non-comfirming','25','ncfixed25',0);
+INSERT INTO `loan_type` VALUES (1,'30 Years Fixed Confirming','30','fixed30',1),(2,'20 Years Fixed Confirming','20','fixed20',1),(3,'15 Years Fixed Confirming','15','fixed15',1),(4,'10 Years Fixed Confirming','10','fixed10',1),(5,'25 Years Fixed Comfirming','25','fixed25',1),(6,'1ARM','30','arm1',1),(7,'3-1ARM','30','arm31',1),(8,'5-1ARM','30','arm51',1),(9,'7-1ARM','30','arm71',1),(10,'10-1ARM','30','arm101',1),(11,'30 Years FHA ','30','fha30',1),(12,'30 Years VA','30','va30',1),(13,'30 Years Fixed non-confirming','30','ncfixed30',0),(14,'20 Years Fixed non-confirming','20','ncfixed20',0),(15,'15 Years Fixed non-confirming','15','ncfixed15',0),(16,'10 Years Fixed non-confirming','10','ncfixed10',0),(17,'25 Years Fixed non-comfirming','25','ncfixed25',0);
 /*!40000 ALTER TABLE `loan_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -636,7 +637,6 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `GetGroupedSRPByState`(`StateName`     CHAR(2),
                                        `LoanTypeId`    INT(2),
                                        `LoanAmount`    INT(10),
-                                       `upperLimit`    INT(10),
                                        `PurchaserID`   INT(2)) RETURNS decimal(3,2)
 BEGIN
 
@@ -657,21 +657,13 @@ BEGIN
      AND purchaser_srp_loan_amount_range.loan_type_id = LoanTypeId ;
 
 
-    if  LoanAmount > upperLimit then
-       set confirming = 0;
-       
-       
-    else 
-       set confirming = 1;
-       
-       if  LoanAmount < 417000 then 
-           select purchaser_srp_loan_amount_range.amount_range_id into srp_amount_range
-           FROM purchaser_srp_loan_amount_range 
-           Where LoanAmount between purchaser_srp_loan_amount_range.start_amount AND purchaser_srp_loan_amount_range.end_amount   
-	         AND purchaser_srp_loan_amount_range.purchaser_id = PurchaserID 
-	         AND purchaser_srp_loan_amount_range.loan_type_id = LoanTypeId ;
-        end if;
-    end if ;
+   select purchaser_srp_loan_amount_range.amount_range_id into srp_amount_range
+   FROM purchaser_srp_loan_amount_range 
+   Where LoanAmount >= purchaser_srp_loan_amount_range.start_amount    
+     AND purchaser_srp_loan_amount_range.purchaser_id = PurchaserID 
+     AND purchaser_srp_loan_amount_range.loan_type_id = LoanTypeId 
+   order by purchaser_srp_loan_amount_range.start_amount desc
+   limit 1 ;
   
    select s.srp into srp 
    FROM stategroupsrp s 
@@ -699,7 +691,6 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `GetGroupedSRPByZip`(`ZipCode`     CHAR(5),
                                        `LoanTypeId`    INT(2),
                                        `LoanAmount`    INT(10),
-                                       `upperLimit`    INT(10),
                                        `PurchaserID`   INT(2)
 ) RETURNS decimal(3,2)
 BEGIN
@@ -715,7 +706,7 @@ BEGIN
     return -1;
   end if;  
   
-  select GetGroupedSRPByState(StateName, LoanTypeId, LoanAmount, upperLimit, PurchaserID ) into result;
+  select GetGroupedSRPByState(StateName, LoanTypeId, LoanAmount, PurchaserID ) into result;
   if result is null then
     return -2;
   end if;  
@@ -772,4 +763,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-09-24 23:33:17
+-- Dump completed on 2015-09-27 22:34:55
