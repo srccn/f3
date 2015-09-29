@@ -90,7 +90,7 @@ class BBT {
     private $ncarm31 = array (
     		"sheetName" => "CA Rate Sheet",
     		"lock_days" => 	[30, 60],
-    		"loan_type" => 18,
+    		"loan_type" => 19,
     		"range" => "A148:C167"
     );
 
@@ -98,7 +98,7 @@ class BBT {
     private $ncarm51 = array (
     		"sheetName" => "CA Rate Sheet",
     		"lock_days" => 	[30, 60],
-    		"loan_type" => 19,
+    		"loan_type" => 20,
     		"range" => "D148:F167"
     );
 
@@ -106,7 +106,7 @@ class BBT {
     private $ncarm71 = array (
     		"sheetName" => "CA Rate Sheet",
     		"lock_days" => 	[30, 60],
-    		"loan_type" => 20,
+    		"loan_type" => 21,
     		"range" => "G148:I167"
     );
 
@@ -114,10 +114,11 @@ class BBT {
     private $ncarm101 = array (
     		"sheetName" => "CA Rate Sheet",
     		"lock_days" => 	[30, 60],
-    		"loan_type" => 21,
+    		"loan_type" => 22,
     		"range" => "J148:L167"
     );
     
+	
     
     public function getMap() {
 	    return array(
