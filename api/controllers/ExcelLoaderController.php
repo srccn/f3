@@ -78,7 +78,35 @@ class ExcelLoaderController extends BaseController {
 	}
 	
 	public function loadAdjDataFromExcel () {
-	
+        //check existance of excel file
+	    if (!file_exists($this->excel_file)) {
+	        exit("Excel file $this->excel_file not found." . EOL);
+	    }
+	    //check existance of excel map file
+	    if (!file_exists($this->excel_map_file)) {
+	        exit("Excel mape file  $this->excel_map_file not found." . EOL);
+	    }
+		
+		require_once $this->excel_map_file;
+        $mydata = new $this->bank_symbol;
+      
+        //require_once '/lib/Classes/PHPExcel/IOFactory.php';
+        require_once '/lib/Classes/PHPExcel.php';
+        $objPHPExcel = PHPExcel_IOFactory::load($this->excel_file);
+				
+		$mydatamap = $mydata->getAdjMap();
+	    $purchaser_id = $mydata->getPurchaserId();
+		$adjusts = array_keys($mydata->getAdjMap());
+		$adjusts_count = count($adjusts);
+		for ($i=0; $i < $adjusts_count; $i++) {
+		    $worksheet = $mydatamap[$products[$i]]['sheetName'];
+			$range= $mydatamap[$products[$i]]['range'];
+			$objPHPExcel->setActiveSheetIndexByName($worksheet);
+	        $result = $objPHPExcel->getActiveSheet()->rangeToArray($range,NULL,TRUE,FALSE);
+			
+			//compose array purchaser_id, ltv_value, cc_value, adjust 
+			
+		}//$i each of the adjustsment
 	
 	}
 	

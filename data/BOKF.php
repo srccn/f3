@@ -108,11 +108,17 @@ class BOKF {
     );	
     
 	//ltv_cc_adjust
-	private $adj_ltc_cc = array (
+	private $adj_ltv_cc = array (
     		"sheetName" => "CONVENTIONL ADJUSTERS",
-			"ltc" => [0,60,70,75,80,85,90,95], //rage pick = max ( value < given_value) 
+			"ltv" => [0,60,70,75,80,85,90,95], //rage pick = max ( value < given_value) 
 			"cc"  => [740,720,700,680,660,640,620,0] , //range pick = max (value < given_value)
         	"range" => "C64:O71"		
+	);
+	
+	private $adj_others = array (
+    		"sheetName" => "CONVENTIONL ADJUSTERS",
+			"ltv" => [0,60,70,75,80,85,90,95], //rage pick = max ( value < given_value) 
+	        "item" => ['adjust_condo','adjust_ivest','adjust_2Units','adjust_34Units','adjust_arm','adjust_highBalanceArm']
 	);
 	
     public function getMap() {
@@ -133,9 +139,10 @@ class BOKF {
 	    );
     }
 
-	public function getAdj(){
+	public function getAdjMap(){
 	    return array (
-		    "adj_ltc_cc" => $this->adj_ltc_cc	
+		    "adj_ltv_cc" => $this->adj_ltv_cc,
+			"adj_others" => $this->$adj_others
 		);
 	}
 	
