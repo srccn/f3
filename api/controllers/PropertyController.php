@@ -11,6 +11,7 @@ class  PropertyController extends BaseController {
 	protected $occType; //primary, commercial, investment
 	protected $purchaseType; //purchase, refinance
 	protected $loanAmount;
+    protected $lockDays;
 	protected $creditScroe;
     protected $loanName; //fixed30, fixed15, arm51, arm71
 	protected $LTV;
@@ -30,6 +31,7 @@ class  PropertyController extends BaseController {
         $this->marketPrice=$inputs["marketPrice"];
         $this->creditScore=$inputs["creditScore"];
         $this->loanName=$inputs["loanName"];
+        $this->lockDays=$inputs["lockDays"];
 
         $this->getLTV();
         $this->setIsConfirming();
@@ -203,6 +205,7 @@ class  PropertyController extends BaseController {
         echo "LTV is : $this->LTV<br>";
         echo "is Confirming : $this->isConfirming<br>";
         echo "loanName : $this->loanName<br>";
+        echo "lockDays : $this->lockDays<br>";
         echo "<hr>";
     
     }
@@ -327,7 +330,7 @@ class  PropertyController extends BaseController {
 		    $baseRef = 9; //71 arm based
 		}
 		
-		echo "$this->zip" . "," . $this->loanAmount .",". $loanTypeId. ",".$purchaserId ."<br>";
+		//echo "$this->zip" . "," . $this->loanAmount .",". $loanTypeId. ",".$purchaserId ."<br>";
 		
 		//find base SRP 
         $result = $this->db->exec ("select GetGroupedSRPByZip(
@@ -356,6 +359,30 @@ class  PropertyController extends BaseController {
 		return floatval(Util::resultString($result)) - floatval(Util::resultString($deduction));
 	}
 	
+    function getPurchaseRate($purchaserId, $margin) {
+        $adjust = Util::getSumValue($this->adjusts); 
+        $SRP = $this->getStateGroupedSRP($purchaserId);
+        $fees = Util::getSumValue($this->fees);
+        $loanTypeId = 1 ;//only have 30fix data noe
+//        echo $fees . "<br>";
+//        echo $adjust . "<br>";
+//        echo $SRP . "<br>";
+//        echo $this->loanAmount . "<br>";
+        
+        $result = $this->db->exec("
+            select rate , ((purchase_price + $adjust - $margin + $SRP - 100)/100 * $this->loanAmount -  $fees) credit 
+            from purchase
+            where purchaser_id = $purchaserId
+              and lock_days_id = $this->lockDays
+              and loan_type_id = $loanTypeId 
+              and ((purchase_price + $adjust - $margin + $SRP - 100)/100 * $this->loanAmount -  $fees) > 0
+            order by rate asc
+            limit 1
+        ");
+        
+        var_dump($result);
+    
+    }
 	
     function test () {
 		$this->logger->write(__FUNCTION__);
@@ -382,6 +409,8 @@ class  PropertyController extends BaseController {
 		echo "Total Fee is " . Util::getSumValue($this->fees) . "<br>";
 		var_dump($this->adjusts);
 		echo "Total adjust is " . Util::getSumValue($this->adjusts) . "<br>";
+
+        $this->getPurchaseRate(2, 1);
 
     }
 
