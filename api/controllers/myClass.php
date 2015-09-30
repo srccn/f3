@@ -35,13 +35,17 @@ class myClass extends BaseController {
     }
 	
 	function testPurchaseLoader () {
-		
 	    $myloader = new LoadPurchaseController ;
 		$myloader->setExcelMapFile("data/BOKF.php");
 		$myloader->reloadData();
-		
 	}
-    
+
+	function testAdjLtvCcLoader(){
+	    echo "Test load to takle Adj_ltv_cc";
+		$myloader = new LoadAdj_ltv_ccController ;
+		$myloader->setExcelMapFile("data/BOKF.php");
+		$myloader->reloadData();
+	}
 }
 
 ?>

@@ -6,7 +6,7 @@ class LoadPurchaseController extends AbstractLoadController {
 	private $DBTableName = "loaner.purchase";
 
 	public function pushDataToDB() {
-		$query = "INSERT INTO $DBTableName ( purchaser_id, loan_type_id, rate, lock_days_id, purchase_price) VALUES "
+		$query = "INSERT INTO $this->DBTableName ( purchaser_id, loan_type_id, rate, lock_days_id, purchase_price) VALUES "
 				   .implode(",",$this->insert_data) ;
 		
 		$result = $this->db->exec($query);
@@ -20,7 +20,7 @@ class LoadPurchaseController extends AbstractLoadController {
 	
 	public function removeDataInDBByPurchaserID($purchaserID) {
 		
-		$query = "delete FROM $DBTableName where purchaser_id=".$purchaserID ;
+		$query = "delete FROM $this->DBTableName where purchaser_id=".$purchaserID ;
 		
 		$result = $this->db->exec($query);
 		if( $result ){	echo 'remove successfully.', EOL; return true;}
@@ -57,26 +57,6 @@ class LoadPurchaseController extends AbstractLoadController {
       unset($this->objPHPExcel);
 	}
 	
-	public function test () {
-		
-		//BBT
-        //$myLoader = new LoadPurchaseController;
-        //$this->setExcelMapFile("data/BBT.php");
-        //$this->reloadData();
-        //unset($myLoader);
-		
-/*		
-        //BOKF
-        $bokfLoader = new ExcelLoaderController;
-        $bokfLoader->setExcelFile("data/BOKF CMS Rate Sheet.xlsx");
-        $bokfLoader->setExcelMapFile("data/BOKF.php");
-        $bokfLoader->setBankSymbol("BOKF");
-        $bokfLoader->removeDataInDB();
-        $bokfLoader->loadRateDataFromExcel();
-        $bokfLoader->pushDataToDB_purchase();
-		unset($bokfLoader);
-*/
-    }
 
 }
 
