@@ -1,10 +1,11 @@
 <?php
 
-class BBT {
+class BBT extends BasePurchaser {
 	
-	private $loanerName="BBT";
-	private $loaner_id = 1;
-	private $lockdays = [15, 30, 45, 60] ;
+	protected $purchaserName="BBT";
+	protected $purchaserId = 1;
+	protected $excelFile = "data/BBT.xls";
+	protected $lockdays = [15, 30, 45, 60] ;
 	
     //30fixed
     private $fixed30 = array (
@@ -118,8 +119,6 @@ class BBT {
     		"range" => "J148:L167"
     );
     
-	
-    
     public function getMap() {
 	    return array(
             "fixed30" => $this->fixed30, 
@@ -138,14 +137,6 @@ class BBT {
 	    	"ncarm101" => $this->ncarm101 
 	    );
     }
-    
-    public function getPurchaserId(){
-    	return $this->loaner_id;
-    }
-    
-    public function getLockDays() {
-    	return $this->lockdays;
-    }
-    
+
 }
 ?>

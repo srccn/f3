@@ -33,6 +33,14 @@ class myClass extends BaseController {
         $myProperty->setInput($myRequest);
         $myProperty->test();
     }
+	
+	function testPurchaseLoader () {
+		
+	    $myloader = new LoadPurchaseController ;
+		$myloader->setExcelMapFile("data/BOKF.php");
+		$myloader->reloadData();
+		
+	}
     
 }
 

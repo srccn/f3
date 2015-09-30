@@ -1,10 +1,11 @@
 <?php
 
-class BOKF {
+class BOKF  extends BasePurchaser{
 	
-	private $loanerName="BOKF";
-	private $loaner_id = 2;
-	private $lockdays = [7, 15, 30, 45, 60, 75] ;
+	protected $purchaserName="BOKF";
+	protected $purchaserId = 2;
+	protected $excelFile = "data/BOKF CMS Rate Sheet.xlsx";
+	protected $lockdays = [7, 15, 30, 45, 60, 75] ;
 	
     //30fixed
     private $fixed30 = array (
@@ -145,14 +146,6 @@ class BOKF {
 			//"adj_others" => $this->$adj_others
 		);
 	}
-	
-    public function getPurchaserId(){
-    	return $this->loaner_id;
-    }
-    
-    public function getLockDays() {
-    	return $this->lockdays;
-    }
-    
+
 }
 ?>

@@ -9,15 +9,25 @@ class ExcelLoaderController extends BaseController {
 	private $insert_data= array();
 	private $bank_symbol;
 	
-	public function pushDataToDB() {
-		
+	public function pushDataToDB_purchase() {
 		$query = "INSERT INTO loaner.purchase ( purchaser_id, loan_type_id, rate, lock_days_id, purchase_price) VALUES "
 				   .implode(",",$this->insert_data) ;
 		
 		$result = $this->db->exec($query);
-		if( $result ){	echo 'inputs added successfully.', EOL; return true;}
-		else { 	echo 'data insert failed.', EOL; return false;}
+		if( $result ){	echo 'Query executed successfully.', EOL ; return true;}
+		else { 	echo 'Query execution failed.', EOL; return false;}
 	}
+
+	public function pushDataToDB_adj_ltv_cc() {
+		$query = "INSERT INTO loaner.adj_ltv_cc (purchaser_id, ltv_value, cc_value, adjust) VALUES "
+				   .implode(",",$this->insert_data) ;
+		
+		$result = $this->db->exec($query);
+		if( $result ){	echo 'Query executed successfully.', EOL ; return true;}
+		else { 	echo 'Query execution failed.', EOL; return false;}
+	}
+	
+	
 	
 	public function removeDataInDB() {
 		$this->removeDataInDBByPurchaserID($this->getPurchaserID());
@@ -118,11 +128,13 @@ class ExcelLoaderController extends BaseController {
                     $adjust = $result[$j][$scan];
                     $scan++;
                     //compose array purchaser_id, ltv_value, cc_value, adjust 
-                    echo $purchaser_id . "," . $mydatamap[$adjusts[$i]]['ltv'][$k] . "," . $cc_value . ",". $adjust . "<br>" ;
+                    //echo $purchaser_id . "," . $mydatamap[$adjusts[$i]]['ltv'][$k] . "," . $cc_value . ",". $adjust . "<br>" ;
+					$insert_row = [ $purchaser_id, $mydatamap[$adjusts[$i]]['ltv'][$k], $cc_value, $adjust] ;
+		            $insert_row_string = "(" . implode(",", $insert_row) . ")" ;
+		            array_push($this->insert_data, $insert_row_string);
                 }//$k each row read
             } // $j for each row
 		}//$i each of the adjustsment
-	
 	}
 	
 	public function setExcelFile($fileName) {
@@ -150,7 +162,7 @@ class ExcelLoaderController extends BaseController {
         $myLoader->setBankSymbol("BBT");
         $myLoader->removeDataInDB();
         $myLoader->loadRateDataFromExcel();
-        $myLoader->pushDataToDB();
+        $myLoader->pushDataToDB_purchase();
         unset($myLoader);
         unset($DataMap);
 
@@ -161,7 +173,7 @@ class ExcelLoaderController extends BaseController {
         $bokfLoader->setBankSymbol("BOKF");
         $bokfLoader->removeDataInDB();
         $bokfLoader->loadRateDataFromExcel();
-        $bokfLoader->pushDataToDB();
+        $bokfLoader->pushDataToDB_purchase();
 		unset($bokfLoader);
 	}
 	
@@ -171,7 +183,7 @@ class ExcelLoaderController extends BaseController {
         $bokfLoader->setExcelMapFile("data/BOKF.php");
         $bokfLoader->setBankSymbol("BOKF");
 	    $bokfLoader->loadAdjDataFromExcel();
-	
+	    $bokfLoader->pushDataToDB_adj_ltv_cc();
 	}
 	
 }
