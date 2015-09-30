@@ -47,7 +47,7 @@ class ExcelLoaderController extends BaseController {
       $mydata = new $this->bank_symbol;
       
       //require_once '/lib/Classes/PHPExcel/IOFactory.php';
-      require_once '/lib/Classes/PHPExcel.php';
+      require_once 'lib/Classes/PHPExcel.php';
       $objPHPExcel = PHPExcel_IOFactory::load($this->excel_file);
 
       $mydatamap = $mydata->getMap();
@@ -91,7 +91,7 @@ class ExcelLoaderController extends BaseController {
         $mydata = new $this->bank_symbol;
       
         //require_once '/lib/Classes/PHPExcel/IOFactory.php';
-        require_once '/lib/Classes/PHPExcel.php';
+        require_once 'lib/Classes/PHPExcel.php';
         $objPHPExcel = PHPExcel_IOFactory::load($this->excel_file);
 				
 		$mydatamap = $mydata->getAdjMap();
@@ -99,13 +99,28 @@ class ExcelLoaderController extends BaseController {
 		$adjusts = array_keys($mydata->getAdjMap());
 		$adjusts_count = count($adjusts);
 		for ($i=0; $i < $adjusts_count; $i++) {
-		    $worksheet = $mydatamap[$products[$i]]['sheetName'];
-			$range= $mydatamap[$products[$i]]['range'];
+		    $worksheet = $mydatamap[$adjusts[$i]]['sheetName'];
+			$range= $mydatamap[$adjusts[$i]]['range'];
 			$objPHPExcel->setActiveSheetIndexByName($worksheet);
 	        $result = $objPHPExcel->getActiveSheet()->rangeToArray($range,NULL,TRUE,FALSE);
-			
-			//compose array purchaser_id, ltv_value, cc_value, adjust 
-			
+			$result_count = count ($result);
+            for ($j=0; $j < $result_count; $j++) {
+                //compose array purchaser_id, ltv_value, cc_value, adjust
+                $cc_value = $mydatamap[$adjusts[$i]]['cc'][$j];
+		        $ltvs = $mydatamap[$adjusts[$i]]['ltv'];
+                $ltvs_count = count($ltvs);
+                $scan = 0;
+			    for ($k=0;$k<$ltvs_count;$k++){
+                    while ( $result[$j][$scan] == null) {
+                        $scan++ ;
+                        break;
+                    } 
+                    $adjust = $result[$j][$scan];
+                    $scan++;
+                    //compose array purchaser_id, ltv_value, cc_value, adjust 
+                    echo $purchaser_id . "," . $mydatamap[$adjusts[$i]]['ltv'][$k] . "," . $cc_value . ",". $adjust . "<br>" ;
+                }//$k each row read
+            } // $j for each row
 		}//$i each of the adjustsment
 	
 	}

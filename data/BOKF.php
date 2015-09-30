@@ -141,8 +141,8 @@ class BOKF {
 
 	public function getAdjMap(){
 	    return array (
-		    "adj_ltv_cc" => $this->adj_ltv_cc,
-			"adj_others" => $this->$adj_others
+		    "adj_ltv_cc" => $this->adj_ltv_cc
+			//"adj_others" => $this->$adj_others
 		);
 	}
 	
