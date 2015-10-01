@@ -140,12 +140,17 @@ class BOKF  extends BasePurchaser{
 	    );
     }
 
-	public function getAdjMap(){
+	public function getAdjLtvCcMap(){
 	    return array (
 		    "adj_ltv_cc" => $this->adj_ltv_cc
-			//"adj_others" => $this->$adj_others
 		);
 	}
+    
+    public function getAdjOthersMap(){
+	    return array (
+			"adj_others" => $this->$adj_others
+		);
+    }
 
 }
 ?>

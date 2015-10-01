@@ -32,13 +32,13 @@ class LoadAdj_ltv_ccController extends AbstractLoadController {
 	
 	public function loadDataFromExcel () {
 
-        $mydatamap = $this->mapData->getMap();
-        $purchaser_id = $this->getPurchaserId();
-        $products = array_keys($mydatamap);
-        $products_count = count($products);
+        //$mydatamap = $this->mapData->getAdjLtvCcMap();
+        //$purchaser_id = $this->getPurchaserId();
+        //$products = array_keys($mydatamap);
+        //$products_count = count($products);
 		
 				
-		$mydatamap = $this->mapData->getAdjMap();
+		$mydatamap = $this->mapData->getAdjLtvCcMap();
 	    $purchaser_id = $this->getPurchaserId();
 		$adjusts = array_keys($mydatamap);
 		$adjusts_count = count($adjusts);
