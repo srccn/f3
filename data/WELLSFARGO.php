@@ -6,7 +6,7 @@ class WELLSFARGO extends BasePurchaser {
 	protected $purchaserId = 3;
 	protected $excelFile = "data/wells fargo.xls";
 	protected $lockdays = [15, 30, 45, 60] ;
-    protected $baseLockDays = 60
+    protected $baseLockDays = 60;
 	
     //30fixed
     private $fixed30 = array (
@@ -104,25 +104,28 @@ class WELLSFARGO extends BasePurchaser {
     		"range" => "O17:P32"
     );
     
-    private purchaseLockDaysConfAdj45 = array (
+    private $purchaseLockDaysConfAdj45 = array (
     		"sheetName" => "Conf Pricing",
-    		"lock_days" => 	[45],
+    		"lock_day" => 	45,
+		    "confirming" => 1,
     		"loan_type" => ["fixed30", "fixed20", "fixed15", "fixedRelo", "arm51", "arm71","amr101" ],
     		"range" => "F53:F59"
     );
     
-    private purchaseLockDaysNoneConfAdj45 = array (
+    private $purchaseLockDaysNoneConfAdj45 = array (
     		"sheetName" => "Non-Conf Pricing",
-    		"lock_days" => 	[45],
-    		"loan_type" => ["fixed30", "fixed15", "" "arm51", "arm71","amr101" ],
+    		"lock_day" => 	45,
+		    "confirming" => 0,
+    		"loan_type" => ["fixed30", "fixed15", "arm51", "arm71","amr101" ],
     		"range" => "P41:P45"
     );
     
     public function purchaseLockDayAdj45($loanTypeId, $adj) {
-        $query = "insert into purchaser  
-                  select price + $adj from purchaser 
-                  where purchaser_id =3 
-                  and lock_days = $this->$baseLockDays
+        $query = "INSERT INTO purchase ( purchaser_id, loan_type_id, rate, lock_days_id,  purchase_price ) 
+                    SELECT purchaser_id, loan_type_id, rate, 100,  purchase_price + $adj from purchase 
+                    WHERE purchaser_id = 3 
+                      AND lock_days_id = $this->baseLockDays
+				      AND loan_type_id = $loanTypeId
                   " ;
         return $query;
     }
@@ -146,5 +149,11 @@ class WELLSFARGO extends BasePurchaser {
 	    );
     }
 
+	public function getPriceAdjMap(){
+		return array (
+            "Conf45" => $this->purchaseLockDaysConfAdj45,
+            "NoneConf45" => $this->purchaseLockDaysNoneConfAdj45
+		);
+	}
 }
 ?>

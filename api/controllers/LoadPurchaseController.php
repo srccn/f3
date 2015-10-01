@@ -53,11 +53,55 @@ class LoadPurchaseController extends AbstractLoadController {
 		          array_push($this->insert_data, $insert_row_string);
 		      } //for $k
 	      }//for $j
+		  
       } //for $i
-      unset($this->objPHPExcel);
+	  //in case we need to derive lock 45 days price from baseLockDays
+	  if ( method_exists($this->mapData, 'purchaseLockDayAdj45') ){  
+	      $this->addPriceAdjData($loan_type, 45);
+	  }
 	}
 	
+    public function addPriceAdjData ($loan_type_id, $lockDays) {
+	    //update adj data
+		
+		//find if confirming from loan type
+		
+		//if confirming find confirming adj
+		
+		//get purchaseLockDayAdj45 query use (load_type and lock days)
+		
+		//execute query to add data
+	
+	}
+	
+	public function addAdjData () {
+	    $mydatamap = $this->mapData->getPriceAdjMap();
+		$purchaser_id = $this->getPurchaserId();
+		$products = array_keys($mydatamap);
+		$products_count = count($products);
+		$myLoanType = new LoanType($this->db);
+		
+	  for ($i=0; $i < $products_count; $i++ ){
+	      $loan_type =  $mydatamap[$products[$i]]["loan_type"]; //this is an array of loan types 
+	      $worksheet = $mydatamap[$products[$i]]['sheetName'];
+	      $range= $mydatamap[$products[$i]]['range'];
+		  $confirming = $mydatamap[$products[$i]]['confirming'];
+	      $lock_days  = $mydatamap[$products[$i]]['lock_day'];
+	      $this->objPHPExcel->setActiveSheetIndexByName($worksheet);
+	      $result = $this->objPHPExcel->getActiveSheet()->rangeToArray($range,NULL,TRUE,FALSE);
 
+		  $result_count = count($result);
+	      for ($j=0; $j< $result_count; $j++) { //each rate row
+		          $insert_row = [ $loan_type[$j], $result[$j][0] ] ;
+			      $insert_row_string = "(" . implode(",", $insert_row) . ")" ;
+			      array_push($this->insert_data, $insert_row_string);
+	      }//for $j
+		  
+      } //for $i
+	   var_dump($this->insert_data);	
+	}		
+	
+	
 }
 
 ?>
