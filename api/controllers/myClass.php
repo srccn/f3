@@ -41,11 +41,16 @@ class myClass extends BaseController {
 	}
 
 	function testAdjLtvCcLoader(){
-	    echo "Test load to takle Adj_ltv_cc";
+	    echo "Test load to table adj_ltv_cc <br>";
 		$myloader = new LoadAdj_ltv_ccController ;
 		$myloader->setExcelMapFile("data/BOKF.php");
 		$myloader->reloadData();
 	}
+    
+    public function testFunc() {
+        $myBBT = new BBT;
+        var_dump(method_exists($myBBT,'getMap'));
+    }
 }
 
 ?>
