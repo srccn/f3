@@ -37,7 +37,7 @@ class myClass extends BaseController {
 	function testPurchaseLoader () {
 	    $myloader = new LoadPurchaseController ;
 		$myloader->setExcelMapFile("data/WELLSFARGO.php");
-		$myloader->addAdjData();
+		$myloader->reloadData();
 	}
 
 	function testAdjLtvCcLoader(){
@@ -49,8 +49,8 @@ class myClass extends BaseController {
     
     public function testFunc() {
         $myv = new LoanType($this->db);
-        //$myv->getIDByNameAndConfirming("fixed30",0);
-        var_dump ($myv->all());
+        $myv->getIDByNameAndConfirming("fixed30",0);
+        //var_dump ($myv->all());
     }
 }
 

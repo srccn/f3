@@ -58,6 +58,7 @@ abstract class AbstractLoadController extends BaseController {
 	    $this->removeDataInDB();
 		$this->loadDataFromExcel();
 		$this->pushDataToDB();
+		$this->addPriceAdjData();
 	}
 	
 	public function getPurchaserID()   { return $this->purchaserID; }

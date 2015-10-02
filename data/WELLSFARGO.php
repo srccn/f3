@@ -74,7 +74,7 @@ class WELLSFARGO extends BasePurchaser {
 
     //arm101
     private $arm101 = array (
-    		"sheetName" => "CA Rate Sheet",
+    		"sheetName" => "Conf Pricing",
     		"lock_days" => 	[30, 60],
     		"loan_type" => 10,
     		"range" => "K68:M81"
@@ -108,7 +108,8 @@ class WELLSFARGO extends BasePurchaser {
     		"sheetName" => "Conf Pricing",
     		"lock_day" => 	45,
 		    "confirming" => 1,
-    		"loan_type" => ["fixed30", "fixed20", "fixed15", "fixedRelo", "arm51", "arm71","amr101" ],
+    		//"loan_type"    => ["fixed30", "fixed20", "fixed15", "fixedRelo", "arm51", "arm71","amr101" ],
+    		"loan_type_id" => [1, 2, 3, -1 , 8, 9, 10 ],
     		"range" => "F53:F59"
     );
     
@@ -116,13 +117,14 @@ class WELLSFARGO extends BasePurchaser {
     		"sheetName" => "Non-Conf Pricing",
     		"lock_day" => 	45,
 		    "confirming" => 0,
-    		"loan_type" => ["fixed30", "fixed15", "arm51", "arm71","amr101" ],
+    		//"loan_type"    => ["fixed30", "fixed15", "arm51", "arm71","amr101" ],
+    		"loan_type_id" => [13, 15, 20, 21,22 ],
     		"range" => "P41:P45"
     );
     
     public function purchaseLockDayAdj45($loanTypeId, $adj) {
         $query = "INSERT INTO purchase ( purchaser_id, loan_type_id, rate, lock_days_id,  purchase_price ) 
-                    SELECT purchaser_id, loan_type_id, rate, 100,  purchase_price + $adj from purchase 
+                    SELECT purchaser_id, loan_type_id, rate, 45,  purchase_price + $adj from purchase 
                     WHERE purchaser_id = 3 
                       AND lock_days_id = $this->baseLockDays
 				      AND loan_type_id = $loanTypeId
