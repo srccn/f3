@@ -19,12 +19,6 @@ class myClass extends BaseController {
 
     function calculate() {
         $myRequest = $this->f3->get('REQUEST');
-        //echo "zip           : " . $myRequest['zipCode'] . "<br>";
-        //echo "Loan Amount   : " . $myRequest['loanAmount'] . "<br>";
-        //echo "Property type : " . $myRequest['properyType'] . "<br>" ;
-        //echo "Lock Days     : " . $myRequest['lockDays'] . "<br>" ;
-        //echo "<h3>Is confirming loan or not</h3>";
-
         foreach ($myRequest as $key => $value) {
             echo "Key: $key; Value: $value<br>";
         }

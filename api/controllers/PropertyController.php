@@ -18,6 +18,7 @@ class  PropertyController extends BaseController {
 	protected $isConfirming;
 	protected $fees;
 	protected $adjusts;
+	protected $margin;
 	
     
     function setInput($inputs ){
@@ -32,7 +33,8 @@ class  PropertyController extends BaseController {
         $this->creditScore=$inputs["creditScore"];
         $this->loanName=$inputs["loanName"];
         $this->lockDays=$inputs["lockDays"];
-
+        $this->margin=$inputs["margin"];
+        
         $this->getLTV();
         $this->setIsConfirming();
         
@@ -206,6 +208,7 @@ class  PropertyController extends BaseController {
         echo "is Confirming : $this->isConfirming<br>";
         echo "loanName : $this->loanName<br>";
         echo "lockDays : $this->lockDays<br>";
+        echo "Margin : $this->margin<br>";
         echo "<hr>";
     
     }
@@ -218,9 +221,9 @@ class  PropertyController extends BaseController {
         $result = $this->db->exec(
             "select adjust as result 
              from   adj_ltv_cc 
-             where  ltv_value > $this->LTV and
-                    cc_value  < $this->creditScore
-             order by ltv_value asc, cc_value desc
+             where  ltv_value < $this->LTV*100 
+        	   and  cc_value  < $this->creditScore
+             order by ltv_value desc, cc_value desc
              limit 1
         ");
 		
@@ -363,7 +366,8 @@ class  PropertyController extends BaseController {
         $adjust = Util::getSumValue($this->adjusts); 
         $SRP = $this->getStateGroupedSRP($purchaserId);
         $fees = Util::getSumValue($this->fees);
-        $loanTypeId = 1 ;//only have 30fix data noe
+        $margin = $this->margin;
+        $loanTypeId = 1 ;//only have 30fix data now
 //        echo $fees . "<br>";
 //        echo $adjust . "<br>";
 //        echo $SRP . "<br>";
@@ -404,12 +408,12 @@ class  PropertyController extends BaseController {
         Util::dump("ltv cc pmi adjust",$this->getLtvCcPmiAdj(2));
         Util::dump("ltv other adjust",$this->getLtvOtherAdj(2));
         Util::dump("find loan type Id",$this->getLoanTypeId());
-        Util::dump("Find bank 2 SPR",$this->getStateGroupedSRP(2));
+        Util::dump("Find bank 2 SRP",$this->getStateGroupedSRP(2));
 		var_dump($this->fees);
 		echo "Total Fee is " . Util::getSumValue($this->fees) . "<br>";
 		var_dump($this->adjusts);
 		echo "Total adjust is " . Util::getSumValue($this->adjusts) . "<br>";
-
+        echo "<br> Calculate bank 2 with margine $this->margin % <br>";
         $this->getPurchaseRate(2, 1);
 
     }

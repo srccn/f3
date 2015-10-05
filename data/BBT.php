@@ -118,6 +118,17 @@ class BBT extends BasePurchaser {
     		"loan_type" => 22,
     		"range" => "J148:L167"
     );
+
+    public function isEligible($property) { //take property argument return if eligible
+    	$minCreditScore['Purchase'] = 680;
+    	$minCreditScore['Refinance'] = 680;
+    	$minCreditScore['CORefianance'] = 680;
+    	$maxLtv['Purchase']  = 95;
+    	$maxLtv['Refinance'] = 80;
+    	
+    	
+    }
+    
     
     public function getMap() {
 	    return array(

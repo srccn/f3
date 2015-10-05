@@ -4,7 +4,7 @@
     <body>
     
         <div style="float: left;">
-            <h3>loan infomation input</h3>
+            <h3>Loan Infomation Search</h3>
             <hr>
             <form name="inputForm" type="post" action="/f3/calculate">
                 <label for="purchaseType">Mortgage Type</label>
@@ -51,13 +51,16 @@
                     <option value="45" selected>45 Days</option>
                     <option value="60">60 Days</option>
                 </select> <br>
-                <label for="lockDays">select loan Type</label>
+                <label for="loanName">select loan Type</label>
                 <select id="loanName" name="loanName">
                     <option value="fixed30">30 years fixed</option>
                     <option value="fixed15">15 years fixed</option>
                     <option value="arm51">5/1 arm</option>
                     <option value="arm71">7/1 arm</option>
-                </select>
+                </select><br>
+                <label for="Margin">Enter Price Margin</label>
+                <input type="text" name="margin" id="margin" value="1" size='3'>%</input><br>
+                
 <!--            
                 <input type=checkbox name="fixed30" id="fixed30" value="fixed30">30y Fixed
                 <input type=checkbox name="fixed15" id="fixed15" value="fixed15">15y Fixed

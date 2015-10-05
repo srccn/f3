@@ -55,7 +55,7 @@ class LoadAdj_ltv_ccController extends AbstractLoadController {
                 $ltvs_count = count($ltvs);
                 $scan = 0;
 			    for ($k=0;$k<$ltvs_count;$k++){
-                    while ( $result[$j][$scan] == null) {
+                    while ( $result[$j][$scan] === null) {
                         $scan++ ;
                         break;
                     } 

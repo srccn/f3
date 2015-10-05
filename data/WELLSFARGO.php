@@ -122,6 +122,15 @@ class WELLSFARGO extends BasePurchaser {
     		"range" => "P41:P45"
     );
     
+    //ltv_cc_adjust
+    private $adj_ltv_cc = array (
+    		"sheetName" => "Conf Adjusters",
+    		"ltv" => [0,60,70,75,80,85,90], //rage pick = max ( value < given_value)
+    		"cc"  => [740,720,700,680,660,640,620,0] , //range pick = max (value < given_value)
+    		"range" => "H76:N83" ,
+    		"max_ltv" => 95
+    );
+    
     public function purchaseLockDayAdj45($loanTypeId, $adj) {
         $query = "INSERT INTO purchase ( purchaser_id, loan_type_id, rate, lock_days_id,  purchase_price ) 
                     SELECT purchaser_id, loan_type_id, rate, 45,  purchase_price + $adj from purchase 
@@ -155,6 +164,12 @@ class WELLSFARGO extends BasePurchaser {
 		return array (
             "Conf45" => $this->purchaseLockDaysConfAdj45,
             "NoneConf45" => $this->purchaseLockDaysNoneConfAdj45
+		);
+	}
+	
+	public function getAdjLtvCcMap(){
+		return array (
+				"adj_ltv_cc" => $this->adj_ltv_cc
 		);
 	}
 }

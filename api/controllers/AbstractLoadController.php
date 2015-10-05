@@ -52,13 +52,12 @@ abstract class AbstractLoadController extends BaseController {
 
 	abstract public function removeDataInDB() ;
 
-	abstract public function loadDataFromExcel() ;
+	abstract public function loadDataFromExcel();
 	
 	public function reloadData() {
 	    $this->removeDataInDB();
 		$this->loadDataFromExcel();
 		$this->pushDataToDB();
-		$this->addPriceAdjData();
 	}
 	
 	public function getPurchaserID()   { return $this->purchaserID; }

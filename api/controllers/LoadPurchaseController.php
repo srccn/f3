@@ -36,7 +36,7 @@ class LoadPurchaseController extends AbstractLoadController {
 		$query = "delete FROM $this->AdjDBTableName where purchaser_id=".$this->purchaserID ;
 		
 		$result = $this->db->exec($query);
-		if( $result ){	echo 'rAdj data emove successfully.', EOL; return true;}
+		if( $result ){	echo 'Adj data remove successfully.', EOL; return true;}
 		else { 	echo 'Adj data removing failed.', EOL; return false;}
 	}
 	
@@ -121,6 +121,11 @@ class LoadPurchaseController extends AbstractLoadController {
 	      }//for $j
       } //for $i
 	}		
+	
+	public function reloadData() {
+		parent::reloadData();
+		$this->addPriceAdjData();
+	}
 	
 	
 }
