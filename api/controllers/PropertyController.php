@@ -16,6 +16,7 @@ class  PropertyController extends BaseController {
     protected $loanName; //fixed30, fixed15, arm51, arm71
 	protected $LTV;
 	protected $isConfirming;
+	protected $isSupperConfirming;
 	protected $fees;
 	protected $adjusts;
 	protected $margin;
@@ -59,6 +60,11 @@ class  PropertyController extends BaseController {
             $this->isConfirming = 0;
         } else {
             $this->isConfirming = 1;
+            if ($this->loanAmount > LoanerConst::CONFIRMING) {
+            	$this->isSupperConfirming = 1;
+            } else {
+            	$this->isSupperConfirming = 0;
+            }
         }
         return $this->isConfirming;
     }

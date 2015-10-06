@@ -6,6 +6,7 @@ class BBT extends BasePurchaser {
 	protected $purchaserId = 1;
 	protected $excelFile = "data/BBT.xls";
 	protected $lockdays = [15, 30, 45, 60] ;
+	protected $superConfirmingCalculateMethod = LoanerConst::ADJUST;
 	
     //30fixed
     private $fixed30 = array (
@@ -119,13 +120,42 @@ class BBT extends BasePurchaser {
     		"range" => "J148:L167"
     );
 
-    public function isEligible($property) { //take property argument return if eligible
-    	$minCreditScore['Purchase'] = 680;
-    	$minCreditScore['Refinance'] = 680;
-    	$minCreditScore['CORefianance'] = 680;
-    	$maxLtv['Purchase']  = 95;
-    	$maxLtv['Refinance'] = 80;
+    public function isConfirmingEligible($property) { //take property argument return if eligible
+    	$minCreditScore[LoanerConst::PURCHASE] = 680;
+    	$minCreditScore[LoanerConst::REFINANCE] = 680;
+    	$minCreditScore[LoanerConst::COREFINANCE] = 680;
+    	$maxLtv[LoanerConst::PURCHASE]  = 95;
+    	$maxLtv[LoanerConst::REFINANCE] = 80;
     	
+    	if (! $property->isConfirming) { //this check is only for confirming or super confirming
+    		return true;
+    	}
+    	
+    	if ($propert->$creditScroe < 680) {
+    		return false;
+    	} else {
+    		if ($property->purchaseType === LoanerConst::PURCHASE) {
+    			if ($property->LTV <= $maxLtv[LoanerConst::PURCHASE] ) {
+    				return true;
+    			} else {
+    				return false;
+    			}
+    		}
+    		
+    		if (    $property->purchaseType === LoanerConst::REFINANCE || 
+    				$property->purchaseType === LoanerConst::COREFINANCE ) 
+    		{
+    			if ($property->LTV <= $maxLtv[LoanerConst::REFINANCE] ) {
+    				return true;
+    			} else {
+    				return false;
+    			}
+    			 
+    		}
+    		
+    		echo "Error - undefined purchase type {$property->purchaseType} <br>" ;
+    		return false;
+    	}
     	
     }
     

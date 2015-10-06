@@ -7,6 +7,7 @@ class WELLSFARGO extends BasePurchaser {
 	protected $excelFile = "data/wells fargo.xls";
 	protected $lockdays = [15, 30, 45, 60] ;
     protected $baseLockDays = 60;
+    protected $superConfirmingCalculateMethod = CalcMethod::LOOKUP;
 	
     //30fixed
     private $fixed30 = array (

@@ -6,6 +6,7 @@ class BOKF  extends BasePurchaser{
 	protected $purchaserId = 2;
 	protected $excelFile = "data/BOKF CMS Rate Sheet.xlsx";
 	protected $lockdays = [7, 15, 30, 45, 60, 75] ;
+	protected $superConfirmingCalculateMethod = LoanerConst::LOOKUP;
 	
     //30fixed
     private $fixed30 = array (
@@ -119,7 +120,7 @@ class BOKF  extends BasePurchaser{
 	private $adj_others = array (
     		"sheetName" => "CONVENTIONL ADJUSTERS",
 			"ltv" => [0,60,70,75,80,85,90,95], //rage pick = max ( value < given_value) 
-	        "item" => ['adjust_condo','adjust_ivest','adjust_2Units','adjust_34Units','adjust_arm','adjust_highBalanceArm']
+	        "item" => ['adjust_condo','adjust_invest','adjust_2Units','adjust_34Units','adjust_arm','adjust_highBalanceArm']
 	);
 	
     public function getMap() {
