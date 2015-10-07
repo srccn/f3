@@ -19,9 +19,9 @@ class myClass extends BaseController {
 
     function calculate() {
         $myRequest = $this->f3->get('REQUEST');
-        foreach ($myRequest as $key => $value) {
-            echo "Key: $key; Value: $value<br>";
-        }
+//        foreach ($myRequest as $key => $value) {
+//            echo "Key: $key; Value: $value<br>";
+//        }
         
         $myProperty = new PropertyController;
         $myProperty->setInput($myRequest);

@@ -60,7 +60,7 @@ class  PropertyController extends BaseController {
             $this->isConfirming = 0;
         } else {
             $this->isConfirming = 1;
-            if ($this->loanAmount > LoanerConst::CONFIRMING) {
+            if ($this->loanAmount > LoanerConst::CONFIRMING_AMOUNT) {
             	$this->isSupperConfirming = 1;
             } else {
             	$this->isSupperConfirming = 0;
@@ -219,7 +219,7 @@ class  PropertyController extends BaseController {
     
     }
     
-    function getLtvCcAdj(){
+    function getLtvCcAdj($purchaserId){
 		$adjName = "LtvCcAdj";
 		$returnVal = 0;
 		
@@ -229,6 +229,7 @@ class  PropertyController extends BaseController {
              from   adj_ltv_cc 
              where  ltv_value < $this->LTV*100 
         	   and  cc_value  < $this->creditScore
+        	   and  purchaser_id = $purchaserId
              order by ltv_value desc, cc_value desc
              limit 1
         ");
@@ -402,26 +403,35 @@ class  PropertyController extends BaseController {
         
         Util::dump("State", $this->getState());
         Util::dump("LTV", $this->getLTV());
-        Util::dump("Appraisal fee",$this->getAppraisalFee());
         Util::dump("Confirming loan limit", $this->getLoanLimitByZipCode());
         Util::dump("set confirming ", $this->setIsConfirming());
+        echo " -- is SupperConfirming : {$this->isSupperConfirming} <br>";
+        Util::dump("find loan type Id",$this->getLoanTypeId());
+        Util::dump("Appraisal fee",$this->getAppraisalFee());
         Util::dump("Lender Insurance fee",$this->getLenderInsuranceFee());
         Util::dump("Title Insurance fee" ,$this->getTitleInsuranceFee());
         Util::dump("Recording fee", $this->getRecordingFee());
         Util::dump("Recording other fee",$this->getRecordingOtherFee());
         Util::dump("Attorney fee",$this->getAttoneyFee());
-        Util::dump("ltv cc adjust",$this->getLtvCcAdj());
-        Util::dump("ltv cc pmi adjust",$this->getLtvCcPmiAdj(2));
-        Util::dump("ltv other adjust",$this->getLtvOtherAdj(2));
-        Util::dump("find loan type Id",$this->getLoanTypeId());
-        Util::dump("Find bank 2 SRP",$this->getStateGroupedSRP(2));
-		var_dump($this->fees);
-		echo "Total Fee is " . Util::getSumValue($this->fees) . "<br>";
-		var_dump($this->adjusts);
-		echo "Total adjust is " . Util::getSumValue($this->adjusts) . "<br>";
-        echo "<br> Calculate bank 2 with margine $this->margin % <br>";
-        $this->getPurchaseRate(2, 1);
+        var_dump($this->fees);
+        echo "Total Fee is " . Util::getSumValue($this->fees) . "<br><br><br>";
 
+        $banks=[1,2,3];
+        foreach ($banks as $bank) {
+        	echo "<hr>";
+            echo "Purchaser number $bank";
+        	echo "<hr>";
+            Util::dump("ltv cc adjust",$this->getLtvCcAdj($bank));
+            Util::dump("ltv cc pmi adjust",$this->getLtvCcPmiAdj($bank));
+            Util::dump("ltv other adjust",$this->getLtvOtherAdj($bank));
+		    var_dump($this->adjusts);
+		    echo "Total adjust is " . Util::getSumValue($this->adjusts) . "<br>";
+            Util::dump("Find purchaser $bank SRP",$this->getStateGroupedSRP($bank));
+            //echo "<hr>";
+            echo "<br> Calculate bank $bank with margin $this->margin % <br>";
+            $this->getPurchaseRate($bank, $this->margin);
+        }
+        
     }
 
 }

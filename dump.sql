@@ -287,9 +287,10 @@ DROP TABLE IF EXISTS `fee_attorney`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fee_attorney` (
   `id` int(11) NOT NULL,
-  `purchase` int(11) DEFAULT NULL,
-  `refinance` int(11) DEFAULT NULL,
-  `state` char(2) DEFAULT NULL,
+  `purchase` int(11) NOT NULL,
+  `rtrefinance` int(11) NOT NULL,
+  `corefinance` int(11) NOT NULL,
+  `state` char(2) NOT NULL,
   `attorney_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -301,7 +302,7 @@ CREATE TABLE `fee_attorney` (
 
 LOCK TABLES `fee_attorney` WRITE;
 /*!40000 ALTER TABLE `fee_attorney` DISABLE KEYS */;
-INSERT INTO `fee_attorney` VALUES (1,490,465,'MA',0);
+INSERT INTO `fee_attorney` VALUES (1,490,465,0,'MA',0);
 /*!40000 ALTER TABLE `fee_attorney` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -316,7 +317,8 @@ CREATE TABLE `fee_recording` (
   `id` int(11) NOT NULL,
   `state` char(2) NOT NULL,
   `purchase` int(11) DEFAULT NULL,
-  `refinance` int(11) DEFAULT NULL,
+  `rtrefinance` int(11) DEFAULT NULL,
+  `corefinance` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -327,7 +329,7 @@ CREATE TABLE `fee_recording` (
 
 LOCK TABLES `fee_recording` WRITE;
 /*!40000 ALTER TABLE `fee_recording` DISABLE KEYS */;
-INSERT INTO `fee_recording` VALUES (1,'MA',300,100),(2,'NH',299,99),(3,'ME',298,98),(4,'CT',297,97),(5,'RI',296,96),(6,'VT',295,95);
+INSERT INTO `fee_recording` VALUES (1,'MA',300,100,100),(2,'NH',299,99,99),(3,'ME',298,98,98),(4,'CT',297,97,97),(5,'RI',296,96,96),(6,'VT',295,95,95);
 /*!40000 ALTER TABLE `fee_recording` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -342,7 +344,8 @@ CREATE TABLE `fee_recording_other` (
   `id` int(11) NOT NULL,
   `state` char(2) NOT NULL,
   `purchase` int(11) DEFAULT NULL,
-  `refinance` int(11) DEFAULT NULL,
+  `rtrefinance` int(11) DEFAULT NULL,
+  `corefiance` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -353,7 +356,7 @@ CREATE TABLE `fee_recording_other` (
 
 LOCK TABLES `fee_recording_other` WRITE;
 /*!40000 ALTER TABLE `fee_recording_other` DISABLE KEYS */;
-INSERT INTO `fee_recording_other` VALUES (1,'MA',65,30),(2,'NH',65,30),(3,'ME',65,30),(4,'CT',65,30),(5,'RI',65,30),(6,'VT',63,28);
+INSERT INTO `fee_recording_other` VALUES (1,'MA',65,30,30),(2,'NH',65,30,30),(3,'ME',65,30,30),(4,'CT',65,30,30),(5,'RI',65,30,30),(6,'VT',63,28,28);
 /*!40000 ALTER TABLE `fee_recording_other` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -865,4 +868,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-06  8:12:19
+-- Dump completed on 2015-10-06 22:17:48

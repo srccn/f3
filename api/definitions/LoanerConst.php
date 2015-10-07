@@ -4,53 +4,53 @@
 interface LoanerConst {
 	
 	//calculation method 
-	const LOOKUP = 1;
-	const ADJUST = 2;
+	const LOOKUP = "lookup";
+	const ADJUST = "adjust";
 	
 	//confirming amount
 	const CONFIRMING_AMOUNT = 417000;
 	
 	//loan amount confirming type 
-	const CONFIRMING = 1 ;
-	const SUPPERCONFIRMING = 2;
-	const NONECONFIRMING = 3;
+	const CONFIRMING = "confirming" ;
+	const SUPPERCONFIRMING = "superConfirming";
+	const NONECONFIRMING = "noneConfirming";
 	
 	//loan term 
-	const FIXED = 1;
-	const AMR = 2;
+	const FIXED = 'fixed';
+	const AMR = 'arm';
 	
 	//fixed year term
 	const YEAR30 = 30;
 	const YEAR25 = 25;
 	const YEAR20 = 20;
-	const YEAR15 = 15
+	const YEAR15 = 15;
 	const YEAR10 = 10;
 	
 	//arm years
-	const ARM31  = 31;
-	const ARM51  = 51;
-	const ARM71  = 71;
-	const ARM101 = 101;
+	const ARM31  = 'arm31';
+	const ARM51  = 'arm51';
+	const ARM71  = 'arm71';
+	const ARM101 = 'arm101';
 	
 	//loan purpose 
-	const PURCHASE =  1;
-	const REFINANCE = 2;
-	const COREFINANCE = 3 ; //cash out refinance
+	const PURCHASE =  'purchase';
+	const REFINANCE = 'rtrefinance';
+	const COREFINANCE = 'corefinance' ; //cash out refinance
 	
 	//property units
-	const ONE_UNIT   = 1;
-	const TWO_UNIT   = 2;
-	const THREE_UNIT = 3;
-	const FOUR_UNIT  = 4
+	const ONE_UNIT   = 'one_unit';
+	const TWO_UNIT   = 'two_unit';
+	const THREE_UNIT = 'three_unit';
+	const FOUR_UNIT  = 'four_unit';
 	
 	//property
-	const HOUSE = 1;
-	const CONDO = 2;
+	const HOUSE = 'house';
+	const CONDO = 'condo';
 	
 	//Property occupation
-	const PRIMARY_HOME = 1;
-	const SECONDARY_HOME = 2;
-	const INVESTMENT = 3;
+	const PRIMARY_HOME = 'primaryHome';
+	const SECONDARY_HOME = 'secondaryHome';
+	const INVESTMENT = 'investmentHouse';
 }
 
 ?>
