@@ -30,7 +30,7 @@ class myClass extends BaseController {
 	
 	function testPurchaseLoader () {
 	    $myloader = new LoadPurchaseController ;
-		$myloader->setExcelMapFile("data/WELLSFARGO.php");
+		$myloader->setExcelMapFile("data/BOKF.php");
 		$myloader->reloadData();
 	}
 

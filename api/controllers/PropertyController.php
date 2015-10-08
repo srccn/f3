@@ -60,7 +60,7 @@ class  PropertyController extends BaseController {
             $this->isConfirming = 0;
         } else {
             $this->isConfirming = 1;
-            if ($this->loanAmount > LoanerConst::CONFIRMING_AMOUNT) {
+            if ($this->loanAmount > LoanerConst::CONFIRMING_LIMIT_AMOUNT) {
             	$this->isSupperConfirming = 1;
             } else {
             	$this->isSupperConfirming = 0;
@@ -247,7 +247,7 @@ class  PropertyController extends BaseController {
         $result = $this->db->exec(
             "select adjust as result 
              from   adj_ltv_cc_pmi 
-             where  ltv_value <= $this->LTV and
+             where  ltv_value <= $this->LTV * 100 and
                     cc_value  < $this->creditScore and
                     purchaser_id = $purchaserId
              order by ltv_value asc, cc_value desc

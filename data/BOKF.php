@@ -49,21 +49,6 @@ class BOKF  extends BasePurchaser{
     	"range" => "B75:H87"
     );
     
-    //ncfixed30
-    private $ncfixed30 = array (
-    		"sheetName" => "SUPERCONF",
-    		"lock_days" => 	[30, 45, 60],
-    		"loan_type" => 13,
-    		"range" => "B20:E32"
-    );
-    
-    //ncfixed15
-    private $ncfixed15 = array (
-    		"sheetName" => "SUPERCONF",
-    		"lock_days" => 	[30, 45, 60],
-    		"loan_type" => 15,
-    		"range" => "G20:J32"
-    );
 	
 	//arm51
     private $arm51 = array (
@@ -107,7 +92,25 @@ class BOKF  extends BasePurchaser{
     		"lock_days" => 	[30, 45, 60],
     		"loan_type" => 22,
     		"range" => "L97:O107"
-    );	
+    );
+
+    //supfixed30
+    private $supfixed30 = array (
+    		"sheetName" => "SUPERCONF",
+    		"lock_days" => 	[30, 45, 60],
+    		"loan_type" => 23,
+    		"range" => "B20:E32"
+    );
+    
+    //supfixed15
+    private $supfixed15 = array (
+    		"sheetName" => "SUPERCONF",
+    		"lock_days" => 	[30, 45, 60],
+    		"loan_type" => 25,
+    		"range" => "G20:J32"
+    );    
+    
+    
     
 	//ltv_cc_adjust
 	private $adj_ltv_cc = array (
@@ -130,8 +133,8 @@ class BOKF  extends BasePurchaser{
 	    	"fixed20" => $this->fixed20,			
 	        "fixed15" => $this->fixed15,			
 	        "fixed10" => $this->fixed10,			
-	        "ncfixed30" => $this->ncfixed30,			
-  	        "ncfixed15" => $this->ncfixed15,
+	        "supfixed30" => $this->supfixed30,			
+  	        "supfixed15" => $this->supfixed15,
 			"arm51" => $this->arm51,
 			"arm71" => $this->arm71,
 			"arm101" => $this->arm101,

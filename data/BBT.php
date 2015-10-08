@@ -120,12 +120,16 @@ class BBT extends BasePurchaser {
     		"range" => "J148:L167"
     );
 
-    public function isConfirmingEligible($property) { //take property argument return if eligible
+    public function isConfirmingEligible(PropertyController $property) { //take property argument return if eligible
     	$minCreditScore[LoanerConst::PURCHASE] = 680;
     	$minCreditScore[LoanerConst::REFINANCE] = 680;
     	$minCreditScore[LoanerConst::COREFINANCE] = 680;
     	$maxLtv[LoanerConst::PURCHASE]  = 95;
     	$maxLtv[LoanerConst::REFINANCE] = 80;
+    	
+    	if ($property->$creditScroe < 680) {
+    		return false;
+    	}
     	
     	if (! $property->isConfirming) { //this check is only for confirming or super confirming
     		return true;
@@ -150,15 +154,15 @@ class BBT extends BasePurchaser {
     			} else {
     				return false;
     			}
-    			 
     		}
-    		
     		echo "Error - undefined purchase type {$property->purchaseType} <br>" ;
     		return false;
     	}
-    	
     }
     
+    public function adjustSupperConfirmtingPrice() {
+    	
+    }
     
     public function getMap() {
 	    return array(

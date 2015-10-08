@@ -8,7 +8,8 @@ interface LoanerConst {
 	const ADJUST = "adjust";
 	
 	//confirming amount
-	const CONFIRMING_AMOUNT = 417000;
+	const CONFIRMING_LIMIT_AMOUNT = 417000;
+	const NON_CONFIRMING_LIMIT_AMOUNT = 2000000;
 	
 	//loan amount confirming type 
 	const CONFIRMING = "confirming" ;
