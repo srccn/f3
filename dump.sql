@@ -126,6 +126,34 @@ INSERT INTO `adj_ltv_super_confirming` VALUES (1,0.000,1.250,1.250,2.000),(1,65.
 UNLOCK TABLES;
 
 --
+-- Table structure for table `confirming_ltv_limit`
+--
+
+DROP TABLE IF EXISTS `confirming_ltv_limit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `confirming_ltv_limit` (
+  `purchaser_id` int(10) NOT NULL,
+  `confirming_type` enum('confirming','superconfirming','noneconfirming') NOT NULL,
+  `loan_purpose_type` enum('purchase','rtrefinance','corefinance') NOT NULL,
+  `property_unit` enum('one_unit','two_unit','three_unit','four_unit','any_unit') NOT NULL,
+  `peoperty_occupancy_type` enum('primary','secondary','investment') NOT NULL,
+  `max_ltv` int(10) NOT NULL,
+  PRIMARY KEY (`purchaser_id`,`confirming_type`,`loan_purpose_type`,`property_unit`,`peoperty_occupancy_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `confirming_ltv_limit`
+--
+
+LOCK TABLES `confirming_ltv_limit` WRITE;
+/*!40000 ALTER TABLE `confirming_ltv_limit` DISABLE KEYS */;
+INSERT INTO `confirming_ltv_limit` VALUES (1,'superconfirming','purchase','one_unit','primary',90),(1,'superconfirming','purchase','one_unit','investment',80),(1,'superconfirming','purchase','two_unit','primary',75),(1,'superconfirming','purchase','two_unit','investment',70),(1,'superconfirming','purchase','three_unit','primary',75),(1,'superconfirming','purchase','three_unit','investment',70),(1,'superconfirming','purchase','four_unit','primary',75),(1,'superconfirming','purchase','four_unit','investment',70),(1,'superconfirming','purchase','any_unit','secondary',80),(1,'superconfirming','rtrefinance','one_unit','primary',90),(1,'superconfirming','rtrefinance','one_unit','investment',75),(1,'superconfirming','rtrefinance','two_unit','primary',75),(1,'superconfirming','rtrefinance','two_unit','investment',70),(1,'superconfirming','rtrefinance','three_unit','primary',75),(1,'superconfirming','rtrefinance','three_unit','investment',70),(1,'superconfirming','rtrefinance','four_unit','primary',75),(1,'superconfirming','rtrefinance','four_unit','investment',70),(1,'superconfirming','rtrefinance','any_unit','secondary',80),(1,'superconfirming','corefinance','one_unit','primary',75),(1,'superconfirming','corefinance','one_unit','investment',65),(1,'superconfirming','corefinance','two_unit','primary',65),(1,'superconfirming','corefinance','two_unit','investment',65),(1,'superconfirming','corefinance','three_unit','primary',65),(1,'superconfirming','corefinance','three_unit','investment',65),(1,'superconfirming','corefinance','four_unit','primary',65),(1,'superconfirming','corefinance','four_unit','investment',65),(1,'superconfirming','corefinance','any_unit','secondary',80);
+/*!40000 ALTER TABLE `confirming_ltv_limit` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `county_loan_limit`
 --
 
@@ -868,4 +896,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-06 22:17:48
+-- Dump completed on 2015-10-07 22:19:57
