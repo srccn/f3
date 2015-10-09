@@ -46,11 +46,12 @@ class  PropertyController extends BaseController {
         $this->type='house';
         $this->occType='primary';
         $this->purchaseType='purchase';
-        $this->loanAmount=390000;
+        $this->loanAmount=700000;
         $this->zip='02460';
-        $this->marketPrice=400000;
+        $this->marketPrice=800000;
         $this->creditScore=780;
         $this->loanName="fixed30";
+        $this->state = $this->getState();
     
     }
     
@@ -369,9 +370,66 @@ class  PropertyController extends BaseController {
 		return floatval(Util::resultString($result)) - floatval(Util::resultString($deduction));
 	}
 	
+	function getSRP($purchaserId) {
+		$result = $this->db->exec("select getSRPFunction as func from purchaser where purchaser_id = $purchaserId");
+		return $result[0]['func'];
+	}
+	
+	function getStateFullListSRP($purchaserId) {
+		$state = $this->getState();
+		$query = "";
+		//right now supprot wells fargo - purchaser_id = 3
+		// state = MA NH CT only
+		if ($this->loanAmount > LoanerConst::MAXIMUM_LIMIT_AMOUNT) {
+		    echo "Loan Amount is greater than limit no SRP value. <br>";
+		    return 0;
+		}elseif ($this->loanAmount < LoanerConst::MIMIMUM_LIMIT_AMOUNT) {
+			echo "Loan Amount is less than mimimum limit no SRP value. <br>";
+			return 0;
+		}
+		
+		$loanTypeId = $this->getLoanTypeId();
+		
+		if ( ! $this->isConfirming ) { //non confirming case
+			$query = "SELECT $state  as result
+			          FROM  state_srp_full_list
+			         WHERE  start_amount = 'confirming'
+			           AND  loan_type_id = $loanTypeId
+			           AND  purchaser_id = $purchaserId
+			";
+		}
+		
+		if ($this->isSupperConfirming) {// supper confirming
+			$query = "SELECT $state  as result
+			            FROM  state_srp_full_list
+			           WHERE  end_amount ='confirming'
+			             AND  loan_type_id = $loanTypeId
+			             AND  purchaser_id = $purchaserId
+			";
+		}
+		
+		if ($this->isConfirming) {
+			$query = "SELECT $state as result
+			            FROM  state_srp_full_list
+			           WHERE  $this->loanAmount > convert(start_amount, UNSIGNED)
+			             AND  loan_type_id = $loanTypeId
+			             AND  purchaser_id = $purchaserId
+			        ORDER BY  convert(start_amount, UNSIGNED) desc
+			           LIMIT  1
+			";
+				
+		}
+		echo $query."<br>";
+        $result = $this->db->exec($query);
+        var_dump($result) ;
+		
+	}
+	
+	
     function getPurchaseRate($purchaserId, $margin) {
-        $adjust = Util::getSumValue($this->adjusts); 
-        $SRP = $this->getStateGroupedSRP($purchaserId);
+        $adjust = Util::getSumValue($this->adjusts);
+        echo $this->getSRP($purchaserId) . "<br>";
+        $SRP = $this->{$this->getSRP($purchaserId)}($purchaserId);
         $fees = Util::getSumValue($this->fees);
         $margin = $this->margin;
         $loanTypeId = 1 ;//only have 30fix data now
@@ -415,7 +473,9 @@ class  PropertyController extends BaseController {
         Util::dump("Attorney fee",$this->getAttoneyFee());
         var_dump($this->fees);
         echo "Total Fee is " . Util::getSumValue($this->fees) . "<br><br><br>";
-
+//        $this->getStateFullListSRP(3);
+//        echo $this->getSRP(2) . "<br>";
+        
         $banks=[1,2,3];
         foreach ($banks as $bank) {
         	echo "<hr>";
@@ -430,8 +490,9 @@ class  PropertyController extends BaseController {
             //echo "<hr>";
             echo "<br> Calculate bank $bank with margin $this->margin % <br>";
             $this->getPurchaseRate($bank, $this->margin);
+            
         }
-        
+       
     }
 
 }
