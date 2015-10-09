@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.44, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.14, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: loaner
 -- ------------------------------------------------------
--- Server version	5.6.19-0ubuntu0.14.04.1
+-- Server version	5.6.17
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -374,7 +374,7 @@ CREATE TABLE `fee_recording_other` (
   `state` char(2) NOT NULL,
   `purchase` int(11) DEFAULT NULL,
   `rtrefinance` int(11) DEFAULT NULL,
-  `corefiance` int(11) DEFAULT NULL,
+  `corefinance` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -927,4 +927,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-08 23:29:25
+-- Dump completed on 2015-10-09 17:06:44

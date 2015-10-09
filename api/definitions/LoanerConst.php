@@ -7,10 +7,20 @@ interface LoanerConst {
 	const LOOKUP = "lookup";
 	const ADJUST = "adjust";
 	
-	//confirming amount
+	//loan amount
 	const MIMIMUM_LIMIT_AMOUNT = 50000;
 	const CONFIRMING_LIMIT_AMOUNT = 417000;
 	const MAXIMUM_LIMIT_AMOUNT = 2000000;
+
+	//Credit score ???
+	const MIMIMUM_CREDIT_SCORE_PURCHASE    = 680;
+	const MIMIMUM_CREDIT_SCORE_REFINANCE   = 700;
+	const MIMIMUM_CREDIT_SCORE_COREFINANCE = 720;
+	
+	//LTV
+	const MAXMUM_LTV_PURCHASE    = 97;
+	const MAXMUM_LTV_REFINANCE   = 95;
+	const MAXMUM_LTV_COREFINANCE = 90;
 	
 	//loan amount confirming type 
 	const CONFIRMING = "confirming" ;
