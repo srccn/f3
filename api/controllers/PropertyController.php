@@ -375,18 +375,57 @@ class  PropertyController extends BaseController {
 		return $result[0]['func'];
 	}
 	
+	function loanLimitCheck(){
+		//Amount checks
+		if ($this->loanAmount > LoanerConst::MAXIMUM_LIMIT_AMOUNT) {
+			echo "Loan Amount is greater than limit no SRP value. <br>";
+			return false;
+		}elseif ($this->loanAmount < LoanerConst::MIMIMUM_LIMIT_AMOUNT) {
+			echo "Loan Amount is less than mimimum limit no SRP value. <br>";
+			return false;
+		}
+		
+		//Credit Score and LTV checks
+		if ($this->purchaseType == LoanerConst::PURCHASE ) {
+			if ($this->creditScore < LoanerConst::MIMIMUM_CREDIT_SCORE_PURCHASE) {
+			    echo "Credit score does not meet mimimun for purchase. <br>";
+			    return false;
+		    }
+		    if ($this->LTV * 100 > LoanerConst::MAXMUM_LTV_PURCHASE) {
+		    	echo "Failed LTV check for purchase. <br>";
+		    	return false;
+		    }
+		}
+		if ($this->purchaseType == LoanerConst::REFINANCE) {
+			if ($this->creditScore < LoanerConst::MIMIMUM_CREDIT_SCORE_REFINANCE) {
+				echo "Credit score does not meet mimimun for refinance. <br>";
+    			return false;
+		    }
+		    if ($this->LTV * 100 > LoanerConst::MAXMUM_LTV_REFINANCE) {
+		    	echo "Failed LTV check for refinance. <br>";
+		    	return false;
+		    }
+		}
+		if ($this->purchaseType == LoanerConst::COREFINANCE ) {
+			if ($this->creditScore < LoanerConst::MIMIMUM_CREDIT_SCORE_COREFINANCE) {
+				echo "Credit score does not meet mimimun for cash out refinance. <br>";
+				return false;
+		    }
+		    if ($this->LTV * 100 > LoanerConst::MAXMUM_LTV_COREFINANCE) {
+		    	echo "Failed LTV check for cahs out purchase. <br>";
+		    	return false;
+		    }
+		}
+		//passed all checks
+		return true;
+	}
+	
+	
 	function getStateFullListSRP($purchaserId) {
 		$state = $this->getState();
 		$query = "";
 		//right now supprot wells fargo - purchaser_id = 3
 		// state = MA NH CT only
-		if ($this->loanAmount > LoanerConst::MAXIMUM_LIMIT_AMOUNT) {
-		    echo "Loan Amount is greater than limit no SRP value. <br>";
-		    return 0;
-		}elseif ($this->loanAmount < LoanerConst::MIMIMUM_LIMIT_AMOUNT) {
-			echo "Loan Amount is less than mimimum limit no SRP value. <br>";
-			return 0;
-		}
 		
 		$loanTypeId = $this->getLoanTypeId();
 		
@@ -419,10 +458,10 @@ class  PropertyController extends BaseController {
 			";
 				
 		}
-		echo $query."<br>";
+		//echo $query."<br>";
         $result = $this->db->exec($query);
-        var_dump($result) ;
-		
+        //var_dump($result) ;
+		return $result[0]['result'];
 	}
 	
 	
@@ -476,20 +515,23 @@ class  PropertyController extends BaseController {
 //        $this->getStateFullListSRP(3);
 //        echo $this->getSRP(2) . "<br>";
         
-        $banks=[1,2,3];
-        foreach ($banks as $bank) {
+        $purchasers=[1,2,3];
+        foreach ($purchasers as $purchaserId) {
         	echo "<hr>";
-            echo "Purchaser number $bank";
+            echo "Purchaser number $purchaserId";
         	echo "<hr>";
-            Util::dump("ltv cc adjust",$this->getLtvCcAdj($bank));
-            Util::dump("ltv cc pmi adjust",$this->getLtvCcPmiAdj($bank));
-            Util::dump("ltv other adjust",$this->getLtvOtherAdj($bank));
+        	if (! $this->loanLimitCheck()) { //if failed loanamount check , skip
+        		continue;
+        	}
+            Util::dump("ltv cc adjust",$this->getLtvCcAdj($purchaserId));
+            Util::dump("ltv cc pmi adjust",$this->getLtvCcPmiAdj($purchaserId));
+            Util::dump("ltv other adjust",$this->getLtvOtherAdj($purchaserId));
 		    var_dump($this->adjusts);
 		    echo "Total adjust is " . Util::getSumValue($this->adjusts) . "<br>";
-            Util::dump("Find purchaser $bank SRP",$this->getStateGroupedSRP($bank));
+            Util::dump("Find purchaser $purchaserId SRP",$this->{$this->getSRP($purchaserId)}($purchaserId));
             //echo "<hr>";
-            echo "<br> Calculate bank $bank with margin $this->margin % <br>";
-            $this->getPurchaseRate($bank, $this->margin);
+            echo "<br> Calculate bank $purchaserId with margin $this->margin % <br>";
+            $this->getPurchaseRate($purchaserId, $this->margin);
             
         }
        
