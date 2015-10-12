@@ -14,11 +14,12 @@ class  PropertyController extends BaseController {
     protected $lockDays;
 	protected $creditScroe;
     protected $loanName; //fixed30, fixed15, arm51, arm71
+    protected $confirmingUpperLimit;
 	protected $LTV;
 	protected $isConfirming;
 //	protected $isSupperConfirming;
-	protected $fees;
-	protected $adjusts;
+	protected $fees;     //hold fees
+	protected $adjusts;  //hold adjusts
 	protected $margin;
 	
     
@@ -38,7 +39,6 @@ class  PropertyController extends BaseController {
         
         $this->getLTV();
         $this->setIsConfirming();
-        
     }
     
     public function setTest () {    
@@ -69,15 +69,16 @@ class  PropertyController extends BaseController {
     }
     
 	function getLoanLimitByZipCode(){
-	    $results = $this->db->exec("select GetConfirmingLoanUpperLimit('$this->zip' , '$this->numberUnit') as result ");
+	    $results = $this->runQuery("select GetConfirmingLoanUpperLimit('$this->zip' , '$this->numberUnit') as result ");
 		//var_dump($results[0]);
-		return Util::resultString($results);
+		$this->confirmingUpperLimit = Util::resultString($results);
+		return $this->confirmingUpperLimit;
 	}
     
     function getState() {
-        $state = $this->db->exec("select t1.state as result from county_loan_limit t1, zip_county t2 where t1.countycode = t2.countycode and t2.zipcode='$this->zip';");
-        //var_dump ( $state );
-        return Util::resultString($state);
+        $state = $this->runQuery("select t1.state as result from county_loan_limit t1, zip_county t2 where t1.countycode = t2.countycode and t2.zipcode='$this->zip';");
+        $this->state = Util::resultString($state);
+        return $this->state;
     }
 
 	function getLTV(){
@@ -90,7 +91,7 @@ class  PropertyController extends BaseController {
 		$feeName = "RecordingFee";
 		$returnVal = null ;
         $state = $this->getState();
-        $result = $this->db->exec ("select $this->purchaseType as result from fee_recording where state='$state'");
+        $result = $this->runQuery("select $this->purchaseType as result from fee_recording where state='$state'");
         if ( ! $result ) {
             $returnVal = 350;
         } else {
@@ -107,7 +108,7 @@ class  PropertyController extends BaseController {
 		$returnVal = null;
 
 		$state = $this->getState();
-        $result = $this->db->exec ("select $this->purchaseType as result from fee_recording_other where state='$state'");
+        $result = $this->runQuery("select $this->purchaseType as result from fee_recording_other where state='$state'");
         if ( ! $result ) {
             $returnVal =  65;
         } else {
@@ -123,7 +124,7 @@ class  PropertyController extends BaseController {
 		$returnVal = null;
 
 		$state = $this->getState();
-        $result = $this->db->exec ("select $this->purchaseType as result from fee_attorney where state='$state'");
+        $result = $this->runQuery("select $this->purchaseType as result from fee_attorney where state='$state'");
         if ( ! $result ) {
             $returnVal =  490 * 2; //double default for unlisted state
         } else {
@@ -223,7 +224,7 @@ class  PropertyController extends BaseController {
 		$returnVal = 0;
 		
         $this->getLTV();
-        $result = $this->db->exec(
+        $result = $this->runQuery(
             "select adjust as result 
              from   adj_ltv_cc 
              where  ltv_value < $this->LTV*100 
@@ -243,7 +244,7 @@ class  PropertyController extends BaseController {
 		$returnVal = 0;
 
 		$this->getLTV();
-        $result = $this->db->exec(
+        $result = $this->runQuery(
             "select adjust as result 
              from   adj_ltv_cc_pmi 
              where  ltv_value <= $this->LTV * 100 and
@@ -268,7 +269,7 @@ class  PropertyController extends BaseController {
 		$adjName = "LtvOtherAdj";
 		$returnVal = 0;
 
-        $result = $this->db->exec(
+        $result = $this->runQuery(
             "select adjust_condo, 
                     adjust_invest,
                     adjust_2Units,
@@ -307,7 +308,7 @@ class  PropertyController extends BaseController {
     }
     
     function getLoanTypeId(){
-        $result = $this->db->exec ("
+        $result = $this->runQuery("
                 select loan_type_id as result 
                   from loan_type 
                  where type_variable_name like '%$this->loanName%' 
@@ -334,7 +335,7 @@ class  PropertyController extends BaseController {
 		//echo "$this->zip" . "," . $this->loanAmount .",". $loanTypeId. ",".$purchaserId ."<br>";
 		
 		//find base SRP 
-        $result = $this->db->exec ("select GetGroupedSRPByZip(
+        $result = $this->runQuery("select GetGroupedSRPByZip(
 		                  '$this->zip',
 						  $baseRef ,
 						  $this->loanAmount,
@@ -349,7 +350,7 @@ class  PropertyController extends BaseController {
 		$deduction = 0;
 		if ($srp_calculation_loan_type_id != $baseRef ) {
 		
-			$deduction = $this->db->exec("
+			$deduction = $this->runQuery("
 				select deduction as result
 				from purchaser_srp_loan_type_ref
 				where purchaser_id = $purchaserId
@@ -368,7 +369,7 @@ class  PropertyController extends BaseController {
 		$loanTypeId = $this->getLoanTypeId();
         //from loan_type_id to find loan type base id that is not condirminged for SRP calculation
         
-        $base_type_id_result = $this->db->exec("
+        $base_type_id_result = $this->runQuery("
         		    SELECT loan_type_base_srp_id as bID
         		      FROM loaner.loan_type 
         		     WHERE loan_type_id=$loanTypeId 
@@ -382,7 +383,7 @@ class  PropertyController extends BaseController {
 	
 	
 	function getSRP($purchaserId) {
-		$result = $this->db->exec("select getSRPFunction as func from purchaser where purchaser_id = $purchaserId");
+		$result = $this->runQuery("select getSRPFunction as func from purchaser where purchaser_id = $purchaserId");
 		return $result[0]['func'];
 	}
 	
@@ -433,7 +434,7 @@ class  PropertyController extends BaseController {
 	
 	function getSupperConfirmingAdj($purchaserID) {
 		$adjName = "LtvOtherAdj";
-		$result = $this->db->exec("
+		$result = $this->runQuery("
 				    SELECT $this->purchaseType as result
 				      FROM adj_ltv_super_confirming
 				     WHERE purchaser_id = $purchaserID
@@ -498,7 +499,7 @@ class  PropertyController extends BaseController {
 				
 		}
 		//echo $query."<br>";
-        $result = $this->db->exec($query);
+        $result = $this->runQuery($query);
         //var_dump($result) ;
 		return $result[0]['result'];
 	}
@@ -516,7 +517,7 @@ class  PropertyController extends BaseController {
 //        echo $SRP . "<br>";
 //        echo $this->loanAmount . "<br>";
         
-        $result = $this->db->exec("
+        $result = $this->runQuery("
             select rate , ((purchase_price + $adjust - $margin + $SRP - 100)/100 * $this->loanAmount -  $fees) credit 
             from purchase
             where purchaser_id = $purchaserId

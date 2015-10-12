@@ -22,6 +22,17 @@ class BaseController {
 		$this->db = $db;
 		$this->logger = $logger;
 	}
+	
+	function runQuery($query){
+		$result = null;
+		try {
+		    $result = $this->db->exec($query);
+		}catch (\Exception $e) {
+			$this->logger->write($e->getMessage());
+			echo ("Exception when executing query : " . $query ."<br>");
+		}
+		return $result;
+	}
 
 }
 

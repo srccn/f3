@@ -6,6 +6,8 @@ class BasePurchaser {
 //	protected $purchaserId = 1 //Purchaser id ;
 //	protected $excelFile = "excel spread sheet data file";
 	
+	private $property;
+	
 	public function getPurchaserId(){
     	return $this->purchaserId;
     }
@@ -17,6 +19,12 @@ class BasePurchaser {
     	return $this->purchaserName;
     }
 	
+    public function setProperty(PropertyController $p) {
+    	$this->property = $p;
+    }
+
+
+
 }
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-class BankController extends BaseController {
+class PurchaserController extends BaseController {
 
 	private $BankName;
 	private $BankId;
