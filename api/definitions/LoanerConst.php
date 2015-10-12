@@ -24,8 +24,12 @@ interface LoanerConst {
 	
 	//loan amount confirming type 
 	const CONFIRMING = "confirming" ;
-	const SUPPERCONFIRMING = "superConfirming";
-	const NONECONFIRMING = "noneConfirming";
+	const SUPPERCONFIRMING = "supperconfirming";
+	const NONECONFIRMING = "noneconfirming";
+
+	const ID_CONFIRMING = 1 ;
+	const ID_SUPPERCONFIRMING = 2;
+	const ID_NONECONFIRMING = 0;
 	
 	//loan term 
 	const FIXED = 'fixed';

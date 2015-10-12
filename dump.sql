@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.14, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.44, for debian-linux-gnu (x86_64)
 --
 -- Host: 127.0.0.1    Database: loaner
 -- ------------------------------------------------------
--- Server version	5.6.17
+-- Server version	5.6.19-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -111,7 +111,7 @@ CREATE TABLE `adj_ltv_super_confirming` (
   `ltv_value` decimal(10,3) NOT NULL,
   `purchase` decimal(10,3) DEFAULT NULL,
   `refinance` decimal(10,3) DEFAULT NULL,
-  `COrefinance` decimal(10,3) DEFAULT NULL,
+  `corefinance` decimal(10,3) DEFAULT NULL,
   PRIMARY KEY (`purchaser_id`,`ltv_value`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -435,6 +435,7 @@ CREATE TABLE `loan_type` (
   `type_term` varchar(45) DEFAULT NULL,
   `type_variable_name` varchar(45) DEFAULT NULL,
   `confirming` int(1) DEFAULT '1',
+  `loan_type_base_SRP_id` int(11) NOT NULL,
   PRIMARY KEY (`loan_type_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -445,7 +446,7 @@ CREATE TABLE `loan_type` (
 
 LOCK TABLES `loan_type` WRITE;
 /*!40000 ALTER TABLE `loan_type` DISABLE KEYS */;
-INSERT INTO `loan_type` VALUES (1,'30 Years Fixed Confirming','30','fixed30',1),(2,'20 Years Fixed Confirming','20','fixed20',1),(3,'15 Years Fixed Confirming','15','fixed15',1),(4,'10 Years Fixed Confirming','10','fixed10',1),(5,'25 Years Fixed Comfirming','25','fixed25',1),(6,'1ARM','30','arm1',1),(7,'3-1ARM','30','arm31',1),(8,'5-1ARM','30','arm51',1),(9,'7-1ARM','30','arm71',1),(10,'10-1ARM','30','arm101',1),(11,'30 Years FHA ','30','fha30',1),(12,'30 Years VA','30','va30',1),(13,'30 Years Fixed non-confirming','30','ncfixed30',0),(14,'20 Years Fixed non-confirming','20','ncfixed20',0),(15,'15 Years Fixed non-confirming','15','ncfixed15',0),(16,'10 Years Fixed non-confirming','10','ncfixed10',0),(17,'25 Years Fixed non-comfirming','25','ncfixed25',0),(18,'1ARM non-confirming','30','ncarm1',0),(19,'3-1ARM non-confirming','30','ncarm31',0),(20,'5-1ARM non-confirming','30','ncarm51',0),(21,'7-1ARM non-confirming','30','ncarm71',0),(22,'10-1ARM non-confirming','30','ncarm101',0),(23,'30 Years Fixed supper-confirming','30','supfixed30',0),(24,'20 Years Fixed supper-confirming','20','supfixed20',0),(25,'15 Years Fixed supper-confirming','15','supfixed15',0),(26,'10 Years Fixed supper-confirming','10','supfixed10',0),(27,'25 Years Fixed supper-comfirming','25','supfixed25',0),(28,'1ARM supper-confirming','30','suparm1',0),(29,'3-1ARM supper-confirming','30','suparm31',0),(30,'5-1ARM supper-confirming','30','suparm51',0),(31,'7-1ARM supper-confirming','30','suparm71',0),(32,'10-1ARM supper-confirming','30','suparm101',0);
+INSERT INTO `loan_type` VALUES (1,'30 Years Fixed Confirming','30','fixed30',1,1),(2,'20 Years Fixed Confirming','20','fixed20',1,2),(3,'15 Years Fixed Confirming','15','fixed15',1,3),(4,'10 Years Fixed Confirming','10','fixed10',1,4),(5,'25 Years Fixed Comfirming','25','fixed25',1,5),(6,'1ARM','30','arm1',1,6),(7,'3-1ARM','30','arm31',1,7),(8,'5-1ARM','30','arm51',1,8),(9,'7-1ARM','30','arm71',1,9),(10,'10-1ARM','30','arm101',1,10),(11,'30 Years FHA ','30','fha30',1,11),(12,'30 Years VA','30','va30',1,12),(13,'30 Years Fixed non-confirming','30','ncfixed30',0,13),(14,'20 Years Fixed non-confirming','20','ncfixed20',0,14),(15,'15 Years Fixed non-confirming','15','ncfixed15',0,15),(16,'10 Years Fixed non-confirming','10','ncfixed10',0,16),(17,'25 Years Fixed non-comfirming','25','ncfixed25',0,17),(18,'1ARM non-confirming','30','ncarm1',0,18),(19,'3-1ARM non-confirming','30','ncarm31',0,19),(20,'5-1ARM non-confirming','30','ncarm51',0,20),(21,'7-1ARM non-confirming','30','ncarm71',0,21),(22,'10-1ARM non-confirming','30','ncarm101',0,22),(23,'30 Years Fixed supper-confirming','30','supfixed30',2,1),(24,'20 Years Fixed supper-confirming','20','supfixed20',2,2),(25,'15 Years Fixed supper-confirming','15','supfixed15',2,3),(26,'10 Years Fixed supper-confirming','10','supfixed10',2,4),(27,'25 Years Fixed supper-comfirming','25','supfixed25',2,5),(28,'1ARM supper-confirming','30','suparm1',2,6),(29,'3-1ARM supper-confirming','30','suparm31',2,7),(30,'5-1ARM supper-confirming','30','suparm51',2,8),(31,'7-1ARM supper-confirming','30','suparm71',2,9),(32,'10-1ARM supper-confirming','30','suparm101',2,10);
 /*!40000 ALTER TABLE `loan_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -927,4 +928,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-09 17:06:44
+-- Dump completed on 2015-10-11 21:44:05
