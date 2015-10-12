@@ -23,8 +23,8 @@ class myClass extends BaseController {
 //            echo "Key: $key; Value: $value<br>";
 //        }
         
-        $myProperty = new PropertyController;
-        $myProperty->setInput($myRequest);
+        $myProperty = new PropertyController($myRequest);
+        //$myProperty->setInput($myRequest);
         $myProperty->test();
     }
 	
