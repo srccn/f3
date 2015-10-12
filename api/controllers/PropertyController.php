@@ -16,7 +16,7 @@ class  PropertyController extends BaseController {
     protected $loanName; //fixed30, fixed15, arm51, arm71
 	protected $LTV;
 	protected $isConfirming;
-	protected $isSupperConfirming;
+//	protected $isSupperConfirming;
 	protected $fees;
 	protected $adjusts;
 	protected $margin;
@@ -62,10 +62,8 @@ class  PropertyController extends BaseController {
         } else {
             $this->isConfirming = 1;
             if ($this->loanAmount > LoanerConst::CONFIRMING_LIMIT_AMOUNT) {
-            	$this->isSupperConfirming = 1;
-            } else {
-            	$this->isSupperConfirming = 0;
-            }
+            	$this->isConfirming = 2; //2 represent supperconfirming
+            } 
         }
         return $this->isConfirming;
     }
@@ -309,20 +307,12 @@ class  PropertyController extends BaseController {
     }
     
     function getLoanTypeId(){
-        if (strpos($this->loanName, 'fix') !== FALSE) { //fixed 
-            $result = $this->db->exec ("
+        $result = $this->db->exec ("
                 select loan_type_id as result 
-                from loan_type 
-                where type_variable_name like '%$this->loanName%' and 
-                      confirming =$this->isConfirming"
-            );
-        } else { //arm
-            $result = $this->db->exec ("
-                select loan_type_id as result 
-                from loan_type 
-                where type_variable_name = '$this->loanName' "
-            );
-        }
+                  from loan_type 
+                 where type_variable_name like '%$this->loanName%' 
+            	   and confirming = $this->isConfirming "
+        );
         
         if ( !$result ) die("Failed to find loan type : " . $this->loanName);
         
@@ -352,15 +342,18 @@ class  PropertyController extends BaseController {
 		
         if ( ! $result ) die("Failed to find SRP : " . "$this->zip  $this->loanAmount $loanTypeId ");
 		
+        //get base loan type for srp calcualtion
+        $srp_calculation_loan_type_id = $this->getSRPLoanTypeId();
+        
 		//find SRP deduction from base if applicable:
 		$deduction = 0;
-		if ($loanTypeId != $baseRef ) {
+		if ($srp_calculation_loan_type_id != $baseRef ) {
 		
 			$deduction = $this->db->exec("
 				select deduction as result
 				from purchaser_srp_loan_type_ref
 				where purchaser_id = $purchaserId
-				  and loan_type_id = $loanTypeId
+				  and loan_type_id = $srp_calculation_loan_type_id 
 				  and ref_loan_type_id = $baseRef 
 				  and hasdata = 0
 				");
@@ -369,6 +362,24 @@ class  PropertyController extends BaseController {
 		
 		return floatval(Util::resultString($result)) - floatval(Util::resultString($deduction));
 	}
+	
+	function getSRPLoanTypeId () {
+		
+		$loanTypeId = $this->getLoanTypeId();
+        //from loan_type_id to find loan type base id that is not condirminged for SRP calculation
+        
+        $base_type_id_result = $this->db->exec("
+        		    SELECT loan_type_base_srp_id as bID
+        		      FROM loaner.loan_type 
+        		     WHERE loan_type_id=$loanTypeId 
+        		");
+        if ( ! $base_type_id_result ) die("Failed to find loan_type_base_id for :  $loanTypeId");
+        $srp_calculation_loan_type_id = intval($base_type_id_result[0]['bID']);
+        
+        //echo $srp_calculation_loan_type_id."<br>";
+        return $srp_calculation_loan_type_id;
+	}
+	
 	
 	function getSRP($purchaserId) {
 		$result = $this->db->exec("select getSRPFunction as func from purchaser where purchaser_id = $purchaserId");
@@ -420,6 +431,33 @@ class  PropertyController extends BaseController {
 		return true;
 	}
 	
+	function getSupperConfirmingAdj($purchaserID) {
+		$adjName = "LtvOtherAdj";
+		$result = $this->db->exec("
+				    SELECT $this->purchaseType as result
+				      FROM adj_ltv_super_confirming
+				     WHERE purchaser_id = $purchaserID
+				       AND ltv_value < $this->LTV * 100
+				  ORDER BY ltv_value desc
+				     LIMIT 1
+				");
+		var_dump($result);
+		$returnVal = 0.00 ;
+		if ($result === null) { // find null value
+			die ("SuperConfirming LTV greater than max limit");
+		}
+		
+		if ( count($result) == 0 )  { //not find any value
+			$returnVal = 0.00;
+		}
+		
+		$returnVal = floatVal($result[0]['result']);
+		
+		$this->adjusts[$adjName] = $returnVal;
+		echo "$returnVal <br>";
+		return $returnVal;
+	}
+	
 	
 	function getStateFullListSRP($purchaserId) {
 		$state = $this->getState();
@@ -427,7 +465,8 @@ class  PropertyController extends BaseController {
 		//right now supprot wells fargo - purchaser_id = 3
 		// state = MA NH CT only
 		
-		$loanTypeId = $this->getLoanTypeId();
+		$loanTypeId = $this->getSRPLoanTypeId(); //getLoanTypeId();
+		echo "loan type id is : $loanTypeId <br>"; 
 		
 		if ( ! $this->isConfirming ) { //non confirming case
 			$query = "SELECT $state  as result
@@ -438,7 +477,7 @@ class  PropertyController extends BaseController {
 			";
 		}
 		
-		if ($this->isSupperConfirming) {// supper confirming
+		if ($this->isConfirming == 2 ) {// supper confirming
 			$query = "SELECT $state  as result
 			            FROM  state_srp_full_list
 			           WHERE  end_amount ='confirming'
@@ -447,7 +486,7 @@ class  PropertyController extends BaseController {
 			";
 		}
 		
-		if ($this->isConfirming) {
+		if ( $this->isConfirming == 1 ) {
 			$query = "SELECT $state as result
 			            FROM  state_srp_full_list
 			           WHERE  $this->loanAmount > convert(start_amount, UNSIGNED)
@@ -471,7 +510,7 @@ class  PropertyController extends BaseController {
         $SRP = $this->{$this->getSRP($purchaserId)}($purchaserId);
         $fees = Util::getSumValue($this->fees);
         $margin = $this->margin;
-        $loanTypeId = 1 ;//only have 30fix data now
+        $loanTypeId = $this->getLoanTypeId() ;
 //        echo $fees . "<br>";
 //        echo $adjust . "<br>";
 //        echo $SRP . "<br>";
@@ -502,7 +541,7 @@ class  PropertyController extends BaseController {
         Util::dump("LTV", $this->getLTV());
         Util::dump("Confirming loan limit", $this->getLoanLimitByZipCode());
         Util::dump("set confirming ", $this->setIsConfirming());
-        echo " -- is SupperConfirming : {$this->isSupperConfirming} <br>";
+//        echo " -- is SupperConfirming : {$this->isSupperConfirming} <br>";
         Util::dump("find loan type Id",$this->getLoanTypeId());
         Util::dump("Appraisal fee",$this->getAppraisalFee());
         Util::dump("Lender Insurance fee",$this->getLenderInsuranceFee());
@@ -520,6 +559,9 @@ class  PropertyController extends BaseController {
         	echo "<hr>";
             echo "Purchaser number $purchaserId";
         	echo "<hr>";
+        	if ($this->isConfirming == 2 ) {
+        	    $this->getSupperConfirmingAdj($purchaserId);
+        	}
         	if (! $this->loanLimitCheck()) { //if failed loanamount check , skip
         		continue;
         	}
