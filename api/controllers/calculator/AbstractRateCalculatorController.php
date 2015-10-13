@@ -84,7 +84,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 	private function getLtvOtherAdj(){
 		$adjName = "LtvOtherAdj";
 		$returnVal = 0;
-		
+		$LTV = $this->property->LTV ;
 		$result = $this->runQuery(
 				"select adjust_condo,
 		        		adjust_invest,
@@ -94,24 +94,27 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		        		adjust_highBalanceArm
 				   from adj_ltv_others
 				  where purchaser_id = $this->purchaserId
+				    AND ltv_value <= ( $LTV * 100 + 1 )
+			   ORDER BY ltv_value desc
+				  LIMIT 1
 				");
 		
-		if ($this->type == "condo") {
+		if ($this->property->type == LoanerConst::CONDO) {
 				$returnVal += $result[0]["adjust_condo"];
 		}
-		if ($this->occType == "investment") {
+		if ($this->property->occType == LoanerConst::INVESTMENT) {
 		    $returnVal += $result[0]["adjust_invest"];
 		}
-		if ($this->numberUnit == "two_unit") {
+		if ($this->property->numberUnit == LoanerConst::TWO_UNIT) {
 					$returnVal += $result[0]["adjust_2Units"];
 		}
-		if ($this->numberUnit == "three_unit" ||
-			    $this->numberUnit == "four_unit" ) {
+		if ($this->property->numberUnit == LoanerConst::THREE_UNIT || 
+			    $this->proprty->numberUnit == LoanerConst::FOUR_UNIT ) {
 			$returnVal += $result[0]["adjust_34Units"];
 		}
-		if (strpos($this->loanName, 'arm') !== FALSE) {
+		if (strpos($this->proprty->loanName, 'arm') !== FALSE) {
 			$return_adj += $result[0]["adjust_arm"];
-			if ($this->LTV > 0.9) {
+			if ($this->proprty->LTV > 0.9) {
 					$returnVal += $result[0]["adjust_highBalanceArm"];
 			}
 		}
@@ -138,18 +141,18 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		//        echo $this->loanAmount . "<br>";
 	
 		$query ="
-				select rate , ((purchase_price + $adjust - $margin + $SRP - 100)/100 * $loanAmount -  $fees) credit
+				select rate , ((purchase_price + $adjust - $margin + $SRP - 100)/100 * $loanAmount -  $fees) credit, lock_days_id lockdays
 				from purchase
 				where purchaser_id = $this->purchaserId
-				and lock_days_id = $lockDays
+				and lock_days_id >= $lockDays
 				and loan_type_id = $loanTypeId
 				and ((purchase_price + $adjust - $margin + $SRP - 100)/100 * $loanAmount -  $fees) > 0
 				order by rate asc
 				limit 1
 				";
-		//echo $query . "<br>";
+		echo $query . "<br>";
 		$result = $this->runQuery($query);
-		echo "Rate = " .$result[0]['rate'] ."  Credit = " .$result[0]['credit'] ."<br>";
+		echo "Rate = " .$result[0]['rate'] ."  Credit = " .$result[0]['credit'] . " LockDays = " .$result[0]['lockdays']  ."<br>";
 		//var_dump($result);
 	}	
 
@@ -159,11 +162,23 @@ abstract class AbstractRateCalculatorController extends BaseController {
 	
 		//set reference base
 		if (strpos($this->property->loanName, 'fix') !== FALSE) {
-			$baseRef = 1 ; //30dixed bases
+			$baseRefName = "fix" ; //dixed bases
 		} else {
-			$baseRef = 8; //51 arm based
+			$baseRefName = "arm"; //arm based
 		}
-	
+		//look up reference loan_type_id
+		
+		$query = "SELECT t1.loan_type_id as baseRef 
+				    FROM loaner.purchaser_srp_loan_type_ref t1 
+				    JOIN loan_type t2 
+				      ON (t1.loan_type_id = t2.loan_type_id ) 
+				   WHERE purchaser_id = $this->purchaserId 
+				     AND hasdata = 1 
+				     AND t2.type_variable_name like '%$baseRefName%';" ;
+				
+		$result = $this->runQuery($query);
+		$baseRef = $result[0]['baseRef'];
+	    echo "baseRef is : " .$baseRef . "<br>" ;
 		//echo "$this->zip" . "," . $this->loanAmount .",". $loanTypeId. ",".$purchaserId ."<br>";
 	
 		//find base SRP

@@ -26,8 +26,8 @@ class Util extends BaseController {
     }
     
     static function dump($message, $toDump) {
- //       echo $message . " : " ;
- //       var_dump($toDump);
+        echo $message . " : " ;
+        var_dump($toDump);
     }
 
     public static function getPurchaserIdByName($purchaserName) {

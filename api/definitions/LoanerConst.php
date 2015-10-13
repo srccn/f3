@@ -49,9 +49,9 @@ interface LoanerConst {
 	const ARM101 = 'arm101';
 	
 	//loan purpose 
-	const PURCHASE =  'purchase';
-	const REFINANCE = 'rtrefinance';
-	const COREFINANCE = 'corefinance' ; //cash out refinance
+	const PURCHASE    = 'purchase';
+	const REFINANCE   = 'rtrefinance';
+	const COREFINANCE = 'corefinance'; //cash out refinance
 	
 	//property units
 	const ONE_UNIT   = 'one_unit';
@@ -66,7 +66,7 @@ interface LoanerConst {
 	//Property occupation
 	const PRIMARY_HOME = 'primaryHome';
 	const SECONDARY_HOME = 'secondaryHome';
-	const INVESTMENT = 'investmentHouse';
+	const INVESTMENT = 'investment';
 }
 
 ?>
