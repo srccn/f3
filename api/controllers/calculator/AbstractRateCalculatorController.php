@@ -147,7 +147,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 				order by rate asc
 				limit 1
 				";
-		echo $query . "<br>";
+		//echo $query . "<br>";
 		$result = $this->runQuery($query);
 		echo "Rate = " .$result[0]['rate'] ."  Credit = " .$result[0]['credit'] ."<br>";
 		//var_dump($result);
@@ -161,7 +161,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		if (strpos($this->property->loanName, 'fix') !== FALSE) {
 			$baseRef = 1 ; //30dixed bases
 		} else {
-			$baseRef = 9; //71 arm based
+			$baseRef = 8; //51 arm based
 		}
 	
 		//echo "$this->zip" . "," . $this->loanAmount .",". $loanTypeId. ",".$purchaserId ."<br>";
@@ -192,7 +192,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 					and ref_loan_type_id = $baseRef
 					and hasdata = 0
 					");
-					if ( ! $deduction ) die("Failed to find SRP deduction : " . "$this->property->zip  $this->property->loanAmount $this->property->loanTypeId ");
+			if ( ! $deduction ) die("Failed to find SRP deduction : " . $this->property->zip. ",".  $this->property->loanAmount.",". $this->property->loanTypeId );
 		}
 	
 		return floatval(Util::resultString($result)) - floatval(Util::resultString($deduction));

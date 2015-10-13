@@ -17,7 +17,7 @@ class CustomerController extends BaseController {
 	
 	function getCustomerInfoByEmail($email) {
 	    $results = $this->db-exec("select name, email, phone, credit_score from customer where email='$email'");
-		var_dump ( $results[0] ) ;
+		//var_dump ( $results ) ;
 		if ( ! $results ) {
 		    die ("not found customer with email " . $email);
 		} else {
