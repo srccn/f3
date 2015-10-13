@@ -595,7 +595,7 @@ CREATE TABLE `purchaser_srp_loan_type_ref` (
   `ref_loan_type_id` int(2) DEFAULT NULL,
   `deduction` decimal(4,3) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -604,7 +604,7 @@ CREATE TABLE `purchaser_srp_loan_type_ref` (
 
 LOCK TABLES `purchaser_srp_loan_type_ref` WRITE;
 /*!40000 ALTER TABLE `purchaser_srp_loan_type_ref` DISABLE KEYS */;
-INSERT INTO `purchaser_srp_loan_type_ref` VALUES (1,1,1,1,1,0.000),(2,1,2,0,1,0.150),(3,1,3,0,1,0.300),(4,1,4,0,1,0.400),(5,1,5,0,1,0.000),(6,2,1,1,1,0.000),(7,2,2,0,1,0.150),(8,2,3,0,1,0.300),(9,2,4,0,1,0.350),(10,2,5,0,1,0.000),(11,1,13,0,1,0.350),(12,1,14,0,1,0.350),(13,1,15,0,1,0.450),(14,1,16,0,1,0.450),(15,2,13,0,1,0.350),(16,2,14,0,1,0.350),(17,2,15,0,1,0.450),(18,2,16,0,1,0.450),(19,1,6,0,8,0.100),(20,1,7,0,8,0.050),(21,1,8,1,8,0.000),(22,1,9,0,8,-0.100),(23,1,10,0,8,-0.100);
+INSERT INTO `purchaser_srp_loan_type_ref` VALUES (1,1,1,1,1,0.000),(2,1,2,0,1,0.150),(3,1,3,0,1,0.300),(4,1,4,0,1,0.400),(5,1,5,0,1,0.000),(6,2,1,1,1,0.000),(7,2,2,0,1,0.150),(8,2,3,0,1,0.300),(9,2,4,0,1,0.350),(10,2,5,0,1,0.000),(11,1,13,0,1,0.350),(12,1,14,0,1,0.350),(13,1,15,0,1,0.450),(14,1,16,0,1,0.450),(15,2,13,0,1,0.350),(16,2,14,0,1,0.350),(17,2,15,0,1,0.450),(18,2,16,0,1,0.450),(19,1,6,0,8,0.100),(20,1,7,0,8,0.050),(21,1,8,1,8,0.000),(22,1,9,0,8,-0.100),(23,1,10,0,8,-0.100),(24,2,7,0,9,0.050),(25,2,8,0,9,0.100),(26,2,9,1,9,0.000),(27,2,10,0,9,0.000);
 /*!40000 ALTER TABLE `purchaser_srp_loan_type_ref` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -672,7 +672,7 @@ DROP TABLE IF EXISTS `stategroupsrp`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `stategroupsrp` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `AnountRange_id` int(2) DEFAULT NULL,
+  `AmountRange_id` int(2) DEFAULT NULL,
   `GroupId` int(2) DEFAULT NULL,
   `srp` decimal(4,3) DEFAULT NULL,
   `PurchaserId` int(2) DEFAULT NULL,
@@ -834,8 +834,9 @@ BEGIN
    select s.srp into srp 
    FROM stategroupsrp s 
    where s.GroupId = srp_group_wk 
-     AND s.AnountRange_id = srp_amount_range 
-     AND s.PurchaserId=PurchaserID ;
+     AND s.AmountRange_id = srp_amount_range 
+     AND s.PurchaserId=PurchaserID 
+     AND s.base_loan_id = LoanTypeId ;
 
    RETURN srp;
 END ;;
@@ -929,4 +930,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-12 22:48:48
+-- Dump completed on 2015-10-12 23:08:34
