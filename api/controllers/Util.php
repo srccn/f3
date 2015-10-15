@@ -29,21 +29,6 @@ class Util extends BaseController {
         echo $message . " : " ;
         var_dump($toDump);
     }
-
-    public static function getPurchaserIdByName($purchaserName) {
-    	$name = $purchaserName ;//$this->f3->get('PARAMS.BankName');
-    	$result = $this->db->exec("select purchaser_id as result from purchaser where purchaser_name='$name'");
-    	//var_dump( $result );
-    	return intval ( Util::resultString($result) );
-    }
-    
-    public static function getAllPurchaserNames(){
-    	$result = $this->db->exec("select purchaser_name as result from purchaser");
-    	//var_dump($result);
-    	return Util::resultString($result);
-    }    
-    
-    
     
 }
 

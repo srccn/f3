@@ -14,7 +14,8 @@ class LoanProperty extends BaseController {
 	public $lockDays;
 	public $creditScroe;
 	public $loanName; //fixed30, fixed15, arm51, arm71
-	public $margin;
+	public $confirmingmargin;
+	public $jumbogmargin;
 	
 	//calculated value
 	public $state; //optional
@@ -23,6 +24,8 @@ class LoanProperty extends BaseController {
 	public $isConfirming;
 	public $loanTypeId;
 	public $loanLimitCheck;
+	public $margin;
+	public $loanAmountOptions = [];
 	//	protected $isSupperConfirming;
 	
 	//variables hold calculation
@@ -41,29 +44,34 @@ class LoanProperty extends BaseController {
 		$this->type=$inputs["type"];
 		$this->occType=$inputs["occType"];
 		$this->purchaseType=$inputs["purchaseType"];
-		$this->loanAmount=$inputs["loanAmount"];
+		$this->loanAmount=intVal ($inputs["loanAmount"]);
 		$this->zip=$inputs["zip"];
-		$this->marketPrice=$inputs["marketPrice"];
-		$this->creditScore=$inputs["creditScore"];
+		$this->marketPrice=intVal ($inputs["marketPrice"]);
+		$this->creditScore=intVal ($inputs["creditScore"]);
 		$this->loanName=$inputs["loanName"];
 		$this->lockDays=$inputs["lockDays"];
-		$this->margin=$inputs["margin"];
-	    
+		$this->confirmingmargin=$inputs["confirmingmargin"];
+		$this->jumbomargin=$inputs["jumbomargin"];
+		
+		$this->calculateDerives();
+		
 		//calculate derived value base on inputs.
-		$this->setLTV();
-		$this->setState();
-		$this->setLoanLimitByZipCode();
-		$this->setIsConfirming();
-		$this->setLoanTypeId();
-		$this->loanLimitCheck = $this->loanLimitCheck();
+// 		$this->setLTV();
+// 		$this->setState();
+// 		$this->setLoanLimitByZipCode();
+// 		$this->setIsConfirming();
+// 		$this->setLoanTypeId();
+// 		$this->setMargin();
+// 		$this->loanLimitCheck = $this->loanLimitCheck();
+// 		$this->loanAmountOptions = $this->calculateLoanOptions();
 	}	
 	
-	function setLTV(){
+	private function setLTV(){
 		$this->LTV = round($this->loanAmount/$this->marketPrice, 2) ;
 		return  $this->LTV ;
 	}
 	
-	function setState() {
+	private function setState() {
 		$state = $this->runQuery("select t1.state as result from county_loan_limit t1, zip_county t2 where t1.countycode = t2.countycode and t2.zipcode='$this->zip';");
 		$this->state = Util::resultString($state);
 	}
@@ -72,14 +80,14 @@ class LoanProperty extends BaseController {
 		return $this->state;
 	}
 
-	function setLoanLimitByZipCode(){
+	private function setLoanLimitByZipCode(){
 		$results = $this->runQuery("select GetConfirmingLoanUpperLimit('$this->zip' , '$this->numberUnit') as result ");
 		//var_dump($results[0]);
-		$this->confirmingUpperLimit = Util::resultString($results);
+		$this->confirmingUpperLimit = intVal( Util::resultString($results));
 		//return $this->confirmingUpperLimit;
 	}
 	
-	function setIsConfirming(){
+	private function setIsConfirming(){
 		$upperLimit = $this->confirmingUpperLimit;
 		if ($this->loanAmount > $upperLimit) {
 			$this->isConfirming = 0;
@@ -92,7 +100,7 @@ class LoanProperty extends BaseController {
 		return $this->isConfirming;
 	}
 	
-	function setLoanTypeId(){
+	private function setLoanTypeId(){
 		$result = $this->runQuery("
 				select loan_type_id as result
 				from loan_type
@@ -104,6 +112,22 @@ class LoanProperty extends BaseController {
 	    $this->loanTypeId = intval (Util::resultString($result)) ;
 	    return $this->loanTypeId;
 	}	
+	
+	private function setMargin() {
+		switch ($this->isConfirming) {
+			case 0 :
+			    $this->margin = $this->jumbomargin ;
+			    break;
+			case 1 :
+			    $this->margin = $this->confirmingmargin ;
+			    break;
+			case 2 :
+			   	$this->margin = $this->confirmingmargin ;
+			   	break;
+			default : 
+				$this->margin = $this->confirmingmargin ;
+		}
+	}
 	
 	function loanLimitCheck(){
 		//Amount checks
@@ -150,7 +174,47 @@ class LoanProperty extends BaseController {
 		return true;
 	}
 	
-	function printProperty(){
+	private function calculateLoanOptions () {
+
+		$options = [];
+		
+		//by default user always have option to mortgage all loanAmount
+		$option = [ $this->isConfirming , $this->loanAmount, 0];
+		array_push($options, $option);
+		 
+		switch ( $this->isConfirming ) {
+			case 0:
+				$option = [ 1 , 416999, $this->loanAmount - 416999 ];
+				array_push($options, $option);
+				if ( $this->confirmingUpperLimit > 417000 ) {
+					$option = [ 2, $this->confirmingUpperLimit -1 ,
+							$this->loanAmount - $this->confirmingUpperLimit + 1  ];
+					array_push($options, $option);
+				}
+				break;
+			case 2 :
+				$option = [ 1, 417000, $this->loanAmount - 417000 ];
+				array_push($options, $option);
+				break;
+			default :
+				// do nothing keep 	$this->loanAmountOptions empty
+		}
+		//$this->loanAmountOptions = options;
+		return $options;
+	}
+	
+	function calculateDerives() {
+		$this->setLTV();
+		$this->setState();
+		$this->setLoanLimitByZipCode();
+		$this->setIsConfirming();
+		$this->setLoanTypeId();
+		$this->setMargin();
+		$this->loanLimitCheck = $this->loanLimitCheck();
+		$this->loanAmountOptions = $this->calculateLoanOptions();		
+	}
+	
+	public function printProperty(){
 		echo "<hr>";
 		print "number of Unit is : $this->numberUnit<br>";
 		echo "property type is : $this->type<br>";
@@ -162,13 +226,16 @@ class LoanProperty extends BaseController {
 		echo "Credit Score is : $this->creditScore<br>";
 		echo "loanName : $this->loanName<br>";
 		echo "lockDays : $this->lockDays<br>";
-		echo "Margin : $this->margin<br>";
-        echo "------ derived values ------ <br>";
+		echo "confirming Margin : $this->confirmingmargin<br>";
+		echo "Jumbo Margin : $this->jumbomargin <br>";
+		echo "------ derived values ------ <br>";
 		echo "State is : $this->state<br>";
 		echo "LTV is : $this->LTV<br>";
 		echo "Confirming Upper limit : $this->confirmingUpperLimit<br>";
 		echo "is Confirming : $this->isConfirming<br>";
 		echo "Loan limit check passed : $this->loanLimitCheck <br>";
+		echo "Margin for calculation : $this->margin <br>";
+		print_r ($this->loanAmountOptions);
 		echo "<hr>";
 	
 	}	

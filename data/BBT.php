@@ -160,10 +160,6 @@ class BBT extends BasePurchaser {
     	}
     }
     
-    public function adjustSupperConfirmtingPrice() {
-    	
-    }
-    
     public function getMap() {
 	    return array(
             "fixed30" => $this->fixed30, 

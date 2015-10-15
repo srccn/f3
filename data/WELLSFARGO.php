@@ -173,5 +173,47 @@ class WELLSFARGO extends BasePurchaser {
 				"adj_ltv_cc" => $this->adj_ltv_cc
 		);
 	}
+	
+	public function getStateListSRPMap () {
+		$selectedStates=["MA", "NH", "RI", "CT", "VT", "NY"];
+		$amountRange =[["minimum","99999"],["100000","139999"],["140000","179999"],
+				       ["180000","239999"],["240000","299999"],["300000","confirming"], ["confirming","maximum"]];
+		$amountAdj = "";
+		$bestEffortsCol = "B:H";
+		$mandatoryCol   = "K:Q";
+
+		$srpFixed30 = array ( 
+				"sheetName" => "Conv Full Grid" ,
+		        "stateCol" =>"A",
+				"range" => "B7:Q57" 
+		);
+		$srpFixed15 = array  ( 
+				"sheetName" => "Conv Full Grid" ,
+		        "stateCol" =>"A",
+				"range" => "B135:Q186"
+		);
+		$srpArm51   = array ( 
+				"sheetName" => "Conv Full Grid" ,
+		        "stateCol" =>"A",
+				"range" =>"B263:Q314" 
+		);
+		$srpArm71   = array ( 
+			    "sheetName" => "Conv Full Grid" ,
+				"stateCol" =>"A",
+				"range"=>"B327:Q378"
+		);
+
+		return array (
+		    "selectedStates" => $selectedStates,
+			"amountRange" => $amountRange,		
+			"amountAdj"  => $amountAdj,
+			"products" => array ( 
+					 "srpFixed30" => $srpFixed30,
+			         "srpFixed15" => $srpFixed15,
+			         "srpArm51"   => $srpArm51,
+			         "srpArm71"   => $srpArm71
+			)
+		);
+	}
 }
 ?>

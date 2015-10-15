@@ -326,7 +326,10 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		$this->getPurchaseRate();
 	}
 	
-	
+	public function calculteSecondaryRate($secondaryAmount) {
+		
+		echo "Secondary loan $secondaryAmount at hard coded Rate 5.5 % <br>";
+	}
 }
 
 ?>
