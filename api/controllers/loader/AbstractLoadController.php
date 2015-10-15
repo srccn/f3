@@ -36,16 +36,20 @@ abstract class AbstractLoadController extends BaseController {
 		echo "Excel file to load is $this->excelFile <br>";
 		
 		//build excel object for accessing spreadsheet
-        require_once 'lib/Classes/PHPExcel/IOFactory.php';
-		try {
-		    $inputFileType = PHPExcel_IOFactory::identify($this->excelFile);
-		    $objReader = PHPExcel_IOFactory::createReader($inputFileType);
-		    $objReader->setReadDataOnly(true);
-		    $this->objPHPExcel = $objReader->load($this->excelFile);
-		} catch(PHPExcel_Reader_Exception $e) {
-            die('Error loading file: '.$e->getMessage());
-        }
+		$this->defineObjPHPExcel($this->excelFile);
 
+	}
+	
+	public function defineObjPHPExcel ($excelFileName) { //example "data/wells.xls"
+		require_once 'lib/Classes/PHPExcel/IOFactory.php';
+		try {
+			$inputFileType = PHPExcel_IOFactory::identify($excelFileName);
+			$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+			$objReader->setReadDataOnly(true);
+			$this->objPHPExcel = $objReader->load($excelFileName);
+		} catch(PHPExcel_Reader_Exception $e) {
+			die('Error loading file: '.$e->getMessage());
+		}		
 	}
 	
 	abstract public function pushDataToDB() ;
