@@ -4,11 +4,7 @@ class QueryDB extends BaseController {
 
     private $result;
     
-    function runQuery ($q) {
-        //$query = 'select GetConfirmingLoanUpperLimit("02163", "two_unit") ';
-        $this->result = $this->db->exec($q);
-    }
-    
+   
     function getConfirming($zip, $propertyType, $loanAmount) {
     	$query= 'select GetConfirmingLoanUpperLimit("' . $zip. '", "' . $propertyType. '")';
     	$this->runQuery($query);
@@ -80,8 +76,6 @@ class QueryDB extends BaseController {
     	}
         echo "<br>";
     }
-    
-    
     
 }
 

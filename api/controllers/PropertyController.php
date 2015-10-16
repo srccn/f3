@@ -22,6 +22,7 @@ class  PropertyController extends BaseController {
      	//echo "fees : " . $totalFee;
     	
      	$purchasers=["BBT", "BOKF", "WELLSFARGO"];
+     	//$purchasers=["BOKF"];
      	foreach ($purchasers as $purchaser) {
 
      		foreach ($myoptions as $opt) {

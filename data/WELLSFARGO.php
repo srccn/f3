@@ -185,22 +185,22 @@ class WELLSFARGO extends BasePurchaser {
 		$srpFixed30 = array ( 
 				"sheetName" => "Conv Full Grid" ,
 		        "stateCol" =>"A",
-				"range" => "B7:Q57" 
+				"range" => "K7:Q57" 
 		);
 		$srpFixed15 = array  ( 
 				"sheetName" => "Conv Full Grid" ,
 		        "stateCol" =>"A",
-				"range" => "B135:Q186"
+				"range" => "K135:Q186"
 		);
 		$srpArm51   = array ( 
 				"sheetName" => "Conv Full Grid" ,
 		        "stateCol" =>"A",
-				"range" =>"B263:Q314" 
+				"range" =>"K263:Q314" 
 		);
 		$srpArm71   = array ( 
 			    "sheetName" => "Conv Full Grid" ,
 				"stateCol" =>"A",
-				"range"=>"B327:Q378"
+				"range"=>"K327:Q378"
 		);
 
 		return array (

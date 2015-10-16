@@ -10,7 +10,7 @@ class LoadAdj_ltv_ccController extends AbstractLoadController {
 		$query = "INSERT INTO $this->DBTableName (purchaser_id, ltv_value, cc_value, adjust) VALUES "
 				   .implode(",",$this->insert_data) ;
 		
-		$result = $this->db->exec($query);
+		$result = $this->runQuery($query);
 		if( $result ){	echo 'PushData executed successfully.', EOL ; return true;}
 		else { 	echo 'PushData execution failed.', EOL; return false;}
 	}
@@ -23,7 +23,7 @@ class LoadAdj_ltv_ccController extends AbstractLoadController {
 		
 		$query = "delete FROM $this->DBTableName where purchaser_id=".$purchaserID ;
 		
-		$result = $this->db->exec($query);
+		$result = $this->runQuery($query);
 		if( $result ){	echo 'remove successfully.', EOL; return true;}
 		else { 	echo 'data removing failed.', EOL; return false;}
 		

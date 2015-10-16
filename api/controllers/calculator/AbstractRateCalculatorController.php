@@ -133,7 +133,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		$fees = $this->fees;
 		$margin = $this->property->margin;
 		$lockDays = $this->property->lockDays;
-		$loanTypeId = $this->getSRPLoanTypeId(); //$this->property->loanTypeId ;
+		$loanTypeId = $this->property->loanTypeId ; // $this->getSRPLoanTypeId(); //$this->property->loanTypeId ;
 		$loanAmount = $this->property->loanAmount ;
 		//        echo $fees . "<br>";
 		//        echo $adjust . "<br>";
@@ -237,13 +237,17 @@ abstract class AbstractRateCalculatorController extends BaseController {
 			$this->adjusts[$adjName] = 0;
 			return;
 		}
+		
+		// incase this function is called, we will need to change property->loan_type_id to correspoding confirming one, that is calculation base
+		$this->property->loanTypeId = $this->getSRPLoanTypeId();
+		
 		$LTV = $this->property->LTV ;
 		$purchaseType = $this->property->purchaseType ; 
 		$result = $this->runQuery("
 				SELECT $purchaseType as result
 				FROM adj_ltv_super_confirming
-				WHERE purchaser_id = $this->purchaserId
-				AND ltv_value < $LTV * 100
+			   WHERE purchaser_id = $this->purchaserId
+				 AND ltv_value < $LTV * 100				
 				ORDER BY ltv_value desc
 				LIMIT 1
 				");
@@ -311,7 +315,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 
 	public function getPurchaserIdByName() {
 		$name = $purchaserName ;//$this->f3->get('PARAMS.BankName');
-		$result = $this->db->exec("select purchaser_id as result from purchaser where purchaser_name='$this->purchaserName'");
+		$result = $this->runQuery("select purchaser_id as result from purchaser where purchaser_name='$this->purchaserName'");
 		//var_dump( $result );
 		return intval ( Util::resultString($result) );
 	}	

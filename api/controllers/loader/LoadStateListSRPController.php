@@ -32,7 +32,7 @@ class LoadStateSRPListController extends AbstractLoadController{
       
 	  //populate data into $insert_data arrya
 	  for ($i=0; $i < $products_count; $i++ ){
-	      $loan_type =  $mydatamap[$products[$i]]["loan_type"];
+	      $stateCol =  $mydatamap[$products[$i]]["stateCol"];
 	      $worksheet = $mydatamap[$products[$i]]['sheetName'];
 	      $range= $mydatamap[$products[$i]]['range'];
 	      $this->objPHPExcel->setActiveSheetIndexByName($worksheet);
@@ -41,8 +41,8 @@ class LoadStateSRPListController extends AbstractLoadController{
 	      for ($j=0; $j< $result_count; $j++) { //each rate row
 		      //echo implode(",", $result[$j]) , EOL;
 		      $lock_days = $mydatamap[$products[$i]]['lock_days'];
-		      $lock_days_count = count($lock_days);
-		      for ( $k=0; $k < $lock_days_count; $k++ ) { //each lock days column
+		      $amountRange_count = count($amountRange);
+		      for ( $k=0; $k < $amountRange_count; $k++ ) { //each lock days column
 		          $insert_row = [ $purchaser_id, $loan_type, $result[$j][0], $lock_days[$k], round($result[$j][$k+1] , 3) ] ;
 		          $insert_row_string = "(" . implode(",", $insert_row) . ")" ;
 		          array_push($this->insert_data, $insert_row_string);

@@ -10,7 +10,7 @@ class LoadPurchaseController extends AbstractLoadController {
 		$query = "INSERT INTO $this->DBTableName ( purchaser_id, loan_type_id, rate, lock_days_id, purchase_price) VALUES "
 				   .implode(",",$this->insert_data) ;
 		
-		$result = $this->db->exec($query);
+		$result = $this->runQuery($query);
 		if( $result ){	echo 'Push price Data executed successfully.', EOL ; return true;}
 		else { 	echo 'Push price Data execution failed.', EOL; return false;}
 	}
@@ -18,7 +18,7 @@ class LoadPurchaseController extends AbstractLoadController {
 	public function removeDataInDB() {
 		$query = "delete FROM $this->DBTableName where purchaser_id=".$this->purchaserID ;
 		
-		$result = $this->db->exec($query);
+		$result = $this->runQuery($query);
 		if( $result ){	echo 'purchase data remove successfully.', EOL; return true;}
 		else { 	echo 'Purchase data removing failed.', EOL; return false;}
 	}
@@ -27,7 +27,7 @@ class LoadPurchaseController extends AbstractLoadController {
 		$query = "INSERT INTO $this->AdjDBTableName ( purchaser_id, loan_type_id, adjust ) VALUES "
 		.implode(",",$this->insert_data) ;
 	
-		$result = $this->db->exec($query);
+		$result = $this->runQuery($query);
 		if( $result ){	echo 'Push adj Data executed successfully.', EOL ; return true;}
 		else { 	echo 'PushData execution failed.', EOL; return false;}
 	}
@@ -35,7 +35,7 @@ class LoadPurchaseController extends AbstractLoadController {
 	public function removeAdjDataInDB() {
 		$query = "delete FROM $this->AdjDBTableName where purchaser_id=".$this->purchaserID ;
 		
-		$result = $this->db->exec($query);
+		$result = $this->runQuery($query);
 		if( $result ){	echo 'Adj data remove successfully.', EOL; return true;}
 		else { 	echo 'Adj data removing failed.', EOL; return false;}
 	}
@@ -84,10 +84,10 @@ class LoadPurchaseController extends AbstractLoadController {
 		$query = "SELECT purchaser_id, loan_type_id, adjust 
 				  FROM loaner.purchase_lockdays_adj
 				  WHERE purchaser_id = $this->purchaserID ";
-		$result = $this->db->exec($query);
+		$result = $this->runQuery($query);
 		foreach ($result as $row) {
 			$updateQuery = $this->mapData->purchaseLockDayAdj45($row['loan_type_id'],$row['adjust']);
-			$this->db->exec($updateQuery);	
+			$this->runQuery($updateQuery);	
 		}
 	
 	}
