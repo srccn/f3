@@ -3,9 +3,9 @@ class myClass extends BaseController {
     
     function test(){
         // echo "in test function";
-        $this->f3->set('page_head','My class -> Test');
+        $this->f3->set('page_head','Green Bird - Customers');
         echo Template::instance()->render('layout.htm');
-		(new PropertyController)->getLoanLimitByZipCode("02460", 'two_unit');
+		//(new PropertyController)->getLoanLimitByZipCode("02460", 'two_unit');
     }
     
     function home() {

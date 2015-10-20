@@ -27,6 +27,16 @@ class CustomerController extends BaseController {
 			$this->customerCreditScore = $results[0]['credit_score'];
 		}
 	}
+	
+	public function index()
+	{
+		$user = new Customer($this->db);
+		$this->f3->set('users',$user->all());
+		$this->f3->set('page_head','User List');
+		$this->f3->set('view','customer/list.htm');
+		echo Template::instance()->render('layout.htm');
+	}
+	
 }
 
 ?>
