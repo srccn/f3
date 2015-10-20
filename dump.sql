@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.14, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.44, for debian-linux-gnu (x86_64)
 --
 -- Host: 127.0.0.1    Database: loaner
 -- ------------------------------------------------------
--- Server version	5.6.17
+-- Server version	5.6.19-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -197,7 +197,7 @@ CREATE TABLE `customer` (
   `phone` varchar(45) DEFAULT NULL,
   `credit_score` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -206,6 +206,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
+INSERT INTO `customer` VALUES (1,'John Doe','jdoe@notexist.com','617-234-5678',740),(2,'Steve King','sking@gmail.com','617-123-4567',720);
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -930,4 +931,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-15 17:03:46
+-- Dump completed on 2015-10-19 23:00:16
