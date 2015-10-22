@@ -30,11 +30,61 @@ class CustomerController extends BaseController {
 	
 	public function index()
 	{
+		if (! $this->authenticationCheck() ) {
+			die ("Please provide user name and password to enter.");
+		}
 		$user = new Customer($this->db);
 		$this->f3->set('users',$user->all());
-		$this->f3->set('page_head','User List');
+		$this->f3->set('page_head','Cusotmer List');
 		$this->f3->set('view','customer/list.htm');
 		echo Template::instance()->render('layout.htm');
+	}
+	
+	public function create()
+	{
+		if($this->f3->exists('POST.create'))
+		{
+			$user = new Customer($this->db);
+			$user->add();
+	
+			$this->f3->reroute('/customer');
+	
+		} else
+		{
+			$this->f3->set('page_head','Create Customer');
+			$this->f3->set('view','customer/create.htm');
+		}
+		echo Template::instance()->render('layout.htm');
+	}
+	
+	public function update()
+	{
+		$user = new Customer($this->db);
+	
+		if($this->f3->exists('POST.update'))
+		{
+			$user->edit($this->f3->get('POST.id'));
+			$this->f3->reroute('/customer');
+	
+		} else
+		{
+			$user->getById($this->f3->get('PARAMS.id'));
+			$this->f3->set('user',$user);
+			$this->f3->set('page_head','Update Customer');
+			$this->f3->set('view','customer/update.htm');
+		}
+		echo Template::instance()->render('layout.htm');
+	}
+	
+	public function delete()
+	{
+		if($this->f3->exists('PARAMS.id'))
+		{
+			$user = new Customer($this->db);
+			$user->delete($this->f3->get('PARAMS.id'));
+		}
+	
+		$this->f3->reroute('/customer');
 	}
 	
 }

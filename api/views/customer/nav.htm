@@ -2,8 +2,8 @@
     <div class="navbar-inner">
         <ul class="nav">
  
-            <li <check if="{{ @page_head == 'Customer List' }}">class="active"</check>><a href="{{ @BASE.'/' }}"><i class="icon-th icon-black"></i> Read</a></li>
-            <li <check if="{{ @page_head == 'Create User' }}">class="active"</check>><a href="{{ @BASE.'/customer/create' }}"><i class="icon-plus-sign icon-black"></i> Create</a></li>
+            <li <check if="{{ @page_head == 'Customer List' }}">class="active"</check>><a href="{{ @BASE.'/customer' }}"><i class="icon-th icon-black"></i> Read</a></li>
+            <li <check if="{{ @page_head == 'Create Customer' }}">class="active"</check>><a href="{{ @BASE.'/customer/create' }}"><i class="icon-plus-sign icon-black"></i> Create</a></li>
  
             <check if="{{ @page_head == 'Update Customer' }}">
             <li class="active"><a href="javascript:void(0);"><i class="icon-plus-sign icon-black"></i> Update</a></li>
