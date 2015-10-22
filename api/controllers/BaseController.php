@@ -33,6 +33,24 @@ class BaseController {
 		}
 		return $result;
 	}
+	
+	function beforeRoute() {
+		if (! $this->authenticationCheck() ) {
+			die ("Please provide user name and password to enter.");
+		}
+	}
+	
+	function afterRoute() {
+		;
+	}
+	
+	
+	function authenticationCheck() {
+		$user = new \DB\SQL\Mapper($this->db, 'user');
+		$auth = new \Auth($user, array('id'=>'name', 'pw'=>'password'));
+		$loginResult = $auth->basic();
+		return $loginResult;
+	}
 
 }
 
