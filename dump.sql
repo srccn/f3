@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.44, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.14, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: loaner
 -- ------------------------------------------------------
--- Server version	5.6.19-0ubuntu0.14.04.1
+-- Server version	5.6.17
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -197,7 +197,7 @@ CREATE TABLE `customer` (
   `phone` varchar(45) DEFAULT NULL,
   `credit_score` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -206,7 +206,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (1,'John Doe','jdoe@notexist.com','617-234-5678',740),(2,'Steve King','sking@gmail.com','617-123-4567',720);
+INSERT INTO `customer` VALUES (1,'John Doe','jdoe@notexist.com','617-234-5678',740),(2,'Steve King','sking@gmail.com','617-123-4567',720),(3,'aa123','fkeemail@nonexist.com','123-456-7890',780);
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -693,6 +693,32 @@ INSERT INTO `stategroupsrp` VALUES (1,1,1,0.950,1,'1'),(2,2,1,1.500,1,'1'),(3,3,
 UNLOCK TABLES;
 
 --
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `password` varchar(256) NOT NULL,
+  `regdate` bigint(64) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'admin','admin2',1445538430),(2,'bfang','bing12',1445538430);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `zip_county`
 --
 
@@ -931,4 +957,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-19 23:00:16
+-- Dump completed on 2015-10-22 17:08:21
