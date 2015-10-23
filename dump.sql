@@ -192,12 +192,14 @@ DROP TABLE IF EXISTS `customer`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `customer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(150) DEFAULT NULL,
-  `email` varchar(150) DEFAULT NULL,
+  `name` varchar(150) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(150) NOT NULL,
   `phone` varchar(45) DEFAULT NULL,
   `credit_score` int(11) DEFAULT NULL,
+  `registed_time` bigint(32) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -206,7 +208,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (1,'John Doe','jdoe@notexist.com','617-234-5678',740),(2,'Steve King','sking@gmail.com','617-123-4567',720),(3,'aa123','fkeemail@nonexist.com','123-456-7890',780);
+INSERT INTO `customer` VALUES (1,'John Doe','','jdoe@notexist.com','617-234-5678',740,0),(2,'Steve King','','sking@gmail.com','617-123-4567',720,0),(3,'aa123dasdsdasdaa','','fkeemail@nonexist.com','123-456-7890',780,0);
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -957,4 +959,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-22 17:08:21
+-- Dump completed on 2015-10-23 17:54:11

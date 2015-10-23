@@ -30,6 +30,14 @@ class Util extends BaseController {
         var_dump($toDump);
     }
     
+    static function hashString ($plainString) {
+    	return password_hash($plainString, PASSWORD_BCRYPT, ['cost'=>10]);
+    }
+    
+    static function verifyHash($plainString, $hashedString) {
+    	return password_verify($plainString, $hashedString);
+    }
+    
 }
 
 ?>

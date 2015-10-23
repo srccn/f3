@@ -35,9 +35,7 @@ class BaseController {
 	}
 	
 	function beforeRoute() {
-		if (! $this->authenticationCheck() ) {
-			die ("Please provide user name and password to enter.");
-		}
+
 	}
 	
 	function afterRoute() {

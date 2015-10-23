@@ -1,4 +1,5 @@
 <?php
+
 $f3 = require('../fatfree-master/lib/base.php');
 $f3->config('config/config.ini');
 $f3->config('config/route.ini');
@@ -10,4 +11,9 @@ $f3->set('ONERROR',
 			echo $f3->get('ERROR.text');
 		}
 		);
+
+if ( empty($f3->SESSION) || $f3->SESSION == null ) {
+	session_start();
+}
+
 $f3->run();

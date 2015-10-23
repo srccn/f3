@@ -27,16 +27,30 @@ class CustomerController extends BaseController {
 			$this->customerCreditScore = $results[0]['credit_score'];
 		}
 	}
+
+	function beforeRoute() {
+		if ($this->f3->SESSION['user'] != 'bfang') {
+			$this->f3->reroute('/home');
+		}
+	}	
+	
 	
 	public function index()
 	{
-		if (! $this->authenticationCheck() ) {
-			die ("Please provide user name and password to enter.");
-		}
+
+// 		if ($this->f3->SESSION['user'] != 'bfang') {
+// 			$this->f3->reroute('/home');
+// 		}
+		
 		$user = new Customer($this->db);
 		$this->f3->set('users',$user->all());
 		$this->f3->set('page_head','Cusotmer List');
 		$this->f3->set('view','customer/list.htm');
+		
+		$_SESSION["id"] = "sriuthgsilgdfisgnaweoir239-57ef";
+		
+		var_dump($_SESSION);
+		
 		echo Template::instance()->render('layout.htm');
 	}
 	

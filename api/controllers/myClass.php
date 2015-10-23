@@ -9,7 +9,44 @@ class myClass extends BaseController {
     }
     
     function home() {
-        echo "Hello World";
+ 
+   		if ($this->f3->POST['username'] == 'bfang') {
+    			$this->f3->SESSION['user'] = 'bfang';
+    			$this->f3->reroute('/customer');
+    	} else {
+    		 
+    	     $this->f3->set('view','home.htm');
+    	}
+         echo Template::instance()->render('layout.htm');
+    }
+    
+    function signin() {
+
+        $this->f3->set('view','signin.htm');
+        echo Template::instance()->render('layout.htm');
+    }
+    
+    function verifysignin () {
+    	if (! empty ( $this->f3->POST)) {
+    		if ($this->f3->POST['username'] == 'bfang') {
+    			$this->f3->SESSION['user'] = 'bfang';
+    			$this->f3->reroute('/customer');
+    		}
+    	} else {
+    		$this->f3->reroute('/home');
+    	}
+    	 
+    }
+
+    function signup() {
+        $this->f3->set('view','signup.htm');
+        echo Template::instance()->render('layout.htm');
+    }
+    function signout() {
+    	//$this->f3->SESSION['user'] = 'unknwn'; 
+    	session_destroy();
+    	var_dump($this->f3->SESSION);
+    	$this->f3->reroute('/home');
     }
     
     function showStatic() {
@@ -41,7 +78,7 @@ class myClass extends BaseController {
 		$myloader->reloadData();
 	}
     
-    public function testFunc() {
+    function testFunc() {
         $myv = new LoanType($this->db);
         $myv->getIDByNameAndConfirming("fixed30",0);
         //var_dump ($myv->all());
