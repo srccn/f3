@@ -34,14 +34,9 @@ class CustomerController extends BaseController {
 		}
 	}	
 	
-	
 	public function index()
 	{
 
-// 		if ($this->f3->SESSION['user'] != 'bfang') {
-// 			$this->f3->reroute('/home');
-// 		}
-		
 		$user = new Customer($this->db);
 		$this->f3->set('users',$user->all());
 		$this->f3->set('page_head','Cusotmer List');
