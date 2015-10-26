@@ -393,39 +393,6 @@ INSERT INTO `fee_recording_other` VALUES (1,'MA',65,30,30),(2,'NH',65,30,30),(3,
 UNLOCK TABLES;
 
 --
--- Table structure for table `fees`
---
-
-DROP TABLE IF EXISTS `fees`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fees` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `credit_report` decimal(10,2) DEFAULT NULL,
-  `appraisal` decimal(10,2) DEFAULT NULL,
-  `legal` decimal(10,2) DEFAULT NULL,
-  `title_search` decimal(10,2) DEFAULT NULL,
-  `title_insurance` decimal(10,2) DEFAULT NULL,
-  `recording` decimal(10,2) DEFAULT NULL,
-  `inspection` decimal(10,2) DEFAULT NULL,
-  `survey` decimal(10,2) DEFAULT NULL,
-  `underwriting` decimal(10,2) DEFAULT NULL,
-  `tax_service` decimal(10,2) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `fees`
---
-
-LOCK TABLES `fees` WRITE;
-/*!40000 ALTER TABLE `fees` DISABLE KEYS */;
-INSERT INTO `fees` VALUES (1,30.00,400.00,500.00,200.00,800.00,50.00,400.00,350.00,250.00,80.00);
-/*!40000 ALTER TABLE `fees` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `loan_type`
 --
 
@@ -959,4 +926,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-23 17:54:11
+-- Dump completed on 2015-10-26 17:50:57

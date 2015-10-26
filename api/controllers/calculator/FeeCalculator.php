@@ -8,6 +8,14 @@ class FeeCalculator extends BaseController {
 	function __construct(LoanProperty $property){
 		parent::__construct();
 		$this->property = $property;
+		$this->setFixedFees();
+	}
+	
+	function setFixedFees () {
+		$this->fees = array(
+				"credit_report" => 25.00 ,
+				"flood_certification" => 35.00 ,
+		);
 	}
 	
 	function getRecordingFee() {
@@ -137,7 +145,7 @@ class FeeCalculator extends BaseController {
 		Util::dump("Recording fee",       $this->getRecordingFee());
 		Util::dump("Recording other fee", $this->getRecordingOtherFee());
 		Util::dump("Attorney fee",        $this->getAttoneyFee());
-		var_dump($this->fees);
+		Util::dump("Fee Details ",        $this->fees);
 		echo "Total Fee is " . Util::getSumValue($this->fees) . "<hr>";
 		return 	intVal (Util::getSumValue($this->fees)) ;	
 	}

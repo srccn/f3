@@ -15,8 +15,6 @@ class  PropertyController extends BaseController {
     	$property->printProperty();
     	$myoptions = $property->loanAmountOptions;
 
-    	foreach ($myoptions as $opt)
-    	
      	$myFeeCalculator = new FeeCalculator($property);
      	$totalFee = $myFeeCalculator->getTotalFees();
      	//echo "fees : " . $totalFee;
@@ -27,17 +25,23 @@ class  PropertyController extends BaseController {
 
      		foreach ($myoptions as $opt) {
      			$property_clone = clone $property; 
-     		    echo "========== purchaser $purchaser, loan option = $opt[1] + $opt[2] <br>" ;
-     		    echo "========== Primary loan<br>";
-     		    $property_clone->loanAmount   = $opt[1];
+     		    echo ("=== purchaser $purchaser, loan option = $opt[1] + $opt[2]") ;
+     		    if ($opt[2] > 0) {
+     		        Util::dump ("=== Primary loan","");
+     		    }
+
+     		    $property_clone->loanAmount = $opt[1];
      		    $property_clone->calculateDerives();
      		    $purchaserCalculatorName  = $purchaser."RateCalculator" ;
      		    $myRateCalculator = new $purchaserCalculatorName ;
      		    $myRateCalculator->setProperty($property_clone);
      		    $myRateCalculator->setTotalFee($totalFee);
      		    $myRateCalculator->calculteRate();
-     		    echo "========== Secondary loan<br>";
-     		    $myRateCalculator->calculteSecondaryRate( $opt[2] );
+
+     		    if ($opt[2] > 0) {
+     		        echo "=== Secondary loan<br>";
+     		        $myRateCalculator->calculteSecondaryRate( $opt[2] );
+     		    }
      		    echo "<hr>";
      		}
      	}

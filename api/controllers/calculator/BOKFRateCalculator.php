@@ -10,8 +10,8 @@ class BOKFRatecalculator extends AbstractRateCalculatorController {
 	}
 	
 	public function getPurchaseRate() {
-		var_dump($this->adjusts);
-		echo "Total adjust is " . Util::getSumValue($this->adjusts) . "<br>";
+		Util::dump("Adjusts Details", $this->adjusts);
+		Util::dump("Total adjust is " , Util::getSumValue($this->adjusts) );
 		parent::getPurchaseRateType1();
 	}
 }

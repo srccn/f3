@@ -25,10 +25,18 @@ class Util extends BaseController {
         return $result;
     }
     
-    static function dump($message, $toDump) {
-        echo $message . " : " ;
-        var_dump($toDump);
+    static function dump($message, $toDump = null) {
+    	
+    	$f3 = Base::instance();
+    	if ( $f3->get('DETAIL') > 0 ) {
+            echo $message . " : " ;
+            if ( $toDump != null ) {
+            	var_dump($toDump);
+            	 
+            }
+    	}
     }
+
     
     static function hashString ($plainString) {
     	return password_hash($plainString, PASSWORD_BCRYPT, ['cost'=>10]);

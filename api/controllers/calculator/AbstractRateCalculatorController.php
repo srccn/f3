@@ -151,7 +151,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 				order by rate asc
 				limit 1
 				";
-		echo $query . "<br>";
+		Util::dump("query", $query . "<br>");
 		$result = $this->runQuery($query);
 		echo "Rate = " .$result[0]['rate'] ."  Credit = " .$result[0]['credit'] . " LockDays = " .$result[0]['lockdays']  ."<br>";
 		//var_dump($result);
@@ -179,7 +179,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 				
 		$result = $this->runQuery($query);
 		$baseRef = $result[0]['baseRef'];
-	    echo "baseRef is : " .$baseRef . "<br>" ;
+	    Util::dump("baseRef is : " .$baseRef . "<br>" , "" );
 		//echo "$this->zip" . "," . $this->loanAmount .",". $loanTypeId. ",".$purchaserId ."<br>";
 	
 		//find base SRP
@@ -234,7 +234,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 	protected function getSuperConfirmingAdj() {
 		$adjName = "SuperConfirmingAdj";
 		if ($this->property->isConfirming != 2) {
-			echo "Not a super confirming loan, skip super confirming adj <br>";
+			Util::dump("Not a super confirming loan skip super confirming adj <br>", "");
 			$this->adjusts[$adjName] = 0;
 			return;
 		}
@@ -308,7 +308,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 				";
 	
 	    }
-		echo "srp query is : ".$query."<br>";
+		Util::dump("Query", $query );
 		$result = $this->runQuery($query);
 		//var_dump($result) ;
 		return $result[0]['result'];
@@ -327,7 +327,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		Util::dump("ltv other adjust",$this->getLtvOtherAdj());
 		Util::dump("Find purchaser SRP", $this->getSRP());
 
-		echo "<br> Calculate purchaser $this->purchaserId with margin ". $this->property->margin . " % <br>";
+		echo "<br> Calculate $this->purchaserName with margin ". $this->property->margin . "% Min Credit $". $this->property->mincredit ."<br>";
 		$this->getPurchaseRate();
 	}
 	

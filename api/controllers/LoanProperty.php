@@ -230,15 +230,15 @@ class LoanProperty extends BaseController {
 		echo "lockDays : $this->lockDays<br>";
 		echo "confirming Margin : $this->confirmingmargin<br>";
 		echo "Jumbo Margin : $this->jumbomargin <br>";
-		echo "------ derived values ------ <br>";
-		echo "State is : $this->state<br>";
-		echo "LTV is : $this->LTV<br>";
-		echo "Confirming Upper limit : $this->confirmingUpperLimit<br>";
-		echo "is Confirming : $this->isConfirming<br>";
-		echo "Loan limit check passed : $this->loanLimitCheck <br>";
-		echo "Margin for calculation : $this->margin <br>";
-		echo "Minimum Credit : $this->mincredit <br>";
-		print_r ($this->loanAmountOptions);
+		Util::dump("------ derived values ------ ");
+		Util::dump( "State is : $this->state<br>");
+		Util::dump( "LTV is : $this->LTV ");
+		Util::dump( "Confirming Upper limit :", $this->confirmingUpperLimit);
+		Util::dump( "is Confirming :", $this->isConfirming );
+		Util::dump( "Loan limit check passed :" , $this->loanLimitCheck );
+		Util::dump( "Margin for calculation :", $this->margin);
+		Util::dump( "Minimum Credit :", $this->mincredit);
+		Util::dump( $this->loanAmountOptions);
 		echo "<hr>";
 	
 	}	

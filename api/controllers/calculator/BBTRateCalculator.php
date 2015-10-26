@@ -13,8 +13,8 @@ class BBTRateCalculator extends AbstractRateCalculatorController {
 	
 	public function getPurchaseRate() {
 		$this->getSuperConfirmingAdj();
-		var_dump($this->adjusts);
-		echo "Total adjust is " . Util::getSumValue($this->adjusts) . "<br>";
+		Util::dump("Adjustment", $this->adjusts);
+		Util::dump ("Total adjust is " , Util::getSumValue($this->adjusts) );
 		$this->getPurchaseRateType1();
 	}
 	
