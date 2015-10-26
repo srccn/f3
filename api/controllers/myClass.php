@@ -15,7 +15,7 @@ class myClass extends BaseController {
     			$this->f3->reroute('/customer');
     	} else {
     		 
-    	     $this->f3->set('view','home.htm');
+    	    $this->f3->set('view','blank.htm');
     	}
          echo Template::instance()->render('layout.htm');
     }

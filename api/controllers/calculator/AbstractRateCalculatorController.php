@@ -135,6 +135,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		$lockDays = $this->property->lockDays;
 		$loanTypeId = $this->property->loanTypeId ; // $this->getSRPLoanTypeId(); //$this->property->loanTypeId ;
 		$loanAmount = $this->property->loanAmount ;
+		$minCredit  = $this->property->mincredit;
 		//        echo $fees . "<br>";
 		//        echo $adjust . "<br>";
 		//        echo $SRP . "<br>";
@@ -146,7 +147,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 				where purchaser_id = $this->purchaserId
 				and lock_days_id >= $lockDays
 				and loan_type_id = $loanTypeId
-				and ((purchase_price + $adjust - $margin + $SRP - 100)/100 * $loanAmount -  $fees) > 0
+				and ((purchase_price + $adjust - $margin + $SRP - 100)/100 * $loanAmount -  $fees) > $minCredit
 				order by rate asc
 				limit 1
 				";

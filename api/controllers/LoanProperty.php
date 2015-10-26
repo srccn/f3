@@ -16,6 +16,7 @@ class LoanProperty extends BaseController {
 	public $loanName; //fixed30, fixed15, arm51, arm71
 	public $confirmingmargin;
 	public $jumbogmargin;
+	public $mincredit;
 	
 	//calculated value
 	public $state; //optional
@@ -52,6 +53,7 @@ class LoanProperty extends BaseController {
 		$this->lockDays=$inputs["lockDays"];
 		$this->confirmingmargin=$inputs["confirmingmargin"];
 		$this->jumbomargin=$inputs["jumbomargin"];
+		$this->mincredit=$inputs["mincredit"];
 		
 		$this->calculateDerives();
 		
@@ -235,6 +237,7 @@ class LoanProperty extends BaseController {
 		echo "is Confirming : $this->isConfirming<br>";
 		echo "Loan limit check passed : $this->loanLimitCheck <br>";
 		echo "Margin for calculation : $this->margin <br>";
+		echo "Minimum Credit : $this->mincredit <br>";
 		print_r ($this->loanAmountOptions);
 		echo "<hr>";
 	
