@@ -127,7 +127,6 @@ class FeeCalculator extends BaseController {
 		$returnVal = 0;
 	    if ($this->property->purchaseType == LoanerConst::REFINANCE || 
 			$this->property->purchaseType == LoanerConst::COREFINANCE ) {
-				echo "here2 <br>";
 				$returnVal = 0;
 		}
 		if ($this->property->purchaseType == LoanerConst::PURCHASE) {
