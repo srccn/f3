@@ -9,43 +9,73 @@ class myClass extends BaseController {
     }
     
     function home() {
- 
-   		if ($this->f3->POST['username'] == 'bfang') {
-    			$this->f3->SESSION['user'] = 'bfang';
-    			$this->f3->reroute('/customer');
+   		if (isset($this->f3->SESSION['username']) && !empty($this->f3->SESSION['username'] )) {
+    		$this->f3->reroute('/customer');
     	} else {
-    		 
     	    $this->f3->set('view','blank.htm');
     	}
          echo Template::instance()->render('layout.htm');
     }
     
     function signin() {
-
         $this->f3->set('view','signin.htm');
         echo Template::instance()->render('layout.htm');
     }
+
     
     function verifysignin () {
-    	if (! empty ( $this->f3->POST)) {
-    		if ($this->f3->POST['username'] == 'bfang') {
-    			$this->f3->SESSION['user'] = 'bfang';
-    			$this->f3->reroute('/customer');
-    		}
-    	} else {
-    		$this->f3->reroute('/home');
-    	}
-    	 
+     	if (! empty ( $this->f3->POST)) {
+        	if ( isset ($this->f3->POST['username'] ) && isset($this->f3->POST['password']) ) {
+        		
+        		$name = $this->f3->POST['username'];
+        		
+        		//if check passwrod succeeded
+        		$query = "
+        				SELECT password
+        				FROM   loaner.user
+        				WHERE  name = '$name'
+        				";
+        		$result=$this->runQuery($query);
+        		$regpassword = $result[0]['password']; 
+        		
+        		if (Util::verifyHash($this->f3->POST['password'], $regpassword)) {
+        			$this->f3->SESSION['username'] = $this->f3->POST['username'];        			
+        		} else {
+        			echo "Sign in Failed. ";
+        		}
+    	    }
+     	}
+     	$this->f3->set('message','Welcom ');
+     	
+	    $this->f3->reroute('/home');
     }
 
     function signup() {
         $this->f3->set('view','signup.htm');
         echo Template::instance()->render('layout.htm');
     }
+    
+    function addUser(){
+    	$name=$this->f3->POST['username'];
+    	$email = $this->f3->POST['email'];
+    	$passwrod = Util::hashString($this->f3->POST['password']);
+		$timeStamp = time();
+    	$query = "
+    			INSERT into loaner.user 
+    			            (name, email,password,regdate)
+    			VALUES ('$name' , '$email', '$passwrod', $timeStamp)
+    			" ;
+    	Util::dump($query);
+    	$this->runQuery($query);
+    	
+    	$this->f3->SESSION['username'] = $name;
+    	$this->f3->reroute('/home');
+    }
+    
     function signout() {
     	//$this->f3->SESSION['user'] = 'unknwn'; 
     	session_destroy();
-    	var_dump($this->f3->SESSION);
+    	Util::dump($this->f3->SESSION);
     	$this->f3->reroute('/home');
     }
     

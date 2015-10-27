@@ -29,7 +29,7 @@ class CustomerController extends BaseController {
 	}
 
 	function beforeRoute() {
-		if ($this->f3->SESSION['user'] != 'bfang') {
+		if (!isset($this->f3->SESSION['username']) ) {
 			$this->f3->reroute('/home');
 		}
 	}	
@@ -43,8 +43,6 @@ class CustomerController extends BaseController {
 		$this->f3->set('view','customer/list.htm');
 		
 		$_SESSION["id"] = "sriuthgsilgdfisgnaweoir239-57ef";
-		
-		var_dump($_SESSION);
 		
 		echo Template::instance()->render('layout.htm');
 	}
