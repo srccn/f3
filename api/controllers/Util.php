@@ -46,6 +46,11 @@ class Util extends BaseController {
     	return password_verify($plainString, $hashedString);
     }
     
+    static function finacialNumber($number) {
+    	$number = round ( floatval($number) , 2 );
+    	return ($number < 0 ? "(".abs($number).")" : $number);
+    }
+    
 }
 
 ?>

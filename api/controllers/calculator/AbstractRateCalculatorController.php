@@ -153,7 +153,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 				";
 		Util::dump("query", $query . "<br>");
 		$result = $this->runQuery($query);
-		echo "Rate = " .$result[0]['rate'] ."  Credit = " .$result[0]['credit'] . " LockDays = " .$result[0]['lockdays']  ."<br>";
+		echo "Rate = " .$result[0]['rate'] ."  Credit = " .intVal($result[0]['credit']) . " LockDays = " .$result[0]['lockdays']  ."<br>";
 		//var_dump($result);
 	}	
 
@@ -327,7 +327,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		Util::dump("ltv other adjust",$this->getLtvOtherAdj());
 		Util::dump("Find purchaser SRP", $this->getSRP());
 
-		echo "<br> Calculate $this->purchaserName with margin ". $this->property->margin . "% Min Credit $". $this->property->mincredit ."<br>";
+		echo " , margin=". $this->property->margin . "% ,Min Credit=$". Util::finacialNumber($this->property->mincredit) ."<br>";
 		$this->getPurchaseRate();
 	}
 	
