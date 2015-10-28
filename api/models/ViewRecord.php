@@ -7,6 +7,8 @@ class ViewRecord {
 	public $rate;
 	public $credit;
 	public $lockDays;
+	public $margin;
+	public $minCredit;
 	
 }
 

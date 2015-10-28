@@ -50,6 +50,25 @@ class Util extends BaseController {
     	$number = round ( floatval($number) , 2 );
     	return ($number < 0 ? "(".abs($number).")" : $number);
     }
+
+    static function cmp ($a, $b) {
+    	
+    	if ($a['part1']->rate == null) {
+    		return 1;
+    	}
+
+    	if ($b['part1']->rate == null) {
+    		return -1;
+    	}
+    	 
+    	if ($a['part1']->rate == $b['rate']->rate ) {
+    		if ( $a['part1']->credit == $b['part1']->credit ) {
+    			return 0;
+    		}
+    		return ($a['part1']->credit < $b['part1']->credit) ? -1:1;
+    	}
+    	return ($a['part1']->rate < $b['part1']->rate ) ? -1:1 ;
+    }
     
 }
 

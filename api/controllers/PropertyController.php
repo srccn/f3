@@ -29,12 +29,13 @@ class  PropertyController extends BaseController {
             
      		foreach ($myoptions as $opt) {
      			$property_clone = clone $property; 
-     		    echo ("=== purchaser $purchaser, loan option = $opt[1] + $opt[2]") ;
+     		    Util::dump("=== purchaser $purchaser, loan option = $opt[1] + $opt[2]") ;
      		    if ($opt[2] > 0) {
      		        Util::dump ("=== Primary loan","");
      		    }
+     		    $myRecord1 = clone $myRecord;
      		    
-     		    $myRecord->loanAmount=$opt[1];
+     		    $myRecord1->loanAmount=$opt[1];
      		    
      		    $property_clone->loanAmount = $opt[1];
      		    $property_clone->calculateDerives();
@@ -44,25 +45,37 @@ class  PropertyController extends BaseController {
      		    $myRateCalculator->setTotalFee($totalFee);
      		    $myresult = $myRateCalculator->calculteRate();
      		    
-     		    $myRecord->rate = $myresult['rate'];
-     		    $myRecord->credit = $myresult['credit'];
-     		    $myRecord->lockDays = $myresult['lockDays'];
+     		    //$myRecord->loanAmount=$opt[1];
+     		    $myRecord1->rate = $myresult['rate'];
+     		    $myRecord1->credit = $myresult['credit'];
+     		    $myRecord1->lockDays = $myresult['lockDays'];
+     		    $myRecord1->margin = $myresult['margin'];
+     		    $myRecord1->minCredit = $myresult['minCredit'];
 
+     		    $myRecord2 = clone $myRecord;
      		    if ($opt[2] > 0) {
      		        Util::dump("=== Secondary loan");
-     		        $myRecord2 = clone $myRecord;
      		        $myresult2 = $myRateCalculator->calculteSecondaryRate( $opt[2] );
      		        
      		        $myRecord2->loanAmount = $opt[2];
-     		        $myRecord2->rate = $myresult2['rate'];
-     		        $myRecord2->credit = $myresult2['credit'];
+     		        $myRecord2->rate =     $myresult2['rate'];
+     		        $myRecord2->credit =   $myresult2['credit'];
      		        $myRecord2->lockDays = $myresult2['lockDays'];
+     		        $myRecord2->margin =    $myresult2['margin'];
+     		        $myRecord2->minCredit = $myresult2['minCredit'];
      		         
      		    }
-     		    var_dump(array ($myRecord, $myRecord2));
-     		    echo "<hr>";
-     		}
-     	}
+     		    $resultRecord = array(
+     		    		               "part1" => $myRecord1, 
+     		    		               "part2" => $myRecord2
+     		    		        );
+     		    //var_dump ($resultRecord );
+     		    array_push($this->viewRecords, $resultRecord);
+     		    //echo "<hr>";
+     		} //option
+     	}//purchaser
+     	$r = usort($this->viewRecords, 'Util::cmp');
+     	var_dump($this->viewRecords);
     }
 
 }
