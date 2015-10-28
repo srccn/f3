@@ -13,7 +13,7 @@ class WELLSFARGORateCalculator extends AbstractRateCalculatorController {
 	public function getPurchaseRate() {
 		Util::dump("Adjusts Details", $this->adjusts);
 		Util::dump("Total adjust is " , Util::getSumValue($this->adjusts) );
-		parent::getPurchaseRateType1();
+		return parent::getPurchaseRateType1();
 	}
 }
 

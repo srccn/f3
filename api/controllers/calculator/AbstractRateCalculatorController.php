@@ -153,8 +153,13 @@ abstract class AbstractRateCalculatorController extends BaseController {
 				";
 		Util::dump("query", $query . "<br>");
 		$result = $this->runQuery($query);
-		echo "Rate = " .$result[0]['rate'] ."  Credit = " .intVal($result[0]['credit']) . " LockDays = " .$result[0]['lockdays']  ."<br>";
+		Util::dump ( "Rate = " .$result[0]['rate'] ."  Credit = " .intVal($result[0]['credit']) . " LockDays = " .$result[0]['lockdays']  );
 		//var_dump($result);
+		return array (
+				"rate" => $result[0]['rate'],
+				"credit" => intVal($result[0]['credit']) ,
+				"lockDays" => $result[0]['lockdays']		
+		);
 	}	
 
 	protected function getStateGroupedSRP() {
@@ -328,12 +333,17 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		Util::dump("Find purchaser SRP", $this->getSRP());
 
 		echo " , margin=". $this->property->margin . "% ,Min Credit=$". Util::finacialNumber($this->property->mincredit) ."<br>";
-		$this->getPurchaseRate();
+		return $this->getPurchaseRate();
 	}
 	
 	public function calculteSecondaryRate($secondaryAmount) {
 		
-		echo "Secondary loan $secondaryAmount at hard coded Rate 5.5 % <br>";
+		Util::dump( "Secondary loan $secondaryAmount at hard coded Rate 5.5 % ");
+		return array (
+				"rate" => 5.5,
+				"credit" => 0,
+				"localDays" => 45
+		);
 	}
 }
 
