@@ -74,7 +74,7 @@ class  PropertyController extends BaseController {
      		    //echo "<hr>";
      		} //option
      	}//purchaser
-     	$r = usort($this->viewRecords, 'Util::cmp');
+     	$r = uasort($this->viewRecords, 'Util::cmp');
      	var_dump($this->viewRecords);
     }
 

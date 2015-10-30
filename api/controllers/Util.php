@@ -53,21 +53,25 @@ class Util extends BaseController {
 
     static function cmp ($a, $b) {
     	
-    	if ($a['part1']->rate == null) {
+    	if ($a['part1']->rate == null && $b['part1']->rate != null) {
     		return 1;
     	}
 
-    	if ($b['part1']->rate == null) {
+    	if ($a['part1']->rate != null && $b['part1']->rate == null) {
     		return -1;
     	}
-    	 
-    	if ($a['part1']->rate == $b['rate']->rate ) {
-    		if ( $a['part1']->credit == $b['part1']->credit ) {
-    			return 0;
+
+    	if ($a['part1']->rate == null && $b['part1']->rate == null) {
+    		return -1;
+    	}    	
+    	
+    	if (($a['part1']->rate) == ($b['part1']->rate) ) {
+     		if ( intVal($a['part1']->credit) === intVal($b['part1']->credit) ) {
+     			return 0;
     		}
-    		return ($a['part1']->credit < $b['part1']->credit) ? -1:1;
+    		return (intVal($a['part1']->credit) < intVal($b['part1']->credit) ) ? 1 : -1;
     	}
-    	return ($a['part1']->rate < $b['part1']->rate ) ? -1:1 ;
+    	return ( ($a['part1']->rate) < ($b['part1']->rate) ) ? -1:1 ;
     }
     
 }
