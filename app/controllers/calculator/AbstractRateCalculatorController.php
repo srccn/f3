@@ -342,6 +342,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		
 		Util::dump( "Secondary loan $secondaryAmount at hard coded Rate 5.5 % ");
 		return array (
+				"purchaser" => "PartiotsBank",
 				"rate" => 5.5,
 				"credit" => 0,
 				"localDays" => 45

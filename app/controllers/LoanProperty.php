@@ -33,6 +33,7 @@ class LoanProperty extends BaseController {
 	//protected $fees;     //hold fees
 	//protected $adjusts;  //hold adjusts
 	
+	
 	public function __construct($inputs) {
 		parent::__construct();
 		$this->setInput($inputs);
@@ -102,7 +103,13 @@ class LoanProperty extends BaseController {
 		return $this->isConfirming;
 	}
 	
-	private function setLoanTypeId(){
+	public function setLoanTypeId(){
+		
+		if ($this->loanName == "all") {
+			$this->loanTypeId = null; //will be set later.
+			return null;
+		}
+		
 		$result = $this->runQuery("
 				select loan_type_id as result
 				from loan_type
@@ -240,9 +247,8 @@ class LoanProperty extends BaseController {
 		Util::dump( "Minimum Credit :", $this->mincredit);
 		Util::dump( $this->loanAmountOptions);
 		echo "<hr>";
-	
-	}	
-	
+	}
+
 	private function setTest () {
 		$this->numberUnit='two_unit';
 		$this->type='house';

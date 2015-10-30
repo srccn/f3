@@ -48,6 +48,11 @@ interface LoanerConst {
 	const ARM71  = 'arm71';
 	const ARM101 = 'arm101';
 	
+	const FIXED30 = "fixed30";
+	const FIXED20 = "fixed20";
+	const FIXED15 = "fixed15";
+	const FIXED10 = "fixed10";
+	
 	//loan purpose 
 	const PURCHASE    = 'purchase';
 	const REFINANCE   = 'rtrefinance';

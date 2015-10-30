@@ -1,5 +1,27 @@
 <html>
     <head>
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('#CalculateFor').on ('change', function() {
+            if( this.value === "bycredit" ) {
+                $('#mincredit').show();
+            } else {
+                $('#mincredit').attr("value", 0);
+                $('#mincredit').hide();
+            }; 
+        });
+        
+        $('#optionLink').click ( function() {
+             $('#optionsDiv').toggle()
+        });
+        
+        
+        
+    });
+    
+    </script>
+
     </head>
     <body>
     
@@ -7,10 +29,6 @@
             <h3>Loan Infomation Search</h3>
             <hr>
             <form name="inputForm" type="post" action="/f3/calculate">
-                <label for="purchaseType">Mortgage Type</label>
-                  <input type="radio" id="purchaseType" name="purchaseType" value="purchase" checked> Puchase
-                  <input type="radio" name="purchaseType" value="rtrefinance"> Rate Term Refinance
-                  <input type="radio" name="purchaseType" value="corefinance"> Cash Out Refinance <br>
                 <label for="type">Property Type</label>
                   <input type="radio" id="type" name="type" value="house" checked>House
                  <label for="numberUnit">Unit</label>
@@ -27,51 +45,66 @@
                 <input type=text value="240000" id="loanAmount" name="loanAmount"><br>
                 <label for="zip">Zip</label>
                 <input type=text value="02460" id="zip" name="zip"><br>
-                <label for="occType">Property Occupancy</label>
-                <select id="occType" name="occType">
-                    <option value="primary">Primary Home</option>
-                    <option value="commercial">Commercial</option>
-                    <option value="investment">Investment</option>
-                </select> <br>
-                <label for="crediteScore">Credite Score</label>
-                <input type="text" name="creditScore" id="creditScore" value="740"></input><br>
-            <!--    
-                <select id="crediteScore" name="crediteScore">
-                    <option value="740"> > 740 </option>
-                    <option value="740"> > 740 </option>
-                    <option value="45" selected>45 Days</option>
-                    <option value="60">60 Days</option>
-                </select> <br>
-            -->    
-                
-                <label for="lockDays">Lock Days</label>
-                <select id="lockDays" name="lockDays">
-                    <option value="30">30 Days</option>
-                    <option value="45" selected>45 Days</option>
-                    <option value="60">60 Days</option>
-                </select> <br>
-                <label for="loanName">select loan Type</label>
-                <select id="loanName" name="loanName">
+
+                <label for="loanName" style="display:none">select loan Type</label>
+                <select id="loanName" name="loanName" style="display:none">
                     <option value="fixed30">30 years fixed</option>
                     <option value="fixed15">15 years fixed</option>
                     <option value="arm51">5/1 arm</option>
                     <option value="arm71">7/1 arm</option>
-                </select><br>
-                <hr>
-                <label for="Margin">Confirming Margin</label>
-                <input type="text" name="confirmingmargin" id="confirmingmargin" value="1" size='3'>% ;
-                <label for="JumboMargin"> NonConfirming  Margin</label>
-                <input type="text" name="jumbomargin" id="jumbomargin" value="0.5" size='3'>% <br>
-                <label for="mincredit"> Minimum Credit ($number of credit when search rate) </label>
-                <input type="text" name="mincredit" id="mincredit" value="0" size='6'>
+                </select>
+                <label for="CalculateFor">Calculate Option</label>
+                <select id="CalculateFor" name="CalculateFor">
+                    <option value="npncc">No Points No Closing Cost</option>
+                    <option value="paycc">Pay Closing Cost</option>
+                    <option value="bycredit">By Minimum Credit/Debts</option>
+                </select>
+                <label id = "formincredit" for="mincredit" hidden> Minimum Credit/Debts</label>
+                <input type="text" name="mincredit" id="mincredit" value="0" size='6' style="display:none" ><br>
+ 
+                <div id="optionsDiv" style="margin:10px; border-style: solid; border-color:black; background-color:lightgrey; display:none">
+
+                <label for="purchaseType">Mortgage Type</label>
+                  <input type="radio" id="purchaseType" name="purchaseType" value="purchase" checked> Puchase
+                  <input type="radio" name="purchaseType" value="rtrefinance"> Rate Term Refinance
+                  <input type="radio" name="purchaseType" value="corefinance"> Cash Out Refinance <br>
+
+
+                    <label for="occType">Property Occupancy</label>
+                    <select id="occType" name="occType">
+                        <option value="primary">Primary Home</option>
+                        <option value="commercial">Commercial</option>
+                        <option value="investment">Investment</option>
+                    </select> <br>
+                    
+                    <label for="crediteScore">Credite Score</label>
+                    <input type="text" name="creditScore" id="creditScore" value="740"></input><br>
                 
-<!--            
-                <input type=checkbox name="fixed30" id="fixed30" value="fixed30">30y Fixed
-                <input type=checkbox name="fixed15" id="fixed15" value="fixed15">15y Fixed
-                <input type=checkbox name="arm51" id="arm51" value="arm51">5-1 ARM
-                <input type=checkbox name="arm71" id="arm71" value="arm71">7-1 ARM <br>
--->
+                    <label for="lockDays">Lock Days</label>
+                    <select id="lockDays" name="lockDays">
+                        <option value="30">30 Days</option>
+                        <option value="45" selected>45 Days</option>
+                        <option value="60">60 Days</option>
+                    </select> <br>
+
+                <label for="loanName">select loan Type</label>
+                <select id="loanName" name="loanName" >
+                    <option value="all">All Loan Type</option>
+                    <option value="fixed30">30 years fixed</option>
+                    <option value="fixed15">15 years fixed</option>
+                    <option value="arm51">5/1 arm</option>
+                    <option value="arm71">7/1 arm</option>
+                </select>
+                
+                </div> 
+                <a id="optionLink" href="#" >Option Change:<a> Mortgage Type(Purchase), Property Occupancy(Primary Home), Credit score(>740), lock days(45), Loan type(All) <br>
                 <hr>
+                <div id="margin">
+                    <label for="Margin">Confirming Margin</label>
+                    <input type="text" name="confirmingmargin" id="confirmingmargin" value="1" size='3'>% ;
+                    <label for="JumboMargin"> NonConfirming  Margin</label>
+                    <input type="text" name="jumbomargin" id="jumbomargin" value="0.5" size='3'>% <br>
+                </div>
                 <input type=submit id="submit" value="Calculate Result">
 
             </form>
