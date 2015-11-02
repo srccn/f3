@@ -135,7 +135,22 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		$lockDays = $this->property->lockDays;
 		$loanTypeId = $this->property->loanTypeId ; // $this->getSRPLoanTypeId(); //$this->property->loanTypeId ;
 		$loanAmount = $this->property->loanAmount ;
-		$minCredit  = $this->property->mincredit;
+		
+		switch ($this->property->closingOption) {
+			case LoanerConst::CLOSING_OPTION_NOPOINT_NOCLOSINGCOST :
+				 $minCredit  = 0;
+				 break;
+			case LoanerConst::CLOSING_OPTION_PAY_CLOSINGCOST:
+				$minCredit  = -1 * $fees ;
+				break;
+			case LoanerConst::CLOSING_OPTION_BY_MIN_CREDIT :
+				$minCredit  = $this->property->mincredit;
+				break;
+			default :
+				$minCredit  = $this->property->mincredit;
+		}
+		
+		// $minCredit  = $this->property->mincredit;
 		//        echo $fees . "<br>";
 		//        echo $adjust . "<br>";
 		//        echo $SRP . "<br>";
@@ -340,10 +355,10 @@ abstract class AbstractRateCalculatorController extends BaseController {
 	
 	public function calculteSecondaryRate($secondaryAmount) {
 		
-		Util::dump( "Secondary loan $secondaryAmount at hard coded Rate 5.5 % ");
+		Util::dump( "Secondary loan $secondaryAmount at hard coded Rate 4.49 % ");
 		return array (
 				"purchaser" => "PartiotsBank",
-				"rate" => 5.5,
+				"rate" => 4.49 ,
 				"credit" => 0,
 				"localDays" => 45
 		);
