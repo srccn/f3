@@ -12,11 +12,12 @@ class LoanProperty extends BaseController {
 	public $purchaseType; //purchase, refinance, cash out refinance
 	public $loanAmount;
 	public $lockDays;
-	public $creditScroe;
+	public $creditScore;
 	public $loanName; //fixed30, fixed15, arm51, arm71
 	public $confirmingmargin;
 	public $jumbogmargin;
 	public $mincredit;
+	public $closingOption;
 	
 	//calculated value
 	public $state; //optional
@@ -55,6 +56,7 @@ class LoanProperty extends BaseController {
 		$this->confirmingmargin=$inputs["confirmingmargin"];
 		$this->jumbomargin=$inputs["jumbomargin"];
 		$this->mincredit=$inputs["mincredit"];
+		$this->closingOption=$inputs["closingOption"];
 		
 		$this->calculateDerives();
 		
@@ -83,6 +85,23 @@ class LoanProperty extends BaseController {
 		return $this->state;
 	}
 
+	function getClosingOption() {
+		switch ($this->closingOption) {
+			case LoanerConst::CLOSING_OPTION_NOPOINT_NOCLOSINGCOST :
+				$returnString  = "No point, No cloing cost";
+				break;
+			case LoanerConst::CLOSING_OPTION_PAY_CLOSINGCOST:
+				$returnString  = "Pay Closing Cost";
+				break;
+			case LoanerConst::CLOSING_OPTION_BY_MIN_CREDIT :
+				$returnString  = " with minimum +credits/-payment " . $this->mincredit ;
+				break;
+			default :
+				$returnString  = "No point, No cloing cost";
+		}		
+		return "Mortgage Rate [ ".$returnString." ]";
+	}
+	
 	private function setLoanLimitByZipCode(){
 		$results = $this->runQuery("select GetConfirmingLoanUpperLimit('$this->zip' , '$this->numberUnit') as result ");
 		//var_dump($results[0]);
@@ -220,7 +239,13 @@ class LoanProperty extends BaseController {
 		$this->setLoanTypeId();
 		$this->setMargin();
 		$this->loanLimitCheck = $this->loanLimitCheck();
-		$this->loanAmountOptions = $this->calculateLoanOptions();		
+		$this->loanAmountOptions = $this->calculateLoanOptions();
+
+		//one_unit for condo type selection
+		if ($this->type == LoanerConst::CONDO) {
+			$this->numberUnit = LoanerConst::ONE_UNIT;
+		}
+		
 	}
 	
 	public function printProperty(){
