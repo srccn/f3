@@ -1,0 +1,1 @@
+@php "%~dp0phpunit4.8.phar" %*
