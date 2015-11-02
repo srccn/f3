@@ -88,7 +88,7 @@ class myClass extends BaseController {
         $myRequest = $this->f3->get('REQUEST');
         
         $myProperty = new PropertyController($myRequest);
-        $myProperty->test();
+        $myProperty->searchRate();
         
         echo Template::instance()->render('result.htm');
         
