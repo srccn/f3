@@ -72,6 +72,12 @@ interface LoanerConst {
 	const PRIMARY_HOME = 'primaryHome';
 	const SECONDARY_HOME = 'secondaryHome';
 	const INVESTMENT = 'investment';
+	
+	const CLOSING_OPTION_NOPOINT_NOCLOSINGCOST = 'npncc';
+	const CLOSING_OPTION_PAY_CLOSINGCOST = 'paycc';
+	const CLOSING_OPTION_BY_MIN_CREDIT = 'bymincredit';
+	
+	
 }
 
 ?>

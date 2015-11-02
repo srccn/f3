@@ -6,6 +6,7 @@
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" media="screen" />
 
         <style>
+            .closingoption{font-size: 2em; text-align:center; background-color:#eeeeee; margin-bottom:15px; }
             .resultBlock {min-width: 250px; display:block; float:left; margin:2px; margin-bottom:20px; margin-right:20px; padding:2px; background-color:#eeeeee;}
             .loanName {color:red;font-size:120%; font-style:bold;text-align:center;text-decoration: underline;}
             .bottom-line { border-bottom:black;border-bottom-style: solid;padding-top:0px;padding-bottom:5px}
@@ -26,6 +27,9 @@
 </head>
 <body >
    <div style="margin:15px">
+   <div class="closingoption">
+       {{@ClosingOption}}
+   </div>
    <div id="fixed30Panel" class="resultBlock" >
    <p class="loanName" id="fixed30">30 year fixed</p>
    <table style="border-collapse: collapse;"">
