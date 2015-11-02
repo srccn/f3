@@ -4,30 +4,44 @@ class  PropertyController extends BaseController {
 
 	private $inputs;
     private $property;
+    private $closingOption;
+    private $purchasers;
+    private $loanNames;
     private $viewRecords = array();
 	
 	function __construct($inputForm) {
 		parent::__construct();
 		$this->inputs = $inputForm;
+
+		$this->setPurchasers(["BBT", "BOKF", "WELLSFARGO"]);
+		$this->setLoanNames([ LoanerConst::FIXED30,
+     			              LoanerConst::FIXED15,
+     			              LoanerConst::ARM51,
+    			              LoanerConst::ARM71  
+     	                    ]);
 	}
 	
-    function test () {
+	public function setPurchasers($array){
+		$this->purchasers = $array;
+	}
+	
+	public function setLoanNames($array){
+		$this->loanNames = $array;
+	}
+	
+    function searchRate () {
     	
     	$property = new LoanProperty($this->inputs);
     	$property->printProperty();
+    	$this->closingOption = $property->getClosingOption();
     	$myoptions = $property->loanAmountOptions;
 
      	$myFeeCalculator = new FeeCalculator($property);
      	$totalFee = $myFeeCalculator->getTotalFees();
      	//echo "fees : " . $totalFee;
     	
-     	$purchasers=["BBT", "BOKF", "WELLSFARGO"];
-     	//$purchasers=["BOKF"];
-     	$loanNames = [ LoanerConst::FIXED30,
-     			       LoanerConst::FIXED15,
-     			       LoanerConst::ARM51,
-    			       LoanerConst::ARM71  
-     	             ];
+     	$purchasers= $this->purchasers;
+     	$loanNames = $this->loanNames;
 
      	foreach ($loanNames as $loanName) {
      		$property->loanName = $loanName;
@@ -93,6 +107,7 @@ class  PropertyController extends BaseController {
      	} //loanName
      	//echo json_encode($this->viewRecords)."<br>";
      	$this->f3->set('SearchResults', $this->viewRecords);
+     	$this->f3->set('ClosingOption', $this->closingOption);
     }
 
 }
