@@ -7,6 +7,7 @@ class  PropertyController extends BaseController {
     private $viewRecords = array();
 	
 	function __construct($inputForm) {
+		parent::__construct();
 		$this->inputs = $inputForm;
 	}
 	
@@ -21,16 +22,17 @@ class  PropertyController extends BaseController {
      	//echo "fees : " . $totalFee;
     	
      	$purchasers=["BBT", "BOKF", "WELLSFARGO"];
+     	//$purchasers=["BOKF"];
      	$loanNames = [ LoanerConst::FIXED30,
      			       LoanerConst::FIXED15,
-//      			   LoanerConst::ARM51,
-//     			       LoanerConst::ARM71  
+     			       LoanerConst::ARM51,
+    			       LoanerConst::ARM71  
      	             ];
 
      	foreach ($loanNames as $loanName) {
      		$property->loanName = $loanName;
      		$property->setLoanTypeId();
-     		echo "--------" . $loanName . "<br>";
+     		Util::dump( "--------" . $loanName );
      		$this->viewRecords[$loanName] = array();
      		 
      	//$purchasers=["BOKF"];
@@ -86,10 +88,11 @@ class  PropertyController extends BaseController {
 					// echo "<hr>";
 				} //option
          	}//purchaser
-				$r = uasort($this->viewRecords[$loanName], 'Util::cmp');
-				var_dump($this->viewRecords[$loanName]);
+				$r = usort($this->viewRecords[$loanName], 'Util::cmp');
+				Util::dump("Calculate result for $loanName", $this->viewRecords[$loanName] );
      	} //loanName
-     	echo json_encode($this->viewRecords)."<br>";
+     	//echo json_encode($this->viewRecords)."<br>";
+     	$this->f3->set('SearchResults', $this->viewRecords);
     }
 
 }

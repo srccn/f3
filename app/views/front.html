@@ -1,32 +1,15 @@
 <html>
     <head>
-    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $('#CalculateFor').on ('change', function() {
-            if( this.value === "bycredit" ) {
-                $('#mincredit').show();
-            } else {
-                $('#mincredit').attr("value", 0);
-                $('#mincredit').hide();
-            }; 
-        });
-        
-        $('#optionLink').click ( function() {
-             $('#optionsDiv').toggle()
-        });
-        
-        
-        
-    });
-    
-    </script>
+
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="lib/js/front.js"></script>
+        <link href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
 
     </head>
     <body>
     
-        <div style="float: left;">
-            <h3>Loan Infomation Search</h3>
+        <div style="float: left; margin:10px;">
+            <h3>Mortgage Rate Search</h3>
             <hr>
             <form name="inputForm" type="post" action="/f3/calculate">
                 <label for="type">Property Type</label>
@@ -62,7 +45,7 @@
                 <label id = "formincredit" for="mincredit" hidden> Minimum Credit/Debts</label>
                 <input type="text" name="mincredit" id="mincredit" value="0" size='6' style="display:none" ><br>
  
-                <div id="optionsDiv" style="margin:10px; border-style: solid; border-color:black; background-color:lightgrey; display:none">
+                <div id="optionsDiv" style="margin:10px; border-style: solid; border-color:grey; background-color:#eeeeee; display:none">
 
                 <label for="purchaseType">Mortgage Type</label>
                   <input type="radio" id="purchaseType" name="purchaseType" value="purchase" checked> Puchase
@@ -97,7 +80,7 @@
                 </select>
                 
                 </div> 
-                <a id="optionLink" href="#" >Option Change:<a> Mortgage Type(Purchase), Property Occupancy(Primary Home), Credit score(>740), lock days(45), Loan type(All) <br>
+                <a id="optionLink" href="#" >Change Search Options:</a> Mortgage Type(Purchase), Property Occupancy(Primary Home), Credit score(>740), lock days(45), Loan type(All) <br>
                 <hr>
                 <div id="margin">
                     <label for="Margin">Confirming Margin</label>
@@ -105,7 +88,7 @@
                     <label for="JumboMargin"> NonConfirming  Margin</label>
                     <input type="text" name="jumbomargin" id="jumbomargin" value="0.5" size='3'>% <br>
                 </div>
-                <input type=submit id="submit" value="Calculate Result">
+                <input type=submit id="submit" value="Search Mortgage">
 
             </form>
         </div>
