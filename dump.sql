@@ -802,11 +802,13 @@ select
        when PropertyType = "two_unit"   Then t1.two_unit
        when PropertyType = "three_unit" Then t1.three_unit
        when PropertyType = "four_unit"  Then t1.four_unit
-  end
+  end result
 into amount_limit 
 from county_loan_limit t1 
     join zip_county t2 on t1.countycode = t2.countycode 
-where t2.zipcode = ZipCode; 
+where t2.zipcode = ZipCode
+order by result
+limit 1; 
 
 if amount_limit is null then
     return -2;
@@ -959,4 +961,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-11-01 23:41:00
+-- Dump completed on 2015-11-02 22:39:33

@@ -77,7 +77,7 @@ class LoanProperty extends BaseController {
 	}
 	
 	private function setState() {
-		$state = $this->runQuery("select t1.state as result from county_loan_limit t1, zip_county t2 where t1.countycode = t2.countycode and t2.zipcode='$this->zip';");
+		$state = $this->runQuery("select t1.state as result from county_loan_limit t1, zip_county t2 where t1.countycode = t2.countycode and t2.zipcode='$this->zip' limit 1;");
 		$this->state = Util::resultString($state);
 	}
 	
