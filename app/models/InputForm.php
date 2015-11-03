@@ -13,7 +13,7 @@ class InputForm {
 	public $loanAmount;
 	public $lockDays;
 	public $creditScore;
-	//public $loanName; //fixed30, fixed15, arm51, arm71
+	public $loanName; //fixed30, fixed15, arm51, arm71
 	public $confirmingmargin;
 	public $jumbogmargin;
 	public $mincredit;
@@ -21,16 +21,18 @@ class InputForm {
 	
 	function getSampleForm() {
 		return array (
+			"type"          => "house",	//house or condo			
 			"zip"          => "02460",				
 			"marketPrice"  => "300000",
 			"numberUnit"   => LoanerConst::ONE_UNIT,
-		    "type"		   => LoanerConst::PURCHASE,
+		    "purchaseType" => LoanerConst::PURCHASE,
 			"occType"	   => LoanerConst::PRIMARY_HOME,
 			"loanAmount"   => "240000",
 			"lockDays"	   => "45",
 			"creditScore"  => "740",
+			"loanName"	   => LoanerConst::FIXED30,
 			"confirmingmargin"	=> "1.0",
-			"jumbogmargin"		=> "0.5",
+			"jumbomargin"		=> "0.5",
 			"mincredit"	   => "0",
 			"closingOption"	=> LoanerConst::CLOSING_OPTION_NOPOINT_NOCLOSINGCOST 
 		);
@@ -53,6 +55,7 @@ class InputForm {
 				"lockDays"	    => $this->lockDays,
 				"creditScore"   => $this->creditScore,
 				"confirmingmargin"	=> $this->confirmingmargin,
+				"loanName"	    => $this->loanName,
 				"jumbogmargin"		=> $this->jumbogmargin,
 				"mincredit"	    => $this->mincredit,
 				"closingOption"	=> $this->closingOption
