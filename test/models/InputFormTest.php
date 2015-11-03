@@ -31,10 +31,10 @@
 	public function testGetSampleInputForm () {
 		$im = new InputForm;
 		$sampleArray = $im->getSampleForm();
-		$this->assertEquals( count($sampleArray) , 12);
+		$this->assertEquals( count($sampleArray) , 14);
 		$this->assertEquals($sampleArray['loanAmount'] , 240000 );
 		$this->assertEquals($sampleArray['occType'] ,  LoanerConst::PRIMARY_HOME );
-		$this->assertEquals($sampleArray['type'] , LoanerConst::PURCHASE );
+		$this->assertEquals($sampleArray['type'] , LoanerConst::HOUSE );
 	}
 }
 	
