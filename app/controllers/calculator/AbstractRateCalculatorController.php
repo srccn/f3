@@ -171,6 +171,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		Util::dump ( "Rate = " .$result[0]['rate'] ."  Credit = " .intVal($result[0]['credit']) . " LockDays = " .$result[0]['lockdays']  );
 		//var_dump($result);
 		return array (
+				"purchaser" => $this->purchaserName,
 				"rate" => $result[0]['rate'],
 				"credit" => intVal($result[0]['credit']) ,
 				"lockDays" => $result[0]['lockdays'],
@@ -185,7 +186,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 	
 		//set reference base
 		if (strpos($this->property->loanName, 'fix') !== FALSE) {
-			$baseRefName = "fix" ; //dixed bases
+			$baseRefName = "fix" ; //fixed bases
 		} else {
 			$baseRefName = "arm"; //arm based
 		}
@@ -213,7 +214,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 				$loanAmount,
 				$this->purchaserId ) as result ");
 	
-		if ( ! $result ) die("Failed to find SRP : " . "$this->property->zip  $this->property->loanAmount $loanTypeId ");
+		if ( ! $result ) die("Failed to find SRP : " . "$this->property->zip  $this->property->loanAmount $baseRef $this->purchaserId ");
 	
 		//get base loan type for srp calcualtion
 		$srp_calculation_loan_type_id = $this->getSRPLoanTypeId();
@@ -221,7 +222,6 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		//find SRP deduction from base if applicable:
 		$deduction = 0;
 		if ($srp_calculation_loan_type_id != $baseRef ) {
-	
 			$deduction = $this->runQuery("
 					select deduction as result
 					from purchaser_srp_loan_type_ref
@@ -236,7 +236,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		return floatval(Util::resultString($result)) - floatval(Util::resultString($deduction));
 	}
 	
-	private function getSRPLoanTypeId () {
+	public function getSRPLoanTypeId () {
 	
 		$loanTypeId = $this->property->loanTypeId;
 		//from loan_type_id to find loan type base id that is not condirminged for SRP calculation
@@ -344,13 +344,17 @@ abstract class AbstractRateCalculatorController extends BaseController {
 	}	
 	
 	public function calculteRate () {
+        $this->calculateAllAdjusts () ;
+		//Util::dump(" , margin=". $this->property->margin . "% ,Min Credit=$". Util::finacialNumber($this->property->mincredit) );
+        Util::dump("Find purchaser SRP", $this->getSRP());
+        return $this->getPurchaseRate();
+	}
+	
+	public function calculateAllAdjusts () {
 		Util::dump("ltv cc adjust", $this->getLtvCcAdj());
 		Util::dump("ltv cc pmi adjust",$this->getLtvCcPmiAdj());
 		Util::dump("ltv other adjust",$this->getLtvOtherAdj());
-		Util::dump("Find purchaser SRP", $this->getSRP());
-
-		//Util::dump(" , margin=". $this->property->margin . "% ,Min Credit=$". Util::finacialNumber($this->property->mincredit) );
-		return $this->getPurchaseRate();
+		return true;
 	}
 	
 	public function calculteSecondaryRate($secondaryAmount) {
