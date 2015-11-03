@@ -35,6 +35,15 @@ class AutoLoader {
 }
  
 spl_autoload_register(array('AutoLoader', 'loadClass'));
-
+AutoLoader::registerDirectory('app/models');
+AutoLoader::registerDirectory('app/controllers');
+AutoLoader::registerDirectory('app/controllers/calculator');
+AutoLoader::registerDirectory('app/controllers/loader');
+AutoLoader::registerDirectory('app/definitions');
+AutoLoader::registerDirectory('app/views');
+AutoLoader::registerDirectory('app/views/customer');
+$f3 = require('../fatfree-master/lib/base.php');
+$f3->config('config/config.ini');
+$f3->config('config/route.ini');
 
 ?>
