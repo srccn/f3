@@ -72,26 +72,16 @@ class  PropertyController extends BaseController {
 					$myRateCalculator->setTotalFee ( $totalFee );
 					$myresult = $myRateCalculator->calculteRate ();
 					
-					// $myRecord->loanAmount=$opt[1];
-					$myRecord1->rate = $myresult ['rate'];
-					$myRecord1->credit = $myresult ['credit'];
-					$myRecord1->lockDays = $myresult ['lockDays'];
-					$myRecord1->margin = $myresult ['margin'];
-					$myRecord1->minCredit = $myresult ['minCredit'];
+					$this->setResultRecord($myRecord1, $myresult);
 					
 					$myRecord2 = null;
 					if ($opt [2] > 0) {
 						Util::dump ( "=== Secondary loan" );
 					    $myRecord2 = clone $myRecord;
-						$myresult2 = $myRateCalculator->calculteSecondaryRate ( $opt [2] );
+						$myresult2 = $myRateCalculator->calculteSecondaryRate ($opt [2]);
 						
 						$myRecord2->loanAmount = $opt [2];
-						$myRecord2->purchaser = $myresult2 ['purchaser'];
-						$myRecord2->rate = $myresult2 ['rate'];
-						$myRecord2->credit = $myresult2 ['credit'];
-						$myRecord2->lockDays = $myresult2 ['lockDays'];
-						$myRecord2->margin = $myresult2 ['margin'];
-						$myRecord2->minCredit = $myresult2 ['minCredit'];
+						$this->setResultRecord($myRecord2, $myresult2) ;
 					}
 					$resultRecord = array (
 							"part1" => $myRecord1,
@@ -99,15 +89,26 @@ class  PropertyController extends BaseController {
 					);
 					// var_dump ($resultRecord );
 					array_push ( $this->viewRecords[$loanName], $resultRecord );
-					// echo "<hr>";
 				} //option
          	}//purchaser
-				$r = usort($this->viewRecords[$loanName], 'Util::cmp');
-				Util::dump("Calculate result for $loanName", $this->viewRecords[$loanName] );
+			$r = usort($this->viewRecords[$loanName], 'Util::cmp');
+			Util::dump("Calculate result for $loanName", $this->viewRecords[$loanName] );
      	} //loanName
      	//echo json_encode($this->viewRecords)."<br>";
      	$this->f3->set('SearchResults', $this->viewRecords);
      	$this->f3->set('ClosingOption', $this->closingOption);
+     	date_default_timezone_set('EST');
+     	$this->f3->set('searchStamp', date("m-d-Y, g:i a"));
+    }
+    
+    function setResultRecord (ViewRecord $record ,  array $arr) { //$record will be modified
+    	
+    	$record->purchaser = $arr ['purchaser'];
+    	$record->rate = $arr ['rate'];
+    	$record->credit = $arr ['credit'];
+    	$record->lockDays = $arr ['lockDays'];
+    	$record->margin = $arr ['margin'];
+    	$record->minCredit = $arr ['minCredit'];    	
     }
 
 }
