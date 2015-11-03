@@ -160,41 +160,41 @@ class LoanProperty extends BaseController {
 	function loanLimitCheck(){
 		//Amount checks
 		if ($this->loanAmount > LoanerConst::MAXIMUM_LIMIT_AMOUNT) {
-			echo "Loan Amount is greater than limit no SRP value. <br>";
+			Util::dump("Loan Amount is greater than limit no SRP value.");
 			return false;
 		}elseif ($this->loanAmount < LoanerConst::MIMIMUM_LIMIT_AMOUNT) {
-			echo "Loan Amount is less than mimimum limit no SRP value. <br>";
+			Util::dump("Loan Amount is less than mimimum limit no SRP value.");
 			return false;
 		}
 	
 		//Credit Score and LTV checks
 		if ($this->purchaseType == LoanerConst::PURCHASE ) {
 			if ($this->creditScore < LoanerConst::MIMIMUM_CREDIT_SCORE_PURCHASE) {
-				echo "Credit score does not meet mimimun for purchase. <br>";
+				Util::dump("Credit score does not meet mimimun for purchase.");
 				return false;
 			}
-			if ($this->LTV * 100 > LoanerConst::MAXMUM_LTV_PURCHASE) {
-				echo "Failed LTV check for purchase. <br>";
+			if ($this->LTV * 100 >= LoanerConst::MAXMUM_LTV_PURCHASE) {
+				Util::dump("Failed LTV check for purchase.");
 				return false;
 			}
 		}
 		if ($this->purchaseType == LoanerConst::REFINANCE) {
 			if ($this->creditScore < LoanerConst::MIMIMUM_CREDIT_SCORE_REFINANCE) {
-				echo "Credit score does not meet mimimun for refinance. <br>";
+				Util::dump( "Credit score does not meet mimimun for refinance.");
 				return false;
 			}
 			if ($this->LTV * 100 > LoanerConst::MAXMUM_LTV_REFINANCE) {
-				echo "Failed LTV check for refinance. <br>";
+				Util::dump(  "Failed LTV check for refinance.");
 				return false;
 			}
 		}
 		if ($this->purchaseType == LoanerConst::COREFINANCE ) {
 			if ($this->creditScore < LoanerConst::MIMIMUM_CREDIT_SCORE_COREFINANCE) {
-				echo "Credit score does not meet mimimun for cash out refinance. <br>";
+				Util::dump("Credit score does not meet mimimun for cash out refinance.");
 				return false;
 			}
 			if ($this->LTV * 100 > LoanerConst::MAXMUM_LTV_COREFINANCE) {
-				echo "Failed LTV check for cahs out purchase. <br>";
+				Util::dump( "Failed LTV check for cahs out purchase.");
 				return false;
 			}
 		}
@@ -212,11 +212,11 @@ class LoanProperty extends BaseController {
 		 
 		switch ( $this->isConfirming ) {
 			case 0:
-				$option = [ 1 , 416999, $this->loanAmount - 416999 ];
+				$option = [ 1 , 417000, $this->loanAmount - 417000 ];
 				array_push($options, $option);
 				if ( $this->confirmingUpperLimit > 417000 ) {
-					$option = [ 2, $this->confirmingUpperLimit -1 ,
-							$this->loanAmount - $this->confirmingUpperLimit + 1  ];
+					$option = [ 2, $this->confirmingUpperLimit  ,
+							$this->loanAmount - $this->confirmingUpperLimit   ];
 					array_push($options, $option);
 				}
 				break;
@@ -274,7 +274,7 @@ class LoanProperty extends BaseController {
 		echo "<hr>";
 	}
 
-	private function setTest () {
+	private function setTest_obsolet () {
 		$this->numberUnit='two_unit';
 		$this->type='house';
 		$this->occType='primary';
