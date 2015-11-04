@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.46, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.14, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: loaner
 -- ------------------------------------------------------
--- Server version	5.6.19-0ubuntu0.14.04.1
+-- Server version	5.6.17
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -64,7 +64,7 @@ CREATE TABLE `adj_ltv_cc_pmi` (
 
 LOCK TABLES `adj_ltv_cc_pmi` WRITE;
 /*!40000 ALTER TABLE `adj_ltv_cc_pmi` DISABLE KEYS */;
-INSERT INTO `adj_ltv_cc_pmi` VALUES (1,85,620,-1.000),(1,90,620,-1.750),(1,95,620,-2.500),(2,95,0,-3.000),(2,95,620,-2.750),(2,95,640,-2.375),(2,95,660,-2.125),(2,95,680,-1.750),(2,95,700,-1.250),(2,95,720,-1.250),(2,95,740,-1.000),(3,85,620,-1.000),(3,90,620,-1.750),(3,95,620,-2.500);
+INSERT INTO `adj_ltv_cc_pmi` VALUES (1,85,720,-1.000),(1,90,720,-1.750),(1,95,720,-2.500),(2,95,0,-3.000),(2,95,620,-2.750),(2,95,640,-2.375),(2,95,660,-2.125),(2,95,680,-1.750),(2,95,700,-1.250),(2,95,720,-1.250),(2,95,740,-1.000),(3,85,620,-1.000),(3,90,620,-1.750),(3,95,620,-2.500);
 /*!40000 ALTER TABLE `adj_ltv_cc_pmi` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -306,7 +306,7 @@ CREATE TABLE `def_property_unit` (
 
 LOCK TABLES `def_property_unit` WRITE;
 /*!40000 ALTER TABLE `def_property_unit` DISABLE KEYS */;
-INSERT INTO `def_property_unit` VALUES (5,'condo'),(4,'four_unit'),(1,'one_unit'),(3,'three_unit'),(2,'two_unit');
+INSERT INTO `def_property_unit` VALUES (4,'four_unit'),(1,'one_unit'),(3,'three_unit'),(2,'two_unit');
 /*!40000 ALTER TABLE `def_property_unit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -393,39 +393,6 @@ INSERT INTO `fee_recording_other` VALUES (1,'MA',65,30,30),(2,'NH',65,30,30),(3,
 UNLOCK TABLES;
 
 --
--- Table structure for table `fees`
---
-
-DROP TABLE IF EXISTS `fees`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fees` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `credit_report` decimal(10,2) DEFAULT NULL,
-  `appraisal` decimal(10,2) DEFAULT NULL,
-  `legal` decimal(10,2) DEFAULT NULL,
-  `title_search` decimal(10,2) DEFAULT NULL,
-  `title_insurance` decimal(10,2) DEFAULT NULL,
-  `recording` decimal(10,2) DEFAULT NULL,
-  `inspection` decimal(10,2) DEFAULT NULL,
-  `survey` decimal(10,2) DEFAULT NULL,
-  `underwriting` decimal(10,2) DEFAULT NULL,
-  `tax_service` decimal(10,2) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `fees`
---
-
-LOCK TABLES `fees` WRITE;
-/*!40000 ALTER TABLE `fees` DISABLE KEYS */;
-INSERT INTO `fees` VALUES (1,30.00,400.00,500.00,200.00,800.00,50.00,400.00,350.00,250.00,80.00);
-/*!40000 ALTER TABLE `fees` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `loan_type`
 --
 
@@ -475,6 +442,39 @@ LOCK TABLES `lock_days` WRITE;
 /*!40000 ALTER TABLE `lock_days` DISABLE KEYS */;
 INSERT INTO `lock_days` VALUES (7,7),(15,15),(30,30),(45,45),(60,60),(75,75);
 /*!40000 ALTER TABLE `lock_days` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `obsolete_fees`
+--
+
+DROP TABLE IF EXISTS `obsolete_fees`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `obsolete_fees` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `credit_report` decimal(10,2) DEFAULT NULL,
+  `appraisal` decimal(10,2) DEFAULT NULL,
+  `legal` decimal(10,2) DEFAULT NULL,
+  `title_search` decimal(10,2) DEFAULT NULL,
+  `title_insurance` decimal(10,2) DEFAULT NULL,
+  `recording` decimal(10,2) DEFAULT NULL,
+  `inspection` decimal(10,2) DEFAULT NULL,
+  `survey` decimal(10,2) DEFAULT NULL,
+  `underwriting` decimal(10,2) DEFAULT NULL,
+  `tax_service` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `obsolete_fees`
+--
+
+LOCK TABLES `obsolete_fees` WRITE;
+/*!40000 ALTER TABLE `obsolete_fees` DISABLE KEYS */;
+INSERT INTO `obsolete_fees` VALUES (1,30.00,400.00,500.00,200.00,800.00,50.00,400.00,350.00,250.00,80.00);
+/*!40000 ALTER TABLE `obsolete_fees` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -961,4 +961,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-11-02 22:39:33
+-- Dump completed on 2015-11-04 17:35:06
