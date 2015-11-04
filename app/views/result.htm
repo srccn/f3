@@ -2,7 +2,7 @@
 <head>
         <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <script src="lib/js/front.js"></script>
+        <script src="lib/js/result.js"></script>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" media="screen" />
 
         <style>
@@ -11,6 +11,7 @@
             .resultBlock {min-width: 250px; display:block; float:left; margin:2px; margin-bottom:20px; margin-right:20px; padding:2px; background-color:#eeeeee;}
             .loanName {color:red;font-size:120%; font-style:bold;text-align:center;text-decoration: underline;}
             .bottom-line { border-bottom:black;border-bottom-style: solid;padding-top:0px;padding-bottom:5px}
+            .hiddenDiv { display:none}
             .single-line { border-bottom:black;
                            border-bottom-style: solid;
                            padding-top:5px;
@@ -27,8 +28,34 @@
         </style>
 </head>
 <body >
-   <div style="margin:15px">
-   <div class="closingoption">
+   <p>Property {{@propertyLabel}} <button id="btnPropertyDetails" type="button" class="btn btn-link">Property Detail</button> </p>
+   <div id="divLoanProperty" name="divLoanProperty" class="hiddenDiv">
+       <table style="border-collapse: collapse;"">
+           <repeat group="{{ @loanProperty }}" key= "{{@ikey}}" value="{{ @ivalue }}">
+               <tr>
+                   <td>{{@ikey}}</td>
+                   <td>{{@ivalue}}</td>
+               </tr>
+           </repeat>
+       </table>
+   </div>
+   <div id="fees", name="fees">
+       <p>Total Fees {{@totalFee}} <button id="btnFeeDetails" type="button" class="btn btn-link">Fee Detail</button> </p>
+       <div id="divFeeDetails" class="hiddenDiv">
+           <table style="border-collapse: collapse;"">
+               <repeat group="{{ @fees }}" key= "{{@ikey}}" value="{{ @ifee }}">
+                   <tr>
+                       <td> {{@ikey}} </td>
+                       <td> {{@ifee}} </td>
+                   </tr>     
+               </repeat>
+           </table>
+       </div>
+   </div>
+
+
+   <div id="rateArea" style="margin:15px">
+   <div id="closingOption" class="closingoption">
        {{@ClosingOption}} <span class="timestamp"> {{@searchStamp}} EST</span>
    </div>
    <div id="fixed30Panel" class="resultBlock" >

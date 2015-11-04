@@ -28,12 +28,6 @@ class LoanProperty extends BaseController {
 	public $loanLimitCheck;
 	public $margin;
 	public $loanAmountOptions = [];
-	//	protected $isSupperConfirming;
-	
-	//variables hold calculation
-	//protected $fees;     //hold fees
-	//protected $adjusts;  //hold adjusts
-	
 	
 	public function __construct($inputs) {
 		parent::__construct();
@@ -274,19 +268,26 @@ class LoanProperty extends BaseController {
 		echo "<hr>";
 	}
 
-	private function setTest_obsolet () {
-		$this->numberUnit='two_unit';
-		$this->type='house';
-		$this->occType='primary';
-		$this->purchaseType='purchase';
-		$this->loanAmount=700000;
-		$this->zip='02460';
-		$this->marketPrice=800000;
-		$this->creditScore=780;
-		$this->loanName="fixed30";
-		$this->state = $this->getState();
-	
+	public function getShowArray () {
+		return array (
+		 "Number of Unit" => $this->numberUnit,
+		 "Property type"  => $this->type ,
+		 "Occupancy"      => $this->occType,
+		 "Purpose"        => $this->purchaseType,
+		 "Loan amount"    => $this->loanAmount,
+		 "Zip code"       => $this->zip,
+		 "Marcket price"  => $this->marketPrice,
+		 "Credit Score"   => $this->creditScore,
+		 //"Loan Name"      => $this->loanName,
+		 "Lock Days"      => $this->lockDays,
+		);		
 	}
+
+	public function getPropertLabel(){
+		return "$this->loanAmount / $this->marketPrice at zip $this->zip";
+
+	}
+	
 }
 
 ?>

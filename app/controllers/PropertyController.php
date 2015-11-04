@@ -31,15 +31,28 @@ class  PropertyController extends BaseController {
 	
     function searchRate () {
     	
+    	//create LoanProperty base on inputs
     	$property = new LoanProperty($this->inputs);
-    	$property->printProperty();
+    	$this->f3->set('loanProperty', $property->getShowArray());
+    	$this->f3->set('propertyLabel', $property->getPropertLabel());
+    	 
+    	//set Closing options and time stamp
     	$this->closingOption = $property->getClosingOption();
+    	$this->f3->set('ClosingOption', $this->closingOption);
+    	date_default_timezone_set('EST');
+    	$this->f3->set('searchStamp', date("m-d-Y g:i a"));
+
+    	//find loan amount options
     	$myoptions = $property->loanAmountOptions;
 
+    	//create fee calculator for property, set totalfee and fee details
      	$myFeeCalculator = new FeeCalculator($property);
      	$totalFee = $myFeeCalculator->getTotalFees();
+     	$this->f3->set('totalFee', $totalFee);
+     	$this->f3->set('fees', $myFeeCalculator->getFeesArray());
      	//echo "fees : " . $totalFee;
     	
+     	//get all purchaser and loan names
      	$purchasers= $this->purchasers;
      	$loanNames = $this->loanNames;
 
@@ -96,7 +109,6 @@ class  PropertyController extends BaseController {
      	} //loanName
      	//echo json_encode($this->viewRecords)."<br>";
      	$this->f3->set('SearchResults', $this->viewRecords);
-     	$this->f3->set('ClosingOption', $this->closingOption);
      	date_default_timezone_set('EST');
      	$this->f3->set('searchStamp', date("m-d-Y g:i a"));
     }

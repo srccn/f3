@@ -145,8 +145,12 @@ class FeeCalculator extends BaseController {
 		Util::dump("Recording other fee", $this->getRecordingOtherFee());
 		Util::dump("Attorney fee",        $this->getAttoneyFee());
 		Util::dump("Fee Details ",        $this->fees);
-		echo "Total Fee is " . Util::getSumValue($this->fees) . "<hr>";
+		Util::dump("Total Fee is " ,      Util::getSumValue($this->fees) );
 		return 	intVal (Util::getSumValue($this->fees)) ;	
+	}
+	
+	public function getFeesArray() {
+		return $this->fees;
 	}
 	
 }
