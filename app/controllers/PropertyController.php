@@ -12,7 +12,7 @@ class  PropertyController extends BaseController {
 	function __construct($inputForm) {
 		parent::__construct();
 		$this->inputs = $inputForm;
-
+		
 		$this->setPurchasers(["BBT", "BOKF", "WELLSFARGO"]);
 		$this->setLoanNames([ LoanerConst::FIXED30,
      			              LoanerConst::FIXED15,
@@ -98,7 +98,7 @@ class  PropertyController extends BaseController {
      	$this->f3->set('SearchResults', $this->viewRecords);
      	$this->f3->set('ClosingOption', $this->closingOption);
      	date_default_timezone_set('EST');
-     	$this->f3->set('searchStamp', date("m-d-Y, g:i a"));
+     	$this->f3->set('searchStamp', date("m-d-Y g:i a"));
     }
     
     function setResultRecord (ViewRecord $record ,  array $arr) { //$record will be modified
