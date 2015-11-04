@@ -65,7 +65,7 @@ class myClass extends BaseController {
     			            (name, email,password,regdate)
     			VALUES ('$name' , '$email', '$passwrod', $timeStamp)
     			" ;
-    	Util::dump($query);
+    	
     	$this->runQuery($query);
     	
     	$this->f3->SESSION['username'] = $name;

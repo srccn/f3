@@ -172,7 +172,6 @@ abstract class AbstractRateCalculatorController extends BaseController {
 				order by rate asc
 				limit 1
 				";
-		Util::dump("query", $query . "<br>");
 		$result = $this->runQuery($query);
 		Util::dump ( "Rate = " .$result[0]['rate'] ."  Credit = " .intVal($result[0]['credit']) . " LockDays = " .$result[0]['lockdays']  );
 		//var_dump($result);
@@ -336,7 +335,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 				";
 	
 	    }
-		Util::dump("Query", $query );
+		
 		$result = $this->runQuery($query);
 		//var_dump($result) ;
 		return $result[0]['result'];

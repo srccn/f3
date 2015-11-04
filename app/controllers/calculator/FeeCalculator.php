@@ -59,7 +59,8 @@ class FeeCalculator extends BaseController {
 	
 		$state = $this->property->state;
 		$purchaserType = $this->property->purchaseType;
-		$result = $this->runQuery("select $purchaserType as result from fee_attorney where state='$state'");
+		$query = "select $purchaserType as result from fee_attorney where state='$state'";
+		$result = $this->runQuery($query);
 		if ( ! $result ) {
 			$returnVal =  490 * 2; //double default for unlisted state
 		} else {

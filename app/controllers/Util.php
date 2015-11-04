@@ -28,12 +28,20 @@ class Util extends BaseController {
     static function dump($message, $toDump = null) {
     	
     	$f3 = Base::instance();
-    	if ( $f3->get('DETAIL') > 0 ) {
-            echo $message . " : " ;
-            if ( $toDump != null ) {
+        if ( $toDump != null ) {
+            	ob_start();
             	var_dump($toDump);
-            	 
-            }
+            	$content = ob_get_clean();
+           	  //var_dump($toDump);
+        } else {
+            	$content = "<br>";
+        }
+        if ($f3->get('LOG_OUTPUT')) {
+            $logger = new Log($f3->get('OUTPUT_LOGFILE')) ;
+            $logger->write ($message . " : " .$content);
+        }
+    	if ( $f3->get('SHOW_DETAIL') > 0 ) {
+            echo $message . " : " . $content ;
     	}
     }
 

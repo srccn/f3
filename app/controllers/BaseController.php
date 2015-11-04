@@ -4,7 +4,7 @@ class BaseController {
 
 	protected $f3;
 	protected $db;
-	protected $logger;
+	protected $queryLogger;
 		
     function __construct () {
 		$f3 = Base::instance();
@@ -16,26 +16,26 @@ class BaseController {
 		    die("Database object createion failed.");
 		}
 		
-		$logger = new Log('error.log');
-		
 		$this->f3 = $f3;
 		$this->db = $db;
-		$this->logger = $logger;
+		$this->queryLogger = new Log($f3->get('QUERY_LOGFILE'));
 	}
 	
 	function runQuery($query){
 		$result = null;
 		try {
-		    $result = $this->db->exec($query);
+			if ( $this->f3->get('LOG_QUERY') ) {
+		        $this->queryLogger->write(" --- Query : " . $query );
+			}
+			$result = $this->db->exec($query);
 		}catch (\Exception $e) {
-			$this->logger->write($e->getMessage());
-			echo ("Exception when executing query : " . $query ."<br>");
+			$this->queryLogger->write($e->getMessage());
 		}
 		return $result;
 	}
 	
 	function beforeRoute() {
-
+        ;
 	}
 	
 	function afterRoute() {
