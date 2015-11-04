@@ -87,6 +87,10 @@ class myClass extends BaseController {
     function calculate() {
         $myRequest = $this->f3->get('REQUEST');
         
+        if (! isset($myRequest['submit'])) { //in case call calculate directly, redirect to front
+        	$this->f3->reroute('/front');
+        }
+        
         $myProperty = new PropertyController($myRequest);
         $myProperty->searchRate();
         
