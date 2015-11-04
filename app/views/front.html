@@ -11,7 +11,7 @@
         <div style="float: left; margin:10px;">
             <h3>Mortgage Rate Search</h3>
             <hr>
-            <form name="inputForm" type="post" action="/f3/calculate">
+            <form name="inputForm" method="post" action="/f3/calculate">
                 <label for="type">Property Type</label>
                   <input type="radio" id="type" name="type" value="house" checked>House
                  <label for="numberUnit">Unit</label>
@@ -88,7 +88,7 @@
                     <label for="JumboMargin"> NonConfirming  Margin</label>
                     <input type="text" name="jumbomargin" id="jumbomargin" value="0.5" size='3'>% <br>
                 </div>
-                <input type=submit id="submit" value="Search Mortgage">
+                <input type=submit id="submit" name="submit" value="Search Mortgage">
 
             </form>
         </div>
