@@ -59,15 +59,17 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		
 		$LTV = $this->property->LTV;
 		$creditScore = $this->property->creditScore ;
-		$result = $this->runQuery(
-				"select adjust as result
-				from   adj_ltv_cc_pmi
-				where  ltv_value <= $LTV * 100 and
-				cc_value  < $creditScore and
-				purchaser_id = $this->purchaserId
-				order by ltv_value asc, cc_value desc
-				limit 1
-				");
+		//echo $LTV . " and ". $creditScore ;
+		
+		$query = "select adjust as result
+		            from   adj_ltv_cc_pmi
+		           where  ltv_value <= $LTV * 100 and
+		                  cc_value  > $creditScore and
+		                  purchaser_id = $this->purchaserId
+		        order by ltv_value desc, cc_value asc
+		           limit 1
+		         ";		
+		$result = $this->runQuery($query);
 		
 		if (! $result ) {
 		  $returnVal =  0;
@@ -124,8 +126,12 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		return $returnVal;		
 	}
 	
+	public function getTotalAdjusts(){
+		return Util::getSumValue($this->adjusts);
+	}
+	
 	public function getPurchaseRateType1() { //look up purchase table 
-		$adjust = Util::getSumValue($this->adjusts);
+		$adjust = $this->getTotalAdjusts();
 		// echo $this->getSRP($purchaserId) . "<br>";
 		$SRP = $this->getSRP();
 		//echo "SRP is $SRP <br>" ;
