@@ -82,6 +82,14 @@ class Util extends BaseController {
     	return ( ($a['part1']->rate) < ($b['part1']->rate) ) ? -1:1 ;
     }
     
+    static function calMonthlyPayment($loanAmount,$rate, $numYears) {
+    	$r = $rate / (12 * 100) ;
+    	$n = 12 * $numYears ;
+    	
+    	$monthlyPayment = ($r * $loanAmount) / (1- pow((1+$r), -$n)) ;
+    	
+    	return round ( $monthlyPayment, 2 );
+    }
 }
 
 ?>

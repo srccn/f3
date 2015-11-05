@@ -8,17 +8,19 @@
         <style>
             .closingoption{font-size: 2em; text-align:center; background-color:#111111; color:#eeeeee; margin-bottom:15px; }
             .timestamp{font-size: 0.5em; background-color:#111111; color:#eeeeee; margin-bottom:15px; }
-            .resultBlock {min-width: 250px; display:block; float:left; margin:2px; margin-bottom:20px; margin-right:20px; padding:2px; background-color:#eeeeee;}
+            .resultBlock {min-width: 350px; display:block; float:left; margin:2px; margin-bottom:20px; margin-right:20px; padding:2px; background-color:#eeeeee;}
             .loanName {color:red;font-size:120%; font-style:bold;text-align:center;text-decoration: underline;}
             .bottom-line { border-bottom:black;border-bottom-style: solid;padding-top:0px;padding-bottom:5px}
+            .text-cell { text-align: left}
             .hiddenDiv { display:none}
             .single-line { border-bottom:black;
                            border-bottom-style: solid;
                            padding-top:5px;
                            padding-bottom:5px;
-                           background-color:lightyellow;
+                           background-color:#ff8;
                          }
-            td {padding-top:5px;padding-right:20px}
+            td {padding-top:5px;padding-right:20px;text-align:right}
+            th {padding-right: 20px; text-align:left; border-bottom:black;border-bottom-style: solid;}
             hr { display: block;
                  margin:0; 
                  border-style: inset;   
@@ -34,13 +36,13 @@
            <repeat group="{{ @loanProperty }}" key= "{{@ikey}}" value="{{ @ivalue }}">
                <tr>
                    <td>{{@ikey}}</td>
-                   <td>{{@ivalue}}</td>
+                   <td>{{ @ivalue }}</td>
                </tr>
            </repeat>
        </table>
    </div>
    <div id="fees", name="fees">
-       <p>Total Fees {{@totalFee}} <button id="btnFeeDetails" type="button" class="btn btn-link">Fee Detail</button> </p>
+       <p>Closing Cost : {{@totalFee}} <button id="btnFeeDetails" type="button" class="btn btn-link">Detail</button> </p>
        <div id="divFeeDetails" class="hiddenDiv">
            <table style="border-collapse: collapse;"">
                <repeat group="{{ @fees }}" key= "{{@ikey}}" value="{{ @ifee }}">
@@ -61,30 +63,44 @@
    <div id="fixed30Panel" class="resultBlock" >
    <p class="loanName" id="fixed30">30 year fixed</p>
    <table style="border-collapse: collapse;"">
+       <tr>
+           <th>Lender</th>
+           <th>Amount</th>
+           <th>Rate</th>
+           <th>Credit</th>
+           <th>LockDays</th>
+           <th>MonPay</th>
+           <th>TotalPay</th>
+       </tr>
    <repeat group="{{ @SearchResults['fixed30'] }}" value="{{ @SearchResult }}">
        <check if="{{ (@SearchResult['part2']->loanAmount) != null }}">
            <true>       
            <tr>
-               <td rowspan="2" class="bottom-line" > {{ (@SearchResult['part1']->purchaser) }} </td> 
+               <td rowspan="2" class="bottom-line text-cell" > {{ (@SearchResult['part1']->purchaser) }} </td> 
                <td > {{ (@SearchResult['part1']->loanAmount) }}</td>
                <td > {{ (@SearchResult['part1']->rate) }}      </td>
                <td > {{ (@SearchResult['part1']->credit) }}    </td>
                <td > {{ (@SearchResult['part1']->lockDays) }}    </td>
+               <td > {{ (@SearchResult['part1']->monthlyPayment) }}   </td>
+               <td rowspan="2" class="bottom-line"> {{ (@SearchResult['part1']->monthlyPayment) + (@SearchResult['part2']->monthlyPayment) }}   </td>
            </tr>
            <tr>
                <td class="bottom-line"> {{ (@SearchResult['part2']->loanAmount) }}</td>
                <td class="bottom-line"> {{ (@SearchResult['part2']->rate) }}      </td>
                <td class="bottom-line"> </td>
                <td class="bottom-line"> </td>
+               <td class="bottom-line"> {{ (@SearchResult['part2']->monthlyPayment) }} </td>
            </tr>
            </true>
            <false>
            <tr>
-               <td class="single-line"> {{ (@SearchResult['part1']->purchaser) }} </td> 
+               <td class="single-line text-cell"> {{ (@SearchResult['part1']->purchaser) }} </td> 
                <td class="single-line"> {{ (@SearchResult['part1']->loanAmount) }}</td>
                <td class="single-line"> {{ (@SearchResult['part1']->rate) }}      </td>
                <td class="single-line"> {{ (@SearchResult['part1']->credit) }}    </td>
                <td class="single-line"> {{ (@SearchResult['part1']->lockDays) }}    </td>
+               <td class="single-line"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
+               <td class="single-line"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
            </tr>
            </false>
        </check>
@@ -95,30 +111,44 @@
    <div id="fixed15Panel" class="resultBlock">
    <p class='loanName' id="15fixed">15 year fixed</p>
    <table style="border-collapse: collapse;"">
+       <tr>
+           <th>Lender</th>
+           <th>Amount</th>
+           <th>Rate</th>
+           <th>Credit</th>
+           <th>LockDays</th>
+           <th>MonPay</th>
+           <th>TotalPay</th>
+       </tr>
    <repeat group="{{ @SearchResults['fixed15'] }}" value="{{ @SearchResult }}">
        <check if="{{ (@SearchResult['part2']->loanAmount) != null }}">
            <true>       
            <tr>
-               <td rowspan="2" class="bottom-line"> {{ (@SearchResult['part1']->purchaser) }} </td> 
+               <td rowspan="2" class="bottom-line text-cell" > {{ (@SearchResult['part1']->purchaser) }} </td> 
                <td > {{ (@SearchResult['part1']->loanAmount) }}</td>
                <td > {{ (@SearchResult['part1']->rate) }}      </td>
                <td > {{ (@SearchResult['part1']->credit) }}    </td>
                <td > {{ (@SearchResult['part1']->lockDays) }}    </td>
+               <td > {{ (@SearchResult['part1']->monthlyPayment) }}   </td>
+               <td rowspan="2" class="bottom-line"> {{ (@SearchResult['part1']->monthlyPayment) + (@SearchResult['part2']->monthlyPayment) }}   </td>
            </tr>
            <tr>
                <td class="bottom-line"> {{ (@SearchResult['part2']->loanAmount) }}</td>
                <td class="bottom-line"> {{ (@SearchResult['part2']->rate) }}      </td>
                <td class="bottom-line"> </td>
                <td class="bottom-line"> </td>
+               <td class="bottom-line"> {{ (@SearchResult['part2']->monthlyPayment) }} </td>
            </tr>
            </true>
            <false>
            <tr>
-               <td class="single-line"> {{ (@SearchResult['part1']->purchaser) }} </td> 
+               <td class="single-line text-cell"> {{ (@SearchResult['part1']->purchaser) }} </td> 
                <td class="single-line"> {{ (@SearchResult['part1']->loanAmount) }}</td>
                <td class="single-line"> {{ (@SearchResult['part1']->rate) }}      </td>
                <td class="single-line"> {{ (@SearchResult['part1']->credit) }}    </td>
                <td class="single-line"> {{ (@SearchResult['part1']->lockDays) }}    </td>
+               <td class="single-line"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
+               <td class="single-line"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
            </tr>
            </false>
        </check>
@@ -129,31 +159,45 @@
    <!--  <div style="clear:both;></div> -->
    <div id="arm71anel" class="resultBlock" >
    <p class="loanName" id="arm71">71 ARM</p>
-    <table style="border-collapse: collapse;"">
+   <table style="border-collapse: collapse;"">
+       <tr>
+           <th>Lender</th>
+           <th>Amount</th>
+           <th>Rate</th>
+           <th>Credit</th>
+           <th>LockDays</th>
+           <th>MonPay</th>
+           <th>TotalPay</th>
+       </tr>
    <repeat group="{{ @SearchResults['arm71'] }}" value="{{ @SearchResult }}">
        <check if="{{ (@SearchResult['part2']->loanAmount) != null }}">
            <true>       
            <tr>
-               <td rowspan="2" class="bottom-line" > {{ (@SearchResult['part1']->purchaser) }} </td> 
+               <td rowspan="2" class="bottom-line text-cell" > {{ (@SearchResult['part1']->purchaser) }} </td> 
                <td > {{ (@SearchResult['part1']->loanAmount) }}</td>
                <td > {{ (@SearchResult['part1']->rate) }}      </td>
                <td > {{ (@SearchResult['part1']->credit) }}    </td>
                <td > {{ (@SearchResult['part1']->lockDays) }}    </td>
+               <td > {{ (@SearchResult['part1']->monthlyPayment) }}   </td>
+               <td rowspan="2" class="bottom-line"> {{ (@SearchResult['part1']->monthlyPayment) + (@SearchResult['part2']->monthlyPayment) }}   </td>
            </tr>
            <tr>
                <td class="bottom-line"> {{ (@SearchResult['part2']->loanAmount) }}</td>
                <td class="bottom-line"> {{ (@SearchResult['part2']->rate) }}      </td>
                <td class="bottom-line"> </td>
                <td class="bottom-line"> </td>
+               <td class="bottom-line"> {{ (@SearchResult['part2']->monthlyPayment) }} </td>
            </tr>
            </true>
            <false>
            <tr>
-               <td class="single-line"> {{ (@SearchResult['part1']->purchaser) }} </td> 
+               <td class="single-line text-cell"> {{ (@SearchResult['part1']->purchaser) }} </td> 
                <td class="single-line"> {{ (@SearchResult['part1']->loanAmount) }}</td>
                <td class="single-line"> {{ (@SearchResult['part1']->rate) }}      </td>
                <td class="single-line"> {{ (@SearchResult['part1']->credit) }}    </td>
                <td class="single-line"> {{ (@SearchResult['part1']->lockDays) }}    </td>
+               <td class="single-line"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
+               <td class="single-line"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
            </tr>
            </false>
        </check>
@@ -164,30 +208,44 @@
    <div id="arm51Panel" class="resultBlock">
    <p class="loanName" id="arm51">51 ARM</p>
    <table style="border-collapse: collapse;"">
+       <tr>
+           <th>Lender</th>
+           <th>Amount</th>
+           <th>Rate</th>
+           <th>Credit</th>
+           <th>LockDays</th>
+           <th>MonPay</th>
+           <th>TotalPay</th>
+       </tr>
    <repeat group="{{ @SearchResults['arm51'] }}" value="{{ @SearchResult }}">
        <check if="{{ (@SearchResult['part2']->loanAmount) != null }}">
            <true>       
            <tr>
-               <td rowspan="2" class="bottom-line"> {{ (@SearchResult['part1']->purchaser) }} </td> 
+               <td rowspan="2" class="bottom-line text-cell" > {{ (@SearchResult['part1']->purchaser) }} </td> 
                <td > {{ (@SearchResult['part1']->loanAmount) }}</td>
                <td > {{ (@SearchResult['part1']->rate) }}      </td>
                <td > {{ (@SearchResult['part1']->credit) }}    </td>
                <td > {{ (@SearchResult['part1']->lockDays) }}    </td>
+               <td > {{ (@SearchResult['part1']->monthlyPayment) }}   </td>
+               <td rowspan="2" class="bottom-line"> {{ (@SearchResult['part1']->monthlyPayment) + (@SearchResult['part2']->monthlyPayment) }}   </td>
            </tr>
            <tr>
                <td class="bottom-line"> {{ (@SearchResult['part2']->loanAmount) }}</td>
                <td class="bottom-line"> {{ (@SearchResult['part2']->rate) }}      </td>
                <td class="bottom-line"> </td>
                <td class="bottom-line"> </td>
+               <td class="bottom-line"> {{ (@SearchResult['part2']->monthlyPayment) }} </td>
            </tr>
            </true>
            <false>
-           <tr>    
-               <td class="single-line"> {{ (@SearchResult['part1']->purchaser) }} </td> 
+           <tr>
+               <td class="single-line text-cell"> {{ (@SearchResult['part1']->purchaser) }} </td> 
                <td class="single-line"> {{ (@SearchResult['part1']->loanAmount) }}</td>
                <td class="single-line"> {{ (@SearchResult['part1']->rate) }}      </td>
                <td class="single-line"> {{ (@SearchResult['part1']->credit) }}    </td>
                <td class="single-line"> {{ (@SearchResult['part1']->lockDays) }}    </td>
+               <td class="single-line"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
+               <td class="single-line"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
            </tr>
            </false>
        </check>

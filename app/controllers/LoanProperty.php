@@ -25,6 +25,7 @@ class LoanProperty extends BaseController {
 	public $confirmingUpperLimit;
 	public $isConfirming;
 	public $loanTypeId;
+	public $loanTerm;
 	public $loanLimitCheck;
 	public $margin;
 	public $loanAmountOptions = [];
@@ -133,7 +134,24 @@ class LoanProperty extends BaseController {
 		if ( !$result ) die("Failed to find loan type : " . $this->loanName);
 	    $this->loanTypeId = intval (Util::resultString($result)) ;
 	    return $this->loanTypeId;
-	}	
+	}
+	
+	public function setLoanTerm () {
+		if ($this->loanName == "all") {
+			$this->loanTerm = null; //will be set later.
+			return null;
+		}
+		
+		$result = $this->runQuery("
+				select type_term as result
+				from loan_type
+				where type_variable_name like '%$this->loanName%' 	"
+		);
+		
+		if ( !$result ) die("Failed to find loan term : " . $this->loanName);
+		$this->loanTerm = intval (Util::resultString($result)) ;
+		return $this->loanTerm;		
+	}
 	
 	private function setMargin() {
 		switch ($this->isConfirming) {
@@ -231,6 +249,7 @@ class LoanProperty extends BaseController {
 		$this->setLoanLimitByZipCode();
 		$this->setIsConfirming();
 		$this->setLoanTypeId();
+		$this->setLoanTerm();
 		$this->setMargin();
 		$this->loanLimitCheck = $this->loanLimitCheck();
 		$this->loanAmountOptions = $this->calculateLoanOptions();

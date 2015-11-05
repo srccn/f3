@@ -175,13 +175,19 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		$result = $this->runQuery($query);
 		Util::dump ( "Rate = " .$result[0]['rate'] ."  Credit = " .intVal($result[0]['credit']) . " LockDays = " .$result[0]['lockdays']  );
 		//var_dump($result);
+		
+		if (!$result) {
+			return null;
+		}
+		
 		return array (
 				"purchaser" => $this->purchaserName,
 				"rate" => $result[0]['rate'],
 				"credit" => intVal($result[0]['credit']) ,
 				"lockDays" => $result[0]['lockdays'],
 				"margin"    => 	$margin,
-				"minCredit"	=>  $minCredit
+				"minCredit"	=>  $minCredit,
+				"monthlyPayment" => Util::calMonthlyPayment($loanAmount, $result[0]['rate'], $this->property->loanTerm)
 		);
 	}	
 
@@ -363,13 +369,14 @@ abstract class AbstractRateCalculatorController extends BaseController {
 	}
 	
 	public function calculteSecondaryRate($secondaryAmount) {
-		
+		$rate = 4.49;
 		Util::dump( "Secondary loan $secondaryAmount at hard coded Rate 4.49 % ");
 		return array (
 				"purchaser" => "PartiotsBank",
-				"rate" => 4.49 ,
+				"rate" => $rate ,
 				"credit" => 0,
-				"localDays" => 45
+				"localDays" => 45,
+				"monthlyPayment" => Util::calMonthlyPayment($secondaryAmount, $rate, $this->property->loanTerm)
 		);
 	}
 }

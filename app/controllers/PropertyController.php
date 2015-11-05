@@ -85,6 +85,10 @@ class  PropertyController extends BaseController {
 					$myRateCalculator->setTotalFee ( $totalFee );
 					$myresult = $myRateCalculator->calculteRate ();
 					
+					if ( $myresult == null ) { //incase no valid result found, skip to next
+						continue;
+					}
+					
 					$this->setResultRecord($myRecord1, $myresult);
 					
 					$myRecord2 = null;
@@ -116,11 +120,12 @@ class  PropertyController extends BaseController {
     function setResultRecord (ViewRecord $record ,  array $arr) { //$record will be modified
     	
     	$record->purchaser = $arr ['purchaser'];
-    	$record->rate = $arr ['rate'];
-    	$record->credit = $arr ['credit'];
-    	$record->lockDays = $arr ['lockDays'];
-    	$record->margin = $arr ['margin'];
-    	$record->minCredit = $arr ['minCredit'];    	
+    	$record->rate = sprintf ('%0.3f' , $arr ['rate']);
+    	$record->credit = $arr['credit'];
+    	$record->lockDays = $arr['lockDays'];
+    	$record->margin = $arr['margin'];
+    	$record->minCredit = $arr['minCredit'];    	
+    	$record->monthlyPayment = sprintf('%0.2f' , $arr['monthlyPayment']);    	
     }
 
 }
