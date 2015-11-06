@@ -102,17 +102,21 @@ class  PropertyController extends BaseController {
 					}
 					$resultRecord = array (
 							"part1" => $myRecord1,
-							"part2" => $myRecord2 
+							"part2" => $myRecord2, 
+							"option" => $opt[0]
 					);
 					// var_dump ($resultRecord );
 					array_push ( $this->viewRecords[$loanName], $resultRecord );
 				} //option
          	}//purchaser
 			$r = usort($this->viewRecords[$loanName], 'Util::cmp');
+			$bestResult =  (Util::bestResult($this->viewRecords[$loanName]));
+			$this->viewRecords[$loanName] = $bestResult;
 			Util::dump("Calculate result for $loanName", $this->viewRecords[$loanName] );
      	} //loanName
      	//echo json_encode($this->viewRecords)."<br>";
      	$this->f3->set('SearchResults', $this->viewRecords);
+     	//$this->f3->set('SearchResults', $bestResult);
      	date_default_timezone_set('EST');
      	$this->f3->set('searchStamp', date("m-d-Y g:i a"));
     }

@@ -90,6 +90,60 @@ class Util extends BaseController {
     	
     	return round ( $monthlyPayment, 2 );
     }
+    
+    static function bestResult ($resultArray) {
+    	$saveViewRecord[0] = array ( 
+    		"part1" =>	new ViewRecord(),
+    		"part2"	=>  null,
+    		"option" => 0	
+    	);
+    	
+    	$saveViewRecord[1] = array ( 
+    		"part1" =>	new ViewRecord(),
+    		"part2"	=>  null,
+    		"option" => 1	
+    	);
+    	$saveViewRecord[2] = array ( 
+    		"part1" =>	new ViewRecord(),
+    		"part2"	=>  null,
+    		"option" => 2	
+    	);
+    	 
+    	$bestOption = array();
+    	
+    	foreach ($resultArray as $viewRecord) {
+    		if ($viewRecord['part1']->rate == null) {
+    			continue;
+    		}
+    		
+    		if ($saveViewRecord[$viewRecord['option']]['part1']->rate == 0) {
+    			$saveViewRecord[$viewRecord['option']] = $viewRecord;
+    			continue;
+    		}
+    		
+    		if ($viewRecord['part1']->rate < $saveViewRecord[$viewRecord['option']]['part1']->rate) {
+    			$saveViewRecord[$viewRecord['option']] = $viewRecord;
+    			continue;
+    		}
+    		
+    	    if ($viewRecord['part1']->rate == $saveViewRecord[$viewRecord['option']]['part1']->rate  &&
+    	    		$viewRecord['part1']->credit > $saveViewRecord[$viewRecord['option']]['part1']->credit
+    	    		) {
+    			$saveViewRecord[$viewRecord['option']] = $viewRecord;
+    		}
+    	}
+    	$returnArray = array($saveViewRecord[0]) ;
+
+    	if ($saveViewRecord[1]['part1']->rate != null) {
+    		array_push($returnArray, $saveViewRecord[1]);
+    	}
+        if ($saveViewRecord[2]['part1']->rate != null) {
+    		array_push($returnArray, $saveViewRecord[2]);
+    	}
+    	return $returnArray;
+    }
+    
+    
 }
 
 ?>

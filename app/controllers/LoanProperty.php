@@ -219,21 +219,21 @@ class LoanProperty extends BaseController {
 		$options = [];
 		
 		//by default user always have option to mortgage all loanAmount
-		$option = [ $this->isConfirming , $this->loanAmount, 0];
+		$option = [ 0 , $this->loanAmount, 0]; //option 0
 		array_push($options, $option);
 		 
 		switch ( $this->isConfirming ) {
-			case 0:
-				$option = [ 1 , 417000, $this->loanAmount - 417000 ];
+			case 0: //none confirming case
+				$option = [ 2 , 417000, $this->loanAmount - 417000 ]; //417000 split as option 1
 				array_push($options, $option);
 				if ( $this->confirmingUpperLimit > 417000 ) {
-					$option = [ 2, $this->confirmingUpperLimit  ,
-							$this->loanAmount - $this->confirmingUpperLimit   ];
+					$option = [ 1, $this->confirmingUpperLimit  ,
+							$this->loanAmount - $this->confirmingUpperLimit   ]; //super conforming as option 2
 					array_push($options, $option);
 				}
 				break;
-			case 2 :
-				$option = [ 1, 417000, $this->loanAmount - 417000 ];
+			case 2 : //supper conforming case add 417000 split
+				$option = [ 2, 417000, $this->loanAmount - 417000 ];
 				array_push($options, $option);
 				break;
 			default :

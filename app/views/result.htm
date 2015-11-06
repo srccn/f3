@@ -13,12 +13,9 @@
             .bottom-line { border-bottom:black;border-bottom-style: solid;padding-top:0px;padding-bottom:5px}
             .text-cell { text-align: left}
             .hiddenDiv { display:none}
-            .single-line { border-bottom:black;
-                           border-bottom-style: solid;
-                           padding-top:5px;
-                           padding-bottom:5px;
-                           background-color:#ff8;
-                         }
+            .option0  { background-color:#fcf8e3;}
+            .option1 { background-color:#faebcc; }             
+            .option2 { background-color:#dff0d8; }             
             td {padding-top:5px;padding-right:20px;text-align:right}
             th {padding-right: 20px; text-align:left; border-bottom:black;border-bottom-style: solid;}
             hr { display: block;
@@ -30,7 +27,7 @@
         </style>
 </head>
 <body >
-   <div id="closingOption" class="closingoption navbar-fixed-top">
+   <div id="closingOption" class="closingoption __navbar-fixed-top">
        {{@ClosingOption}} <span class="timestamp"> {{@searchStamp}} EST</span>
    </div>
    
@@ -78,40 +75,40 @@
                       <th>TotalPay</th>
                </tr>
                <repeat group="{{@resords}}" value="{{ @SearchResult }}">
-                   <check if="{{ (@SearchResult['part2']->loanAmount) != null }}">
+                   <check if="{{  (@SearchResult['option']) != 0  }}">
                    <true>       
                        <tr>
-               <td rowspan="2" class="bottom-line text-cell" > <input id="checkbox1" type="checkbox">  </td> 
-               <td rowspan="2" class="bottom-line text-cell" >
+               <td rowspan="2" class="option{{@SearchResult['option']}} bottom-line text-cell" > <input id="checkbox1" type="checkbox">  </td> 
+               <td rowspan="2" class="option{{@SearchResult['option']}} bottom-line text-cell" >
                  <button id="{{@loanType}}" type="button" class="btn btn-link">{{ (@SearchResult['part1']->purchaser) }} </button>
                </td> 
-               <td > {{ (@SearchResult['part1']->loanAmount) }}</td>
-               <td > {{ (@SearchResult['part1']->rate) }}      </td>
-               <td > {{ (@SearchResult['part1']->credit) }}    </td>
-               <td > {{ (@SearchResult['part1']->lockDays) }}    </td>
-               <td > {{ (@SearchResult['part1']->monthlyPayment) }}   </td>
-               <td rowspan="2" class="bottom-line"> {{ (@SearchResult['part1']->monthlyPayment) + (@SearchResult['part2']->monthlyPayment) }}   </td>
+               <td class="option{{@SearchResult['option']}}"> {{ (@SearchResult['part1']->loanAmount) }}</td>
+               <td class="option{{@SearchResult['option']}}"> {{ (@SearchResult['part1']->rate) }}      </td>
+               <td class="option{{@SearchResult['option']}}"> {{ (@SearchResult['part1']->credit) }}    </td>
+               <td class="option{{@SearchResult['option']}}"> {{ (@SearchResult['part1']->lockDays) }}    </td>
+               <td class="option{{@SearchResult['option']}}"> {{ (@SearchResult['part1']->monthlyPayment) }}   </td>
+               <td rowspan="2" class="option{{@SearchResult['option']}} bottom-line"> {{ (@SearchResult['part1']->monthlyPayment) + (@SearchResult['part2']->monthlyPayment) }}   </td>
                        </tr>
                        <tr>
-               <td class="bottom-line"> {{ (@SearchResult['part2']->loanAmount) }}</td>
-               <td class="bottom-line"> {{ (@SearchResult['part2']->rate) }}      </td>
-               <td class="bottom-line"> </td>
-               <td class="bottom-line"> </td>
-               <td class="bottom-line"> {{ (@SearchResult['part2']->monthlyPayment) }} </td>
+               <td class="option{{@SearchResult['option']}} bottom-line"> {{ (@SearchResult['part2']->loanAmount) }}</td>
+               <td class="option{{@SearchResult['option']}} bottom-line"> {{ (@SearchResult['part2']->rate) }}      </td>
+               <td class="option{{@SearchResult['option']}} bottom-line"> </td>
+               <td class="option{{@SearchResult['option']}} bottom-line"> </td>
+               <td class="option{{@SearchResult['option']}} bottom-line"> {{ (@SearchResult['part2']->monthlyPayment) }} </td>
                        </tr>
                    </true>
                    <false>
                        <tr>
-               <td class="single-line text-cell"> <input id="checkbox1" type="checkbox"> </td> 
-               <td class="single-line text-cell"> 
+               <td class="option0  bottom-line text-cell"> <input id="checkbox1" type="checkbox"> </td> 
+               <td class="option0  bottom-line text-cell"> 
                    <button id="{{@loanType}}" type="button" class="btn btn-link">{{ (@SearchResult['part1']->purchaser) }} </button>
                </td> 
-               <td class="single-line"> {{ (@SearchResult['part1']->loanAmount) }}</td>
-               <td class="single-line"> {{ (@SearchResult['part1']->rate) }}      </td>
-               <td class="single-line"> {{ (@SearchResult['part1']->credit) }}    </td>
-               <td class="single-line"> {{ (@SearchResult['part1']->lockDays) }}    </td>
-               <td class="single-line"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
-               <td class="single-line"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
+               <td class="option0 bottom-line"> {{ (@SearchResult['part1']->loanAmount) }}</td>
+               <td class="option0 bottom-line" > {{ (@SearchResult['part1']->rate) }}      </td>
+               <td class="option0 bottom-line"> {{ (@SearchResult['part1']->credit) }}    </td>
+               <td class="option0 bottom-line"> {{ (@SearchResult['part1']->lockDays) }}    </td>
+               <td class="option0 bottom-line"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
+               <td class="option0 bottom-line"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
                        </tr>
                    </false>
                </check>

@@ -4,7 +4,7 @@ class ViewRecord {
 	public $product;
 	public $purchaser;
 	public $loanAmount;
-	public $rate;
+	public $rate=0;
 	public $credit;
 	public $lockDays;
 	public $margin;
