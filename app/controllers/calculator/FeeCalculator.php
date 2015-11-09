@@ -13,14 +13,32 @@ class FeeCalculator extends BaseController {
 	
 	function setFixedFees () {
 		$this->fees = array(
-				"credit_report" => 25.00 ,
-				"flood_certification" => 35.00 ,
+				"804 credit_report" => 18.00 ,
+				"flood_certification" => 15.00 ,
+				"801 Origination" => 850.00 ,
+				"TaxService" => 87.00 ,
+				"HomeRegistration" => 85.00 ,
 		);
+	}
+	
+	function getSecondLoanFee(){
+		$feeName = "SecondLoanCharge";
+		$returnVal = [0,0];
+		
+		$options = $this->property->loanAmountOptions ;
+		if ( count($options) > 1 ) {
+			$returnVal[0] = $options[1][2] ?  525 + $options[1][2] * 0.0025 : 0 ;
+			$returnVal[1] = $options[2][2] ?  525 + $options[1][2] * 0.0025 : 0 ;
+		}
+		
+		//525 + 2ndloanAmount*0.25%
+		//not put into fees array. $this->fees[$feeName] = $returnVal;
+		return $returnVal;
 	}
 	
 	function getRecordingFee() {
 		//input state, purchase or refinance, lookup default 350, 65.
-		$feeName = "RecordingFee";
+		$feeName = "1201 RecordingFee";
 		$returnVal = null ;
 		$state = $this->property->state;
 		$purchaserType = $this->property->purchaseType;
@@ -37,7 +55,7 @@ class FeeCalculator extends BaseController {
 	
 	function getRecordingOtherFee(){
 		//input state, purchase or refinance, lookup default 350, 65.
-		$feeName = "RecordingOtherFee";
+		$feeName = "1202 RecordingOtherFee";
 		$returnVal = null;
 	
 		$state = $this->property->state;
@@ -54,7 +72,7 @@ class FeeCalculator extends BaseController {
 	}
 
 	function getAttoneyFee(){
-		$feeName = "AttoneyFee";
+		$feeName = "1107 AttoneyFee";
 		$returnVal = null;
 	
 		$state = $this->property->state;
@@ -71,7 +89,7 @@ class FeeCalculator extends BaseController {
 	}
 	
 	function getAppraisalFee() {
-		$feeName = "AppraisalFee";
+		$feeName = "803 AppraisalFee";
 		$returnVal = null;
 	
 		$state = $this->property->state;
@@ -108,7 +126,7 @@ class FeeCalculator extends BaseController {
 	}	
 
 	function getLenderInsuranceFee() {
-		$feeName = "LenderInsuranceFee";
+		$feeName = "806 LenderInsuranceFee";
 		$returnVal = 0;
 	
 		if ($this->property->purchaseType == LoanerConst::REFINANCE || 
@@ -124,7 +142,7 @@ class FeeCalculator extends BaseController {
 	}
 
 	function getTitleInsuranceFee(){
-		$feeName = "TitleInsuranceFee";
+		$feeName = "1108 TitleInsuranceFee";
 		$returnVal = 0;
 	    if ($this->property->purchaseType == LoanerConst::REFINANCE || 
 			$this->property->purchaseType == LoanerConst::COREFINANCE ) {
