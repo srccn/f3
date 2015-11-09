@@ -30,6 +30,11 @@ class BaseController {
 			$result = $this->db->exec($query);
 		}catch (\Exception $e) {
 			$this->queryLogger->write($e->getMessage());
+			throw new Exception("Exception when run query : ");
+		}
+		
+		if (! $result) {
+           // throw new Exception ("Query result is null : " .$query);			
 		}
 		return $result;
 	}

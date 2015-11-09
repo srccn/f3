@@ -94,7 +94,7 @@ class LoanProperty extends BaseController {
 			default :
 				$returnString  = "No point, No cloing cost";
 		}		
-		return "Mortgage Rate [ ".$returnString." ]";
+		return "Rate Search Based on [ ".$returnString." ]";
 	}
 	
 	private function setLoanLimitByZipCode(){

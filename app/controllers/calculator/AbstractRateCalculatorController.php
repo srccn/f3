@@ -163,7 +163,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		//        echo $this->loanAmount . "<br>";
 	
 		$query ="
-				select rate , ((purchase_price + $adjust - $margin + $SRP - 100)/100 * $loanAmount -  $fees) credit, lock_days_id lockdays
+				select rate , ((purchase_price + $adjust - $margin + $SRP - 100)/100 * $loanAmount -  $fees) credit, lock_days_id lockdays, purchase_price price
 				from purchase
 				where purchaser_id = $this->purchaserId
 				and lock_days_id >= $lockDays
@@ -173,7 +173,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 				limit 1
 				";
 		$result = $this->runQuery($query);
-		Util::dump ( "Rate = " .$result[0]['rate'] ."  Credit = " .intVal($result[0]['credit']) . " LockDays = " .$result[0]['lockdays']  );
+		Util::dump ( "Rate = " .$result[0]['rate'] ."  Credit = " .intVal($result[0]['credit']) . " LockDays = " .$result[0]['lockdays'] . " purchase_price = ". $result[0]['price']);
 		//var_dump($result);
 		
 		if (!$result) {
@@ -182,7 +182,11 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		
 		return array (
 				"purchaser" => $this->purchaserName,
+				"purchaserId" => $this->purchaserId,
 				"rate" => $result[0]['rate'],
+				"loanTypeId" => $loanTypeId,
+				"loanTerm" => $this->property->loanTerm,
+				"price" => $result[0]['price'],
 				"credit" => intVal($result[0]['credit']) ,
 				"lockDays" => $result[0]['lockdays'],
 				"margin"    => 	$margin,

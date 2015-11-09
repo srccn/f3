@@ -117,14 +117,16 @@ class  PropertyController extends BaseController {
      	//echo json_encode($this->viewRecords)."<br>";
      	$this->f3->set('SearchResults', $this->viewRecords);
      	//$this->f3->set('SearchResults', $bestResult);
-     	date_default_timezone_set('EST');
-     	$this->f3->set('searchStamp', date("m-d-Y g:i a"));
     }
     
     function setResultRecord (ViewRecord $record ,  array $arr) { //$record will be modified
     	
     	$record->purchaser = $arr ['purchaser'];
+    	$record->purchaserId = $arr ['purchaserId'];
     	$record->rate = sprintf ('%0.3f' , $arr ['rate']);
+    	$record->price = sprintf ('%0.3f' , $arr ['price']);
+    	$record->loanTypeId = $arr ['loanTypeId'];
+    	$record->loanTerm = $arr ['loanTerm'];
     	$record->credit = $arr['credit'];
     	$record->lockDays = $arr['lockDays'];
     	$record->margin = $arr['margin'];

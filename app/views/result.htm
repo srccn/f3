@@ -8,16 +8,19 @@
         <style>
             .closingoption{font-size: 1.25em; text-align:center; background-color:#111111; color:#eeeeee; margin-bottom:15px; width:100%; overflow-y: hidden !important  }
             .timestamp{font-size: 0.5em; background-color:#111111; color:#eeeeee; margin-bottom:15px; }
-            .resultBlock {min-width: 350px; display:block; float:left; margin:2px; margin-bottom:20px; margin-right:20px; padding:2px; background-color:#eeeeee;}
+            .resultBlock {min-width: 120px; display:block; float:left; margin:2px; margin-bottom:20px; margin-right:20px; padding:2px; background-color:#eeeeee;}
+            .propertyBlock {min-width: 200px; display:block; float:left; margin:2px; margin-bottom:20px; margin-right:20px; padding:2px; width="40%"}
+            .feeBlock {min-width: 200px; display:block; float:left; margin:2px; margin-bottom:20px; margin-right:20px; padding:2px; width="40%"}
             .loanName {color:red;font-size:120%; font-style:bold;text-align:center;text-decoration: underline;}
             .bottom-line { border-bottom:black;border-bottom-style: solid;padding-top:0px;padding-bottom:5px}
             .text-cell { text-align: left}
             .hiddenDiv { display:none}
+            .hiddenCol { display:none ; text-align:right}
             .option0  { background-color:#fcf8e3;}
             .option1 { background-color:#faebcc; }             
             .option2 { background-color:#dff0d8; }             
-            td {padding-top:5px;padding-right:20px;text-align:right}
-            th {padding-right: 20px; text-align:left; border-bottom:black;border-bottom-style: solid;}
+            td {padding-top:5px;padding-right:10px;text-align:right}
+            th {padding-right: 10px; text-align:right; border-bottom:black;border-bottom-style: solid;}
             hr { display: block;
                  margin:0; 
                  border-style: inset;   
@@ -31,8 +34,8 @@
        {{@ClosingOption}} <span class="timestamp"> {{@searchStamp}} EST</span>
    </div>
    
-   <div id="prop" class="propertyBlock" style="padding-top: 3em" >
-     <p>Property {{@propertyLabel}} <button id="btnPropertyDetails" type="button" class="btn btn-link">Property Detail</button> </p>
+   <div id="prop" class="propertyBlock" >
+     <p>Property {{@propertyLabel}}  </p>
      <div id="divLoanProperty" name="divLoanProperty" class="hiddenDiv">
        <table style="border-collapse: collapse;"">
            <repeat group="{{ @loanProperty }}" key= "{{@ikey}}" value="{{ @ivalue }}">
@@ -44,8 +47,8 @@
        </table>
      </div>
    </div>
-   <div id="fees", name="fees">
-       <p>Closing Cost : {{@totalFee}} <button id="btnFeeDetails" type="button" class="btn btn-link">Detail</button> </p>
+   <div id="fees", name="fees" class="feeBlock">
+       <p>Closing Cost : {{@totalFee}} </p>
        <div id="divFeeDetails" class="hiddenDiv">
            <table style="border-collapse: collapse;"">
                <repeat group="{{ @fees }}" key= "{{@ikey}}" value="{{ @ifee }}">
@@ -57,59 +60,103 @@
            </table>
        </div>
    </div>
-
-
+   <button id="btnFeeDetails" type="button" class="btn btn-link">Detail</button>
+   <div style="clear:both"></div>
+   
+   <button id="btnRateDetails" type="button" class="btn btn-link">Detail view on and off</button>
    <div id="rateArea" style="margin:15px">
    <repeat group="{{ @SearchResults }}" key="{{@loanType}}" value="{{@resords}}">
        <div id={{@loanType."Div"}} class="resultBlock" >
            <p class="loanName" id={{@loanType."Label"}}>{{@loanType}}</p>
               <table style="font-size:0.8em; border-collapse: collapse;">
                   <tr>
-                      <th></th>
-                      <th>Lender</th>
+                      <th class="hiddenCol text-cell" style="padding-left:12px">Lender</th>
                       <th>Amount</th>
                       <th>Rate</th>
+                      <th class="hiddenCol">Price</th>
                       <th>Credit</th>
-                      <th>LockDays</th>
-                      <th>MonPay</th>
-                      <th>TotalPay</th>
+                      <th class="hiddenCol">LockDays</th>
+                      <th class="hiddenCol">MonPay</th>
+                      <th class="hiddenCol">TotalPay</th>
                </tr>
                <repeat group="{{@resords}}" value="{{ @SearchResult }}">
                    <check if="{{  (@SearchResult['option']) != 0  }}">
                    <true>       
-                       <tr>
-               <td rowspan="2" class="option{{@SearchResult['option']}} bottom-line text-cell" > <input id="checkbox1" type="checkbox">  </td> 
-               <td rowspan="2" class="option{{@SearchResult['option']}} bottom-line text-cell" >
+                       <tr class="option{{@SearchResult['option']}}">
+               <td rowspan="4" class=" hiddenCol bottom-line text-cell" >
                  <button id="{{@loanType}}" type="button" class="btn btn-link">{{ (@SearchResult['part1']->purchaser) }} </button>
                </td> 
-               <td class="option{{@SearchResult['option']}}"> {{ (@SearchResult['part1']->loanAmount) }}</td>
-               <td class="option{{@SearchResult['option']}}"> {{ (@SearchResult['part1']->rate) }}      </td>
-               <td class="option{{@SearchResult['option']}}"> {{ (@SearchResult['part1']->credit) }}    </td>
-               <td class="option{{@SearchResult['option']}}"> {{ (@SearchResult['part1']->lockDays) }}    </td>
-               <td class="option{{@SearchResult['option']}}"> {{ (@SearchResult['part1']->monthlyPayment) }}   </td>
-               <td rowspan="2" class="option{{@SearchResult['option']}} bottom-line"> {{ (@SearchResult['part1']->monthlyPayment) + (@SearchResult['part2']->monthlyPayment) }}   </td>
+               <td > {{ (@SearchResult['part1']->loanAmount) }}</td>
+               <td > {{ (@SearchResult['part1']->rate) }}      </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->price) }}      </td>
+               <td > {{ (@SearchResult['part1']->credit) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment) }}   </td>
+               <td class="hiddenCol"> {{ sprintf ('%0.2f' ,(@SearchResult['part1']->monthlyPayment + @SearchResult['part2']->monthlyPayment) ) }}   </td>
                        </tr>
-                       <tr>
-               <td class="option{{@SearchResult['option']}} bottom-line"> {{ (@SearchResult['part2']->loanAmount) }}</td>
-               <td class="option{{@SearchResult['option']}} bottom-line"> {{ (@SearchResult['part2']->rate) }}      </td>
-               <td class="option{{@SearchResult['option']}} bottom-line"> </td>
-               <td class="option{{@SearchResult['option']}} bottom-line"> </td>
-               <td class="option{{@SearchResult['option']}} bottom-line"> {{ (@SearchResult['part2']->monthlyPayment) }} </td>
+                       
+                       <tr class="option{{@SearchResult['option']}}">
+               <td></td>        
+               <td > {{ (@SearchResult['part1']->rate_lowrate) }}      </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->price_lowrate) }}      </td>
+               <td > {{ (@SearchResult['part1']->credit_lowrate) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays_lowrate) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowrate) }}    </td>
+               <td class="hiddenCol"> {{ sprintf ('%0.2f' ,(@SearchResult['part1']->monthlyPayment_lowrate + @SearchResult['part2']->monthlyPayment) ) }}   </td>
+                       </tr>
+
+                       <tr class="option{{@SearchResult['option']}}">
+               <td></td>        
+               <td > {{ (@SearchResult['part1']->rate_lowlowrate) }}      </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->price_lowlowrate) }}      </td>
+               <td > {{ (@SearchResult['part1']->credit_lowlowrate) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays_lowlowrate) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowlowrate) }}    </td>
+               <td class="hiddenCol"> {{ sprintf ('%0.2f' ,(@SearchResult['part1']->monthlyPayment_lowlowrate + @SearchResult['part2']->monthlyPayment) ) }}   </td>
+                       </tr>
+                       
+                       <tr class="option{{@SearchResult['option']}} bottom-line">
+               <td > {{ (@SearchResult['part2']->loanAmount) }}</td>
+               <td > {{ (@SearchResult['part2']->rate) }}      </td>
+               <td class="hiddenCol"></td>
+               <td > </td>
+               <td class="hiddenCol"> </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part2']->monthlyPayment) }} </td>
+               <td class="hiddenCol"></td>
                        </tr>
                    </true>
                    <false>
-                       <tr>
-               <td class="option0  bottom-line text-cell"> <input id="checkbox1" type="checkbox"> </td> 
-               <td class="option0  bottom-line text-cell"> 
+                       <tr class="option0">
+               <td rowspan="3" class="hiddenCol bottom-line text-cell"> 
                    <button id="{{@loanType}}" type="button" class="btn btn-link">{{ (@SearchResult['part1']->purchaser) }} </button>
-               </td> 
-               <td class="option0 bottom-line"> {{ (@SearchResult['part1']->loanAmount) }}</td>
-               <td class="option0 bottom-line" > {{ (@SearchResult['part1']->rate) }}      </td>
-               <td class="option0 bottom-line"> {{ (@SearchResult['part1']->credit) }}    </td>
-               <td class="option0 bottom-line"> {{ (@SearchResult['part1']->lockDays) }}    </td>
-               <td class="option0 bottom-line"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
-               <td class="option0 bottom-line"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
+               </td > 
+               <td rowspan="3" class="bottom-line"> {{ (@SearchResult['part1']->loanAmount) }}</td>
+               <td > {{ (@SearchResult['part1']->rate) }}      </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->price) }}      </td>
+               <td > {{ (@SearchResult['part1']->credit) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
                        </tr>
+
+                       <tr class="option0">
+               <td > {{ (@SearchResult['part1']->rate_lowrate) }}      </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->price_lowrate) }}      </td>
+               <td > {{ (@SearchResult['part1']->credit_lowrate) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays_lowrate) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowrate) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowrate) }}    </td>
+                       </tr>
+
+                       <tr class="option0 bottom-line">
+               <td > {{ (@SearchResult['part1']->rate_lowlowrate) }}      </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->price_lowlowrate) }}      </td>
+               <td > {{ (@SearchResult['part1']->credit_lowlowrate) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays_lowlowrate) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowlowrate) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowlowrate) }}    </td>
+                       </tr>
+ 
                    </false>
                </check>
                </repeat>

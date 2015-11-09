@@ -132,18 +132,23 @@ class Util extends BaseController {
     			$saveViewRecord[$viewRecord['option']] = $viewRecord;
     		}
     	}
+    	
+            	
+    	
+    	//package resturn array
+    	$saveViewRecord[0]['part1']->populateLowRateData();
     	$returnArray = array($saveViewRecord[0]) ;
 
     	if ($saveViewRecord[1]['part1']->rate != null) {
+    		$saveViewRecord[1]['part1']->populateLowRateData();
     		array_push($returnArray, $saveViewRecord[1]);
     	}
         if ($saveViewRecord[2]['part1']->rate != null) {
+        	$saveViewRecord[2]['part1']->populateLowRateData();
     		array_push($returnArray, $saveViewRecord[2]);
     	}
     	return $returnArray;
     }
-    
-    
 }
 
 ?>
