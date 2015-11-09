@@ -1,26 +1,32 @@
 <html>
     <head>
 
-        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-        <script src="lib/js/front.js"></script>
-        <link href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
-
+        <script src="lib/js/jquery-1.11.3.min.js"></script>
+        <script src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+        <script src="lib/js/loaner.js"></script>
+        <link href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+        
+        <style>
+            label {display:block; margin-top:10px}
+            #margin {display:none}
+        </style>
+        
     </head>
     <body>
     
         <div style="float: left; margin:10px;">
-            <h3>Mortgage Rate Search</h3>
+            <h3>Find Mortgage Rate</h3>
             <hr>
             <form name="inputForm" method="post" action="/f3/calculate">
                 <label for="type">Property Type</label>
                   <input type="radio" id="type" name="type" value="house" checked>House
-                 <label for="numberUnit">Unit</label>
+                 <label for="numberUnit" style="display:inline">Unit</label>
                 <select id="numberUnit" name="numberUnit">
                     <option value="one_unit">One Unit</option>
                     <option value="two_unit">Two Unit</option>
                     <option value="three_unit">Three Unit</option>
                     <option value="four_unit">Four Unit</option>
-                </select> 
+                </select> <br>
                   <input type="radio" name="type" value="condo"> Condo<br>
                 <label for="marketPrice">Market Pricece</label>
                 <input type=text value="300000" id="marketPrice" name="marketPrice"> <br>
@@ -29,7 +35,7 @@
                 <label for="zip">Zip</label>
                 <input type=text value="02460" id="zip" name="zip"><br>
 
-                <label for="loanName" style="display:none">select loan Type</label>
+                <label for="loanName" style="display:none">Loan Type</label>
                 <select id="loanName" name="loanName" style="display:none">
                     <option value="fixed30">30 years fixed</option>
                     <option value="fixed15">15 years fixed</option>
@@ -45,11 +51,11 @@
                 <label id = "formincredit" for="mincredit" hidden> Minimum Credit/Debts</label>
                 <input type="text" name="mincredit" id="mincredit" value="0" size='6' style="display:none" ><br>
  
-                <div id="optionsDiv" style="margin:10px; border-style: solid; border-color:grey; background-color:#eeeeee; display:none">
+                <div id="optionsDiv" style="margin-top: 10px; padding:10px; border-style: solid; border-color:grey; background-color:#eeeeee; display:none">
 
                 <label for="purchaseType">Mortgage Type</label>
-                  <input type="radio" id="purchaseType" name="purchaseType" value="purchase" checked> Puchase
-                  <input type="radio" name="purchaseType" value="rtrefinance"> Rate Term Refinance
+                  <input type="radio" id="purchaseType" name="purchaseType" value="purchase" checked>Puchase <br>
+                  <input type="radio" name="purchaseType" value="rtrefinance"> Rate Term Refinance<br> 
                   <input type="radio" name="purchaseType" value="corefinance"> Cash Out Refinance <br>
 
 
@@ -80,7 +86,14 @@
                 </select>
                 
                 </div> 
-                <button id="optionLink" type="button" class="btn btn-link" >Change Search Options:</button> Mortgage Type(Purchase), Property Occupancy(Primary Home), Credit score(>740), lock days(45), Loan type(All) <br>
+                <button id="optionLink" type="button" class="btn btn-link" >Change Search Options:</button> 
+                <ul id="optionsList">
+                    <li>Mortgage Type(Purchase) </li> 
+                    <li>Occupancy(Primary Home)</li> 
+                    <li>Credit score(>740)</li>
+                    <li>lock days(45)</li> 
+                    <li>Loan type(All)</li>
+                </ul> 
                 <hr>
                 <div id="margin">
                     <label for="Margin">Confirming Margin</label>
@@ -88,7 +101,7 @@
                     <label for="JumboMargin"> NonConfirming  Margin</label>
                     <input type="text" name="jumbomargin" id="jumbomargin" value="0.5" size='3'>% <br>
                 </div>
-                <input type=submit id="submit" name="submit" value="Search Mortgage">
+                <button type="submit" name="submit" id="submit" class="btn btn-info">Find Rates</button>
 
             </form>
         </div>
