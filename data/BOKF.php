@@ -55,7 +55,7 @@ class BOKF  extends BasePurchaser{
     		"sheetName" => "ARMS",
     		"lock_days" => 	[30, 45, 60],
     		"loan_type" => 8,
-    		"range" => "B77:R87"
+    		"range" => "B77:E87"
     );
 	//arm71
     private $arm71 = array (
@@ -122,8 +122,11 @@ class BOKF  extends BasePurchaser{
 	
 	private $adj_others = array (
     		"sheetName" => "CONVENTIONL ADJUSTERS",
-			"ltv" => [0,60,70,75,80,85,90,95], //rage pick = max ( value < given_value) 
-	        "item" => ['adjust_condo','adjust_invest','adjust_2Units','adjust_34Units','adjust_arm','adjust_highBalanceArm']
+			"ltv" => [0,70,75,80,85,90,95], //rage pick = max ( value < given_value) 
+	        "item" => ['adjust_condo','adjust_invest','adjust_2Units','adjust_34Units','adjust_arm','adjust_highBalanceArm'],
+			"range" => "C17:N23" ,
+			"max_ltv" => 95
+			
 	);
 	
     public function getMap() {

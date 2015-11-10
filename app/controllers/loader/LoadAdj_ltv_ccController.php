@@ -36,7 +36,6 @@ class LoadAdj_ltv_ccController extends AbstractLoadController {
         //$purchaser_id = $this->getPurchaserId();
         //$products = array_keys($mydatamap);
         //$products_count = count($products);
-		
 				
 		$mydatamap = $this->mapData->getAdjLtvCcMap();
 	    $purchaser_id = $this->getPurchaserId();
