@@ -90,24 +90,27 @@ class CHASE  extends BasePurchaser{
 	//ltv_cc_adjust fixed conforming
 	private $adj_ltv_cc1 = array (
     		"sheetName" => "Agency Fixed Adj",
-			"ltv" => [0,60,70,75,80,85,90,95,97], //rage pick = max ( value < given_value) 
-			"cc"  => [740,720,700,680,660,640,620,0] , //range pick = max (value < given_value)
+			"rotate" => 1,
+			"ltv" => [97,95,90,85,80,75,70,60,0], //rage pick = max ( value < given_value) 
+			"cc"  => [0,620,640,660,680,700,720,740] , //range pick = max (value < given_value)
         	"range" => "J12:Y20"		
 	);
 
 	//ltv_cc_adjust fixed supper conforming
 	private $adj_ltv_cc2 = array (
 			"sheetName" => "Agency Fixed High Balance Adj",
-			"ltv" => [0,60,70,75,80,85,90,95,97], //rage pick = max ( value < given_value)
-			"cc"  => [740,720,700,680,660,640,620,0] , //range pick = max (value < given_value)
+			"rotate" => 1,
+			"ltv" => [97,95,90,85,80,75,70,60,0], //rage pick = max ( value < given_value)
+			"cc"  => [0,620,640,660,680,700,720,740] , //range pick = max (value < given_value)
 			"range" => "J13:Y21"
 	);
 
 	//ltv_cc_adjust arm
 	private $adj_ltv_cc3 = array (
 			"sheetName" => "Agency ARMs Adj",
-			"ltv" => [0,60,70,75,80,85,90,95,97], //rage pick = max ( value < given_value)
-			"cc"  => [740,720,700,680,660,640,620,0] , //range pick = max (value < given_value)
+			"rotate" => 1,
+			"ltv" => [97,95,90,85,80,75,70,60,0], //rage pick = max ( value < given_value)
+			"cc"  => [0,620,640,660,680,700,720,740] , //range pick = max (value < given_value)
 			"range" => "J13:Y21"
 	);
 	
@@ -121,7 +124,6 @@ class CHASE  extends BasePurchaser{
     public function getMap() {
 	    return array(
             "fixed30" => $this->fixed30, 
-            "fixed25" => $this->fixed25, 
 	    	"fixed20" => $this->fixed20,			
 	        "fixed15" => $this->fixed15,			
 	        "fixed10" => $this->fixed10,			
@@ -131,14 +133,12 @@ class CHASE  extends BasePurchaser{
 			"arm71" => $this->arm71,
 			"arm101" => $this->arm101,
 			"ncarm51" => $this->ncarm51,
-			"ncarm71" => $this->ncarm71,
-			"ncarm101" => $this->ncarm101
 	    );
     }
 
 	public function getAdjLtvCcMap(){
 	    return array (
-		    "adj_ltv_cc" => $this->adj_ltv_cc
+		    "adj_ltv_cc1" => $this->adj_ltv_cc1
 		);
 	}
     

@@ -55,6 +55,8 @@ class LoadPurchaseController extends AbstractLoadController {
 	      $range= $mydatamap[$products[$i]]['range'];
 	      $this->objPHPExcel->setActiveSheetIndexByName($worksheet);
 	      $result = $this->objPHPExcel->getActiveSheet()->rangeToArray($range,NULL,TRUE,FALSE);
+	      $result = Util::cleanTable($result);
+
 	      $result_count = count($result);
 	      for ($j=0; $j< $result_count; $j++) { //each rate row
 		      //echo implode(",", $result[$j]) , EOL;

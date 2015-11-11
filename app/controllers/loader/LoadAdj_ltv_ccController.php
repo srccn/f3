@@ -29,14 +29,8 @@ class LoadAdj_ltv_ccController extends AbstractLoadController {
 		
 	}
 
-	
 	public function loadDataFromExcel () {
 
-        //$mydatamap = $this->mapData->getAdjLtvCcMap();
-        //$purchaser_id = $this->getPurchaserId();
-        //$products = array_keys($mydatamap);
-        //$products_count = count($products);
-				
 		$mydatamap = $this->mapData->getAdjLtvCcMap();
 	    $purchaser_id = $this->getPurchaserId();
 		$adjusts = array_keys($mydatamap);
@@ -45,22 +39,22 @@ class LoadAdj_ltv_ccController extends AbstractLoadController {
 		    $worksheet = $mydatamap[$adjusts[$i]]['sheetName'];
 			$range= $mydatamap[$adjusts[$i]]['range'];
 			$this->objPHPExcel->setActiveSheetIndexByName($worksheet);
-	        $result = $this->objPHPExcel->getActiveSheet()->rangeToArray($range,NULL,TRUE,FALSE);
-			$result_count = count ($result);
-            for ($j=0; $j < $result_count; $j++) {
+	        $result0 = $this->objPHPExcel->getActiveSheet()->rangeToArray($range,NULL,TRUE,FALSE);
+            $result = Util::cleanTable($result0);
+            
+            //see if we need to rotate table
+	        if (isset($mydatamap[$adjusts[$i]]['rotate'])) {
+	        	$result = Util::rotateTable($result);
+	        }
+	        Util::dump("Array to load for LTV credit adj table. ", $result);
+	        $result_count = count ($result);
+            for ($j=0; $j < $result_count; $j++) { 
                 //compose array purchaser_id, ltv_value, cc_value, adjust
                 $cc_value = $mydatamap[$adjusts[$i]]['cc'][$j];
 		        $ltvs = $mydatamap[$adjusts[$i]]['ltv'];
                 $ltvs_count = count($ltvs);
-                $scan = 0;
 			    for ($k=0;$k<$ltvs_count;$k++){
-                    while ( $result[$j][$scan] === null) {
-                        $scan++ ;
-                        break;
-                    } 
-                    $adjust = $result[$j][$scan];
-                    $scan++;
-                    //compose array purchaser_id, ltv_value, cc_value, adjust 
+                    $adjust = $result[$j][$k];
                     //echo $purchaser_id . "," . $mydatamap[$adjusts[$i]]['ltv'][$k] . "," . $cc_value . ",". $adjust . "<br>" ;
 					$insert_row = [ $purchaser_id, $mydatamap[$adjusts[$i]]['ltv'][$k], $cc_value, $adjust] ;
 		            $insert_row_string = "(" . implode(",", $insert_row) . ")" ;

@@ -15,7 +15,7 @@ abstract class AbstractLoadController extends BaseController {
 		
         //check existance of excel map file
 	    if (!file_exists($excelMapFile)) {
-	        exit("Excel mape file  $excelMapFile does not exist." . EOL);
+	        die("Excel mape file  $excelMapFile does not exist." . EOL);
 	    } else {
 		    $this->excel_map_file = $excelMapFile;
 		}

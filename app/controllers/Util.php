@@ -5,7 +5,6 @@ class Util extends BaseController {
 	protected $f3;
 	protected $db;
 
-
 	static function getSumValue($array) {
 		$sum=0;
 	    foreach ($array as $key => $value) {
@@ -149,6 +148,24 @@ class Util extends BaseController {
     	}
     	return $returnArray;
     }
+    
+    static function cleanTable ($resultTable) {
+    	$returnTable = array();
+    	
+    	foreach ($resultTable as $tableRow) {
+    		$cleanRow = array_filter($tableRow, function($var){return is_numeric($var);});
+    		array_push($returnTable, array_values ($cleanRow) );
+    	}
+    	return $returnTable;
+    }
+    
+    static function rotateTable($resultTable) {
+    	$a = new ArrayIterator($resultTable);
+    	$returnTable = $a->getArrayCopy();
+    	array_unshift($returnTable, null);
+    	return call_user_func_array('array_map', $returnTable);
+    }
+    
 }
 
 ?>

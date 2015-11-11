@@ -100,14 +100,14 @@ class myClass extends BaseController {
 	
 	function testPurchaseLoader () {
 	    $myloader = new LoadPurchaseController ;
-		$myloader->setExcelMapFile("data/BOKF.php");
+		$myloader->setExcelMapFile("data/CHASE.php");
 		$myloader->reloadData();
 	}
 
 	function testAdjLtvCcLoader(){
 	    echo "Test load to table adj_ltv_cc <br>";
 		$myloader = new LoadAdj_ltv_ccController ;
-		$myloader->setExcelMapFile("data/BOKF.php");
+		$myloader->setExcelMapFile("data/CHASE.php");
 		$myloader->reloadData();
 	}
     
