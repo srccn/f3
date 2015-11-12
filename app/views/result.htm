@@ -1,5 +1,6 @@
 <html>
 <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="lib/js/jquery-1.11.3.min.js"></script>
         <script src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
         <script src="lib/js/loaner.js"></script>
@@ -14,13 +15,13 @@
             #rateArea {margin-left:2px}
             .loanName {color:red;font-size:120%; font-style:bold;text-align:center;text-decoration: underline;}
             .bottom-line { border-bottom:black;border-bottom-style: solid;padding-top:0px;padding-bottom:5px}
-            .text-cell { text-align: left}
+            .text-cell { text-align: left;}
             .hiddenDiv { display:none}
-            .hiddenCol { display:none ; text-align:right}
+            .hiddenCol { display:none ;}
             .option0  { background-color:#fcf8e3;}
             .option1 { background-color:#faebcc; }             
             .option2 { background-color:#dff0d8; }             
-            td {padding-top:5px;padding-right:5px;text-align:right}
+            td {padding-top:5px;padding-right:5px;text-align:right; }
             th {padding-right: 5px; text-align:right; border-bottom:black;border-bottom-style: solid;}
             hr { display: block;
                  margin:0; 
@@ -28,6 +29,11 @@
                  border-width: 1px;
                  color: red
                 }
+           .btn{
+           word-wrap:break-word;
+white-space:normal !important;
+    max-width:70px;
+}
         </style>
 </head>
 <body >
@@ -64,7 +70,7 @@
    <button id="btnFeeDetails" type="button" class="btn btn-link">Detail</button>
    <div style="clear:both"></div>
    
-   <button id="btnRateDetails" type="button" class="btn btn-link">Detail view on and off</button>
+   <button id="btnRateDetails" type="button" class="btn btn-link">Extend</button>
    <div id="rateArea" >
    <repeat group="{{ @SearchResults }}" key="{{@loanType}}" value="{{@resords}}">
        <div id={{@loanType."Div"}} class="resultBlock" >
@@ -128,8 +134,8 @@
                    </true>
                    <false>
                        <tr class="option0">
-               <td rowspan="3" class="hiddenCol bottom-line text-cell"> 
-                   <button id="{{@loanType}}" type="button" class="btn btn-sm btn-link">{{ (@SearchResult['part1']->purchaser) }} </button>
+               <td rowspan="3" class="hiddenCol bottom-line "> 
+                   <button id="{{@loanType}}" type="button" class="btn btn-sm btn-link text-cell">{{ (@SearchResult['part1']->purchaser) }} </button>
                </td > 
                <td rowspan="3" class="bottom-line"> {{ (@SearchResult['part1']->loanAmount) }}</td>
                <td > {{ (@SearchResult['part1']->rate) }}      </td>

@@ -1,6 +1,6 @@
 <html>
     <head>
-
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="lib/js/jquery-1.11.3.min.js"></script>
         <script src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
         <script src="lib/js/loaner.js"></script>
@@ -13,8 +13,8 @@
         
     </head>
     <body >
-    
-        <div style="width:300px; margin: 10 auto;">
+        <div style="width:25%" id="left"></div>
+        <div style="min-width:250px; width:50%; margin: 10 auto;">
             <h3>Find Mortgage Rate</h3>
             <hr>
             <form name="inputForm" method="post" action="/f3/calculate">
@@ -105,6 +105,7 @@
 
             </form>
         </div>
+        <div style="width:25%" id="right"></div>
     </body>
 
 </html>
