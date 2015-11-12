@@ -110,7 +110,15 @@ class myClass extends BaseController {
 		$myloader->setExcelMapFile("data/CHASE.php");
 		$myloader->reloadData();
 	}
-    
+
+	function testStateListSRPLoader(){
+		echo "Test load to table  state_srp_full_list <br>";
+		$myloader = new LoadStateSRPListController ;
+		$myloader->setExcelMapFile("data/CHASE.php");
+		$myloader->reloadData();
+	}
+	
+	
     function testFunc() {
         $myv = new LoanType($this->db);
         $myv->getIDByNameAndConfirming("fixed30",0);

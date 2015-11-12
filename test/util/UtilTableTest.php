@@ -50,7 +50,6 @@ class UtilTableTest extends PHPUnit_Framework_TestCase {
 	 * @test
 	 */
 	public function testGetSumValue() {
-	
 		$testArray = array (
 				"a" => 1.1,
 				"b" => 1.2,
@@ -59,10 +58,7 @@ class UtilTableTest extends PHPUnit_Framework_TestCase {
 				"x" => null,
 				"y" => "abc"
 		);
-
-	
 		$sum = Util::getSumValue($testArray);
-	
 		$this->assertEquals(5.0, $sum);
 	}
 	

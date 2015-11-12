@@ -178,29 +178,33 @@ class WELLSFARGO extends BasePurchaser {
 		$selectedStates=["MA", "NH", "RI", "CT", "VT", "NY"];
 		$amountRange =[["minimum","99999"],["100000","139999"],["140000","179999"],
 				       ["180000","239999"],["240000","299999"],["300000","confirming"], ["confirming","maximum"]];
-		$amountAdj = "";
 		$bestEffortsCol = "B:H";
 		$mandatoryCol   = "K:Q";
 
 		$srpFixed30 = array ( 
 				"sheetName" => "Conv Full Grid" ,
 		        "stateCol" =>"A",
-				"range" => "K7:Q57" 
+				"range" => "B7:H57", 
+		        $amountAdj = ""
 		);
 		$srpFixed15 = array  ( 
 				"sheetName" => "Conv Full Grid" ,
 		        "stateCol" =>"A",
-				"range" => "K135:Q186"
+				"range" => "B135:H186",
+				$amountAdj = ""
+				
 		);
 		$srpArm51   = array ( 
 				"sheetName" => "Conv Full Grid" ,
 		        "stateCol" =>"A",
-				"range" =>"K263:Q314" 
+				"range" =>"B263:H314",
+				$amountAdj = "" 
 		);
 		$srpArm71   = array ( 
 			    "sheetName" => "Conv Full Grid" ,
 				"stateCol" =>"A",
-				"range"=>"K327:Q378"
+				"range"=>"B327:H378",
+				$amountAdj = ""
 		);
 
 		return array (
