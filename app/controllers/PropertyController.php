@@ -13,7 +13,8 @@ class  PropertyController extends BaseController {
 		parent::__construct();
 		$this->inputs = $inputForm;
 		
-		$this->setPurchasers(["BBT", "BOKF", "WELLSFARGO"]);
+		$this->setPurchasers(["BBT", "BOKF", "WELLSFARGO","CHASE"]);
+//		$this->setPurchasers(["CHASE"]);
 		$this->setLoanNames([ LoanerConst::FIXED30,
      			              LoanerConst::FIXED15,
      			              LoanerConst::ARM51,
@@ -41,6 +42,13 @@ class  PropertyController extends BaseController {
     	$this->f3->set('ClosingOption', $this->closingOption);
     	date_default_timezone_set('EST');
     	$this->f3->set('searchStamp', date("m-d-Y g:i a"));
+    	
+    	//determine lender list
+    	if (in_array("ALL", $property->purchaserSelection) ) {
+    		//do ntohing take default all;
+    	} else {
+    		$this->setPurchasers($property->purchaserSelection);
+    	}
 
     	//find loan amount options
     	$myoptions = $property->loanAmountOptions;

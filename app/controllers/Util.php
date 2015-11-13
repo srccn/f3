@@ -166,6 +166,26 @@ class Util extends BaseController {
     	return call_user_func_array('array_map', $returnTable);
     }
     
+    static function prependColumn($column, $table) {
+    	
+    	if (count($column) !== count($table)) {
+    		die ("failed prepend Column, due to number of elements mismatch." . count($column)." vs ". count($table) );
+    	}
+    	
+    	$a = new ArrayIterator($table);
+    	$returnTable = $a->getArrayCopy();
+        $number = count($column);
+        for ($i=0; $i<$number; $i++){
+        	array_unshift($returnTable[$i], $column[$i]);
+        }
+    	return $returnTable;
+    }
+    
+    static function getTableColumn($columnNumber, $table) {
+    	$returnColumn = array_column($table, $columnNumber);
+    	return $returnColumn;
+    }
+    
 }
 
 ?>

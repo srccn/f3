@@ -14,10 +14,11 @@ class LoanProperty extends BaseController {
 	public $lockDays;
 	public $creditScore;
 	public $loanName; //fixed30, fixed15, arm51, arm71
-	public $confirmingmargin;
-	public $jumbogmargin;
 	public $mincredit;
 	public $closingOption;
+	public $confirmingmargin;
+	public $jumbogmargin;
+	public $purchaserSelection;
 	
 	//calculated value
 	public $state; //optional
@@ -52,6 +53,7 @@ class LoanProperty extends BaseController {
 		$this->jumbomargin=$inputs["jumbomargin"];
 		$this->mincredit=$inputs["mincredit"];
 		$this->closingOption=$inputs["closingOption"];
+		$this->purchaserSelection = $inputs["purchaserSelection"];
 		
 		$this->calculateDerives();
 		

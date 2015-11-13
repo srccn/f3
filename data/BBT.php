@@ -4,7 +4,7 @@ class BBT extends BasePurchaser {
 	
 	protected $purchaserName="BBT";
 	protected $purchaserId = 1;
-	protected $excelFile = "data/BBT.xls";
+	protected $excelFile = "data/BBT.xlsx";
 	protected $lockdays = [15, 30, 45, 60] ;
 	protected $superConfirmingCalculateMethod = LoanerConst::ADJUST;
 	
@@ -13,7 +13,7 @@ class BBT extends BasePurchaser {
     	"sheetName" => "CA Rate Sheet",	
     	"lock_days" => 	[15, 30, 45, 60], 
     	"loan_type" => 1,	
-        "range" => "A16:E35"
+        "range" => "A17:E36"
     );
 
     //20fixed
@@ -21,7 +21,7 @@ class BBT extends BasePurchaser {
     	"sheetName" => "CA Rate Sheet",
     	"lock_days" => 	[15, 30, 45, 60], 
     	"loan_type" => 2,
-        "range" => "F16:J35"
+        "range" => "F17:J36"
     );
 
     //15fixed
@@ -29,7 +29,7 @@ class BBT extends BasePurchaser {
     		"sheetName" => "CA Rate Sheet",
     	"lock_days" => 	[15, 30, 45, 60], 
     	"loan_type" => 3,
-    	"range" => "K16:O35"
+    	"range" => "K17:O36"
     );
     
     //10fixed
@@ -37,7 +37,7 @@ class BBT extends BasePurchaser {
     		"sheetName" => "CA Rate Sheet",
     	"lock_days" => 	[15, 30, 45, 60], 
     	"loan_type" => 4,
-    	"range" => "A39:E58"
+    	"range" => "A40:E59"
     );
     
     //ncfixed30
@@ -45,7 +45,7 @@ class BBT extends BasePurchaser {
     		"sheetName" => "CA Rate Sheet",
     		"lock_days" => 	[15, 30, 45, 60],
     		"loan_type" => 13,
-    		"range" => "F63:J82"
+    		"range" => "F64:J83"
     );
 
     //ncfixed15
@@ -53,7 +53,7 @@ class BBT extends BasePurchaser {
     		"sheetName" => "CA Rate Sheet",
     		"lock_days" => 	[15, 30, 45, 60],
     		"loan_type" => 15,
-    		"range" => "K63:O82"
+    		"range" => "K64:O83"
     );
 
     //arm31
@@ -61,7 +61,7 @@ class BBT extends BasePurchaser {
     		"sheetName" => "CA Rate Sheet",
     		"lock_days" => 	[30, 60],
     		"loan_type" => 7,
-    		"range" => "A125:C144"
+    		"range" => "A112:C131"
     );
     
     //arm51
@@ -69,7 +69,7 @@ class BBT extends BasePurchaser {
     		"sheetName" => "CA Rate Sheet",
     		"lock_days" => 	[30, 60],
     		"loan_type" => 8,
-    		"range" => "D125:F144"
+    		"range" => "D112:F131"
     );
     
     //arm71
@@ -77,7 +77,7 @@ class BBT extends BasePurchaser {
     		"sheetName" => "CA Rate Sheet",
     		"lock_days" => 	[30, 60],
     		"loan_type" => 9,
-    		"range" => "G125:I144"
+    		"range" => "G112:I131"
     );
 
     //arm101
@@ -85,7 +85,7 @@ class BBT extends BasePurchaser {
     		"sheetName" => "CA Rate Sheet",
     		"lock_days" => 	[30, 60],
     		"loan_type" => 10,
-    		"range" => "J125:L144"
+    		"range" => "J112:L131"
     );
     
     //ncarm31
@@ -93,7 +93,7 @@ class BBT extends BasePurchaser {
     		"sheetName" => "CA Rate Sheet",
     		"lock_days" => 	[30, 60],
     		"loan_type" => 19,
-    		"range" => "A148:C167"
+    		"range" => "A135:C154"
     );
 
     //ncarm51
@@ -101,7 +101,7 @@ class BBT extends BasePurchaser {
     		"sheetName" => "CA Rate Sheet",
     		"lock_days" => 	[30, 60],
     		"loan_type" => 20,
-    		"range" => "D148:F167"
+    		"range" => "D135:F154"
     );
 
     //ncarm71
@@ -109,7 +109,7 @@ class BBT extends BasePurchaser {
     		"sheetName" => "CA Rate Sheet",
     		"lock_days" => 	[30, 60],
     		"loan_type" => 21,
-    		"range" => "G148:I167"
+    		"range" => "G135:I154"
     );
 
     //ncarm101
@@ -117,7 +117,7 @@ class BBT extends BasePurchaser {
     		"sheetName" => "CA Rate Sheet",
     		"lock_days" => 	[30, 60],
     		"loan_type" => 22,
-    		"range" => "J148:L167"
+    		"range" => "J135:L154"
     );
 
     public function isConfirmingEligible(PropertyController $property) { //take property argument return if eligible

@@ -176,44 +176,46 @@ class WELLSFARGO extends BasePurchaser {
 	
 	public function getStateListSRPMap () {
 		$selectedStates=["AK", "MA", "NH", "RI", "CT", "VT", "NY"];
-		$amountRange =[["minimum","99999"],["100000","139999"],["140000","179999"],
+		$common_range =[["minimum","99999"],["100000","139999"],["140000","179999"],
 				       ["180000","239999"],["240000","299999"],["300000","confirming"], ["confirming","maximum"]];
-		$bestEffortsCol = "B:H";
-		$mandatoryCol   = "K:Q";
 
 		$srpFixed30 = array (
 				"sheetName" => "Conv Full Grid" ,
 				"loan_type_id" => 1,
 				"escrow" => 0,
-				"stateCol" =>"A",
-				"range" => "A7:H57", 
-		        "amountAdj" => ""
+				"stateCol" =>"A7:A57",
+				"range" => "B7:H57", 
+		        "amountAdjRange" => $common_range,
+				"amountAdj"=>""
 		);
 		$srpFixed15 = array  (
 				"sheetName" => "Conv Full Grid" ,
 				"loan_type_id" => 3,
 				"escrow" => 0,
-				"stateCol" =>"A",
-				"range" => "A135:H186",
-		        "amountAdj" => ""
-				
+				"stateCol" =>"A136:A186",
+				"range" => "B136:H186",
+		        "amountAdjRange" => $common_range,
+				"amountAdj"=>""
+								
 		);
 		$srpArm51   = array ( 
 				"sheetName" => "Conv Full Grid" ,
 				"loan_type_id" => 8,
 				"escrow" => 0,
-				"stateCol" =>"A",
-				"range" =>"A263:H314",
-		        "amountAdj" => ""
-				);
+				"stateCol" =>"A264:A314",
+				"range" =>"B264:H314",
+		        "amountAdjRange" => $common_range,
+				"amountAdj"=>""
+		);
 		$srpArm71   = array ( 
 			    "sheetName" => "Conv Full Grid" ,
 				"loan_type_id" => 9,
 				"escrow" => 0,
-				"stateCol" =>"A",
-				"range"=>"A327:H378",
-		        "amountAdj" => ""
-				);
+				"stateCol" =>"A328:A378",
+				"range"=>"B328:H378",
+		        "amountAdjRange" => $common_range,
+				"amountAdj"=>""
+		);
 
 		return array (
 		    "selectedStates" => $selectedStates,

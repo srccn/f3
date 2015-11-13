@@ -8,7 +8,7 @@
         
         <style>
             label {display:block; margin-top:10px}
-            #margin {display:none}
+            #brokerOptionDiv {display:none}
         </style>
         
     </head>
@@ -93,14 +93,23 @@
                     <li>Credit score(>740)</li>
                     <li>lock days(45)</li> 
                     <li>Loan type(All)</li>
-                </ul> 
-                <hr>
-                <div id="margin">
+                </ul>
+                <div id="brokerOptionDiv">
                     <label for="Margin">Confirming Margin</label>
                     <input type="text" name="confirmingmargin" id="confirmingmargin" value="1" size='3'>% ;
                     <label for="JumboMargin"> NonConfirming  Margin</label>
                     <input type="text" name="jumbomargin" id="jumbomargin" value="0.5" size='3'>% <br>
+                    <label for="purchaserSelection">Select Specific Lender</label>
+                    <select id="purchaserSelection" name="purchaserSelection[]" size="8" multiple>
+                        <option value="ALL" selected>All Lenders</option>
+                        <option value="BBT" >BBT</option>
+                        <option value="BOKF">BOKF</option>
+                        <option value="WELLSFARGO">Wells Fargo</option>
+                        <option value="CHASE">Chase</option>
+                    </select>                    
                 </div>
+                <button id="brokerOptionLink" type="button" class="btn btn-link" >Broker's Option</button><br> 
+                <hr>
                 <button type="submit" name="submit" id="submit" class="btn btn-info">Find Rates</button>
 
             </form>

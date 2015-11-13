@@ -46,21 +46,21 @@ class CHASE  extends BasePurchaser{
     		"sheetName" => "Agency ARMs",
     		"lock_days" => 	[15, 30, 45, 60, 75],
     		"loan_type" => 8,
-    		"range" => "B77:L25"
+    		"range" => "B11:L24"
     );
 	//arm71
     private $arm71 = array (
     		"sheetName" => "Agency ARMs",
     		"lock_days" => 	[15, 30, 45, 60, 75],
     		"loan_type" => 9,
-    		"range" => "O12:Y25"
+    		"range" => "O11:Y24"
     );
 	//amr101
     private $arm101 = array (
     		"sheetName" => "Agency ARMs",
     		"lock_days" => 	[15, 30, 45, 60, 75],
     		"loan_type" => 10,
-    		"range" => "B29:L42"
+    		"range" => "B28:L41"
     );
 	
 	//supperarm51
@@ -68,7 +68,7 @@ class CHASE  extends BasePurchaser{
     		"sheetName" => "Agency ARMs",
     		"lock_days" => 	[15, 30, 45, 60, 75],
     		"loan_type" => 30,
-    		"range" => "O29:Y42"
+    		"range" => "O28:Y41"
     );	
 
     //supfixed30
@@ -76,7 +76,7 @@ class CHASE  extends BasePurchaser{
     		"sheetName" => "Agency Fixed High Balance",
     		"lock_days" => 	[15, 30, 45, 60, 75],
     		"loan_type" => 23,
-    		"range" => "B11:L30"
+    		"range" => "B12:L31"
     );
     
     //supfixed15
@@ -84,7 +84,7 @@ class CHASE  extends BasePurchaser{
     		"sheetName" => "Agency Fixed High Balance",
     		"lock_days" => 	[15, 30, 45, 60, 75],
     		"loan_type" => 25,
-    		"range" => "O11:Y30"
+    		"range" => "O12:Y25"
     );    
     
 	//ltv_cc_adjust fixed conforming
@@ -148,5 +148,64 @@ class CHASE  extends BasePurchaser{
 		);
     }
 
+    public function getStateListSRPMap () {
+    	$selectedStates=["AK", "MA", "NH", "RI", "CT", "VT", "NY"];
+        $conforming_rage = [["70000","74999"],["75000","89999"],["90000","99999"],
+    			    ["100000","109999"],["110000","124999"],["125000","149999"], ["150000","174999"],
+    			    ["175000","224999"],["225000","249999"],["250000","274999"], ["275000","417000"],
+    			    ["417000","1300000"]
+        ];
+    
+    	$srpFixed30 = array (
+    			"sheetName" => "Agcy Conf FR" ,
+    			"loan_type_id" => 1,
+    			"escrow" => 1,
+    			"stateCol" =>"A14:B64",
+    			"range" => "C14:C64",
+    	        "amountAdjRange" => $conforming_rage,
+    			"amountAdj" => "C67:C78"
+    	);
+    	$srpFixed15 = array  (
+    			"sheetName" => "Agcy Conf FR" ,
+    			"loan_type_id" => 3,
+    			"escrow" => 1,
+    			"stateCol" =>"A14:B64",
+    			"range" => "H14:H64",
+    	        "amountAdjRange" => $conforming_rage,
+    			"amountAdj" => "H67:H78"
+    
+    	);
+    	$srpArm51   = array (
+    			"sheetName" => "Agcy Conf ARM" ,
+    			"loan_type_id" => 8,
+    			"escrow" => 1,
+    			"stateCol" =>"A15:B65",
+    			"range" =>"C15:D65",
+    	        "amountAdjRange" => $conforming_rage,
+    			"amountAdj" => "C68:C79"
+    			    	);
+    	$srpArm71   = array (
+    			"sheetName" => "Agcy Conf ARM" ,
+    			"loan_type_id" => 9,
+    			"escrow" => 1,
+    			"stateCol" =>"A15:B65",
+    			"range"=>"F15:F65",
+    	        "amountAdjRange" => $conforming_rage,
+    			"amountAdj" => "F68:F79"
+    			    	);
+    
+    	return array (
+    			"selectedStates" => $selectedStates,
+    			"amountRange" => $amountRange,
+    			"amountAdj"  => $amountAdj,
+    			"products" => array (
+    					"srpFixed30" => $srpFixed30,
+    					"srpFixed15" => $srpFixed15,
+    					"srpArm51"   => $srpArm51,
+    					"srpArm71"   => $srpArm71
+    			)
+    	);
+    }    
+    
 }
 ?>

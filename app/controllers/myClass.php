@@ -100,22 +100,22 @@ class myClass extends BaseController {
 	
 	function testPurchaseLoader () {
 	    $myloader = new LoadPurchaseController ;
-		$myloader->setExcelMapFile("data/CHASE.php");
+		$myloader->setExcelMapFile("data/BBT.php");
 		$myloader->reloadData();
 	}
 
 	function testAdjLtvCcLoader(){
 	    echo "Test load to table adj_ltv_cc <br>";
 		$myloader = new LoadAdj_ltv_ccController ;
-		$myloader->setExcelMapFile("data/CHASE.php");
+		$myloader->setExcelMapFile("data/CHASE.php"); //donnot use BBT, data manually inputed
 		$myloader->reloadData();
 	}
 
 	function testStateListSRPLoader(){
 		echo "Test load to table  state_srp_full_list <br>";
 		$myloader = new LoadStateListSRPController ;
-		$myloader->setExcelMapFile("data/WELLSFARGO.php");
-		$myloader->defineObjPHPExcel('data/wells.xlsx');
+		$myloader->setExcelMapFile("data/CHASE.php");
+		$myloader->defineObjPHPExcel('data/chase srp.xls');
 		$myloader->reloadData();
 	}
 	
