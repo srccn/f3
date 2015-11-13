@@ -317,29 +317,32 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		//echo "loan type id is : $loanTypeId <br>";
 	
 		if ( $this->property->isConfirming == 0) { //non confirming case
-			$query = "SELECT $state  as result
+			$query = "SELECT SRP  as result
 			FROM  state_srp_full_list
 			WHERE  start_amount = 'confirming'
 			AND  loan_type_id = $loanTypeId
-			AND  purchaser_id = $this->purchaserId 
+			AND  purchaser_id = $this->purchaserId
+			AND  state = '$state'
 			";
 		}
 	
 		if ($this->property->isConfirming == 2 ) {// supper confirming
-			$query = "SELECT $state  as result
+			$query = "SELECT SRP  as result
 				FROM  state_srp_full_list
 				WHERE  end_amount ='confirming'
 				AND  loan_type_id = $loanTypeId
-				AND  purchaser_id = $this->purchaserId  
+				AND  purchaser_id = $this->purchaserId
+				AND state = '$state'
 				";
 			}
 	
 	    if ( $this->property->isConfirming == 1 ) {
-				$query = "SELECT $state as result
+				$query = "SELECT SRP as result
 				FROM  state_srp_full_list
 				WHERE  $loanAmount > convert(start_amount, UNSIGNED)
 				AND  loan_type_id = $loanTypeId
-				AND  purchaser_id = $this->purchaserId 
+				AND  purchaser_id = $this->purchaserId
+				AND  state = '$state'
 				ORDER BY  convert(start_amount, UNSIGNED) desc
 				LIMIT  1
 				";

@@ -153,7 +153,7 @@ class Util extends BaseController {
     	$returnTable = array();
     	
     	foreach ($resultTable as $tableRow) {
-    		$cleanRow = array_filter($tableRow, function($var){return is_numeric($var);});
+    		$cleanRow = array_filter($tableRow, function($var){return (isset($var) && strlen($var) > 0 );});
     		array_push($returnTable, array_values ($cleanRow) );
     	}
     	return $returnTable;

@@ -7,7 +7,7 @@ class WELLSFARGO extends BasePurchaser {
 	protected $excelFile = "data/wells fargo.xls";
 	protected $lockdays = [15, 30, 45, 60] ;
     protected $baseLockDays = 60;
-    protected $superConfirmingCalculateMethod = CalcMethod::LOOKUP;
+    protected $superConfirmingCalculateMethod = LoanerConst::LOOKUP;
 	
     //30fixed
     private $fixed30 = array (
@@ -175,37 +175,45 @@ class WELLSFARGO extends BasePurchaser {
 	}
 	
 	public function getStateListSRPMap () {
-		$selectedStates=["MA", "NH", "RI", "CT", "VT", "NY"];
+		$selectedStates=["AK", "MA", "NH", "RI", "CT", "VT", "NY"];
 		$amountRange =[["minimum","99999"],["100000","139999"],["140000","179999"],
 				       ["180000","239999"],["240000","299999"],["300000","confirming"], ["confirming","maximum"]];
 		$bestEffortsCol = "B:H";
 		$mandatoryCol   = "K:Q";
 
-		$srpFixed30 = array ( 
+		$srpFixed30 = array (
 				"sheetName" => "Conv Full Grid" ,
-		        "stateCol" =>"A",
-				"range" => "B7:H57", 
-		        $amountAdj = ""
+				"loan_type_id" => 1,
+				"escrow" => 0,
+				"stateCol" =>"A",
+				"range" => "A7:H57", 
+		        "amountAdj" => ""
 		);
-		$srpFixed15 = array  ( 
+		$srpFixed15 = array  (
 				"sheetName" => "Conv Full Grid" ,
-		        "stateCol" =>"A",
-				"range" => "B135:H186",
-				$amountAdj = ""
+				"loan_type_id" => 3,
+				"escrow" => 0,
+				"stateCol" =>"A",
+				"range" => "A135:H186",
+		        "amountAdj" => ""
 				
 		);
 		$srpArm51   = array ( 
 				"sheetName" => "Conv Full Grid" ,
-		        "stateCol" =>"A",
-				"range" =>"B263:H314",
-				$amountAdj = "" 
-		);
+				"loan_type_id" => 8,
+				"escrow" => 0,
+				"stateCol" =>"A",
+				"range" =>"A263:H314",
+		        "amountAdj" => ""
+				);
 		$srpArm71   = array ( 
 			    "sheetName" => "Conv Full Grid" ,
+				"loan_type_id" => 9,
+				"escrow" => 0,
 				"stateCol" =>"A",
-				"range"=>"B327:H378",
-				$amountAdj = ""
-		);
+				"range"=>"A327:H378",
+		        "amountAdj" => ""
+				);
 
 		return array (
 		    "selectedStates" => $selectedStates,

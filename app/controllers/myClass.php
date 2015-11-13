@@ -113,8 +113,9 @@ class myClass extends BaseController {
 
 	function testStateListSRPLoader(){
 		echo "Test load to table  state_srp_full_list <br>";
-		$myloader = new LoadStateSRPListController ;
-		$myloader->setExcelMapFile("data/CHASE.php");
+		$myloader = new LoadStateListSRPController ;
+		$myloader->setExcelMapFile("data/WELLSFARGO.php");
+		$myloader->defineObjPHPExcel('data/wells.xlsx');
 		$myloader->reloadData();
 	}
 	
