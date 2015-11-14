@@ -208,7 +208,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		//look up reference loan_type_id
 		
 		$query = "SELECT t1.loan_type_id as baseRef 
-				    FROM loaner.purchaser_srp_loan_type_ref t1 
+				    FROM purchaser_srp_loan_type_ref t1 
 				    JOIN loan_type t2 
 				      ON (t1.loan_type_id = t2.loan_type_id ) 
 				   WHERE purchaser_id = $this->purchaserId 
@@ -258,7 +258,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 	
 		$base_type_id_result = $this->runQuery("
 				SELECT loan_type_base_srp_id as bID
-				FROM loaner.loan_type
+				FROM loan_type
 				WHERE loan_type_id=$loanTypeId
 				");
 		if ( ! $base_type_id_result ) die("Failed to find loan_type_base_id for :  $loanTypeId");

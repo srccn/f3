@@ -32,7 +32,7 @@ class myClass extends BaseController {
         		//if check passwrod succeeded
         		$query = "
         				SELECT password
-        				FROM   loaner.user
+        				FROM   user
         				WHERE  name = '$name'
         				";
         		$result=$this->runQuery($query);
@@ -61,7 +61,7 @@ class myClass extends BaseController {
     	$passwrod = Util::hashString($this->f3->POST['password']);
 		$timeStamp = time();
     	$query = "
-    			INSERT into loaner.user 
+    			INSERT into user 
     			            (name, email,password,regdate)
     			VALUES ('$name' , '$email', '$passwrod', $timeStamp)
     			" ;

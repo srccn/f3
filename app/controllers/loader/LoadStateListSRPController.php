@@ -3,7 +3,7 @@
 class LoadStateListSRPController extends AbstractLoadController{
 	
 	private $insert_data= array();
-	private $DBTableName = "loaner.state_srp_full_list";	
+	private $DBTableName = "state_srp_full_list";	
 	
 	
 	public function pushDataToDB() {

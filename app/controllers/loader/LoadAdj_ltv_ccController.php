@@ -3,7 +3,7 @@ define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 class LoadAdj_ltv_ccController extends AbstractLoadController {
 
 	private $insert_data= array();
-	private $DBTableName = "loaner.adj_ltv_cc";
+	private $DBTableName = "adj_ltv_cc";
 
 	
 	public function pushDataToDB() {

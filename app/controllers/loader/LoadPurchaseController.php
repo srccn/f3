@@ -3,8 +3,8 @@ define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 class LoadPurchaseController extends AbstractLoadController {
 
 	private $insert_data= array();
-	private $DBTableName = "loaner.purchase";
-	private $AdjDBTableName = "loaner.purchase_lockdays_adj";
+	private $DBTableName = "purchase";
+	private $AdjDBTableName = "purchase_lockdays_adj";
 	
 	public function pushDataToDB() {
 		$query = "INSERT INTO $this->DBTableName ( purchaser_id, loan_type_id, rate, lock_days_id, purchase_price) VALUES "
@@ -84,7 +84,7 @@ class LoadPurchaseController extends AbstractLoadController {
 	    
 		//execute query to add price data in table 
 		$query = "SELECT purchaser_id, loan_type_id, adjust 
-				  FROM loaner.purchase_lockdays_adj
+				  FROM purchase_lockdays_adj
 				  WHERE purchaser_id = $this->purchaserID ";
 		$result = $this->runQuery($query);
 		foreach ($result as $row) {
