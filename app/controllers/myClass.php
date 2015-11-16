@@ -9,12 +9,14 @@ class myClass extends BaseController {
     }
     
     function home() {
-   		if (isset($this->f3->SESSION['username']) && !empty($this->f3->SESSION['username'] )) {
+        echo "Hello World";
+        return;
+    	if (isset($this->f3->SESSION['username']) && !empty($this->f3->SESSION['username'] )) {
     		$this->f3->reroute('/customer');
     	} else {
     	    $this->f3->set('view','blank.htm');
     	}
-         echo Template::instance()->render('layout.htm');
+        echo Template::instance()->render('layout.htm');
     }
     
     function signin() {
