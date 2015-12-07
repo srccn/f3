@@ -30,10 +30,13 @@
                  color: red
                 }
            .btn{
-           word-wrap:break-word;
-white-space:normal !important;
-    max-width:70px;
-}
+                 word-wrap:break-word;
+                 white-space:normal !important;
+                 max-width:70px;
+                }
+            #btnRateDetails {
+                 max-width:170px;
+                }
         </style>
 </head>
 <body >
@@ -54,23 +57,29 @@ white-space:normal !important;
        </table>
      </div>
    </div>
-   <div id="fees", name="fees" class="feeBlock">
+   <div id="fees" name="fees" class="feeBlock">
+<!--    
        <p>Closing Cost : {{@totalFee}} </p>
        <div id="divFeeDetails" class="hiddenDiv">
            <table style="border-collapse: collapse;"">
-               <repeat group="{{ @fees }}" key= "{{@ikey}}" value="{{ @ifee }}">
+               <repeat group="{{ @feeOptions }}" key= "{{@ikey}}" value="{{ @ifee }}">
                    <tr>
                        <td> {{@ikey}} </td>
-                       <td> {{@ifee}} </td>
+                       <td> 
+               <repeat group="{{ @ifee }}" key= "{{@iikey}}" value="{{ @iifee }}">
+                           {{@iifee}} 
+                           </repeat>
+                       </td>
                    </tr>     
                </repeat>
            </table>
        </div>
+-->
    </div>
-   <button id="btnFeeDetails" type="button" class="btn btn-link">Detail</button>
+  <button id="btnFeeDetails" type="button" class="btn btn-link">Show Details</button> 
    <div style="clear:both"></div>
    
-   <button id="btnRateDetails" type="button" class="btn btn-link">Extend</button>
+<!-- <button id="btnRateDetails" type="button" class="btn btn-link">Expend</button> -->
    <div id="rateArea" >
    <repeat group="{{ @SearchResults }}" key="{{@loanType}}" value="{{@resords}}">
        <div id={{@loanType."Div"}} class="resultBlock" >
@@ -92,6 +101,7 @@ white-space:normal !important;
                        <tr class="option{{@SearchResult['option']}}">
                <td rowspan="4" class=" hiddenCol bottom-line text-cell" >
                  <button id="{{@loanType}}" type="button" class="btn btn-sm btn-link ">{{ (@SearchResult['part1']->purchaser) }} </button>
+                 <br>Fees: {{@feeOptions[@SearchResult['option']][2]}}
                </td> 
                <td > {{ (@SearchResult['part1']->loanAmount) }}</td>
                <td > {{ (@SearchResult['part1']->rate) }}      </td>
@@ -136,6 +146,7 @@ white-space:normal !important;
                        <tr class="option0">
                <td rowspan="3" class="hiddenCol bottom-line "> 
                    <button id="{{@loanType}}" type="button" class="btn btn-sm btn-link text-cell">{{ (@SearchResult['part1']->purchaser) }} </button>
+                   <br>Fees: {{@feeOptions[@SearchResult['option']][2]}}
                </td > 
                <td rowspan="3" class="bottom-line"> {{ (@SearchResult['part1']->loanAmount) }}</td>
                <td > {{ (@SearchResult['part1']->rate) }}      </td>

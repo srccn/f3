@@ -55,10 +55,13 @@ class  PropertyController extends BaseController {
 
     	//create fee calculator for property, set totalfee and fee details
      	$myFeeCalculator = new FeeCalculator($property);
-     	$totalFee = $myFeeCalculator->getTotalFees();
-     	$this->f3->set('totalFee', $totalFee);
-     	$this->f3->set('fees', $myFeeCalculator->getFeesArray());
-     	//echo "fees : " . $totalFee;
+     	//calculate fees for each option in an array
+     	$totalFeeByOptions = $myFeeCalculator->getOptionsFee();
+
+     	//temporarily put fees for first option, just for display purpose
+//      	$this->f3->set('totalFee', $totalFeeByOption);
+      	$this->f3->set('feeOptions', $totalFeeByOptions);
+//      	//echo "fees : " . $totalFee;
     	
      	//get all purchaser and loan names
      	$purchasers= $this->purchasers;
@@ -90,7 +93,8 @@ class  PropertyController extends BaseController {
 					$purchaserCalculatorName = $purchaser . "RateCalculator";
 					$myRateCalculator = new $purchaserCalculatorName ();
 					$myRateCalculator->setProperty ( $property_clone );
-					$myRateCalculator->setTotalFee ( $totalFee );
+					//set total fee for this option 
+					$myRateCalculator->setTotalFee ( $totalFeeByOptions[$opt[0]][2] );
 					$myresult = $myRateCalculator->calculteRate ();
 					
 					if ( $myresult == null ) { //incase no valid result found, skip to next
@@ -111,7 +115,8 @@ class  PropertyController extends BaseController {
 					$resultRecord = array (
 							"part1" => $myRecord1,
 							"part2" => $myRecord2, 
-							"option" => $opt[0]
+							"option" => $opt[0],
+							"fees" => $totalFeeByOptions[$opt[0]]
 					);
 					// var_dump ($resultRecord );
 					array_push ( $this->viewRecords[$loanName], $resultRecord );

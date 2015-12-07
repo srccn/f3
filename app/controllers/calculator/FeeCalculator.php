@@ -4,10 +4,11 @@ class FeeCalculator extends BaseController {
 
 	private $property ;
 	private $fees;
-
+	private $amountRelatedFees;
+	
 	function __construct(LoanProperty $property){
 		parent::__construct();
-		$this->property = $property;
+		$this->property = clone $property;
 		$this->setFixedFees();
 	}
 	
@@ -21,18 +22,31 @@ class FeeCalculator extends BaseController {
 		);
 	}
 	
-	function getSecondLoanFee(){
+	function getOptionsFee(){
 		$feeName = "SecondLoanCharge";
-		$returnVal = [0,0];
+		$returnVal = array();
 		
 		$options = $this->property->loanAmountOptions ;
-		if ( count($options) > 1 ) {
-			$returnVal[0] = $options[1][2] ?  525 + $options[1][2] * 0.0025 : 0 ;
-			$returnVal[1] = $options[2][2] ?  525 + $options[1][2] * 0.0025 : 0 ;
+		foreach ( $options as $opt ) {
+			$feeVal = array();
+			//first loan cost
+			$feeVal[0] = $this->getTotalFees($opt[1]);
+			
+			//second loan cost if any
+			$feeVal[1] = $opt[2] ? 525 + $option[2] * 0.0025 : 0;
+			
+			//total cost
+			$feeVal[2] = $feeVal[0] + $feeVal[1];
+			
+			//cost ddetails
+			$feeDetails = $this->fees;
+			$feeDetails['SecondLoanInitiationFee'] = $feeVal[1];
+			$feeDetails_json = json_encode($feeDetails);
+			
+			$feeVal[3] = $feeDetails_json;
+				
+			$returnVal[$opt[0]] = $feeVal;
 		}
-		
-		//525 + 2ndloanAmount*0.25%
-		//not put into fees array. $this->fees[$feeName] = $returnVal;
 		return $returnVal;
 	}
 	
@@ -149,21 +163,38 @@ class FeeCalculator extends BaseController {
 				$returnVal = 0;
 		}
 		if ($this->property->purchaseType == LoanerConst::PURCHASE) {
-			$lenderInsuranceFee = $this->getLenderInsuranceFee();
-			$returnVal = round($this->property->marketPrice * 0.4/100 + 175 - $lenderInsuranceFee, 0 );
+			$returnVal = round($this->property->marketPrice * 0.4/100 + 175, 0 );
 		}
 		$this->fees[$feeName] = $returnVal;
 		return $returnVal;
 	}
-
-	function getTotalFees() {
+	
+	//optional 
+	function getOwnerTitleInsuranceFee(){
+		$feeName = "OwnerTitleInsuranceFee";
+		$returnVal = 0;
+		if ($this->property->purchaseType == LoanerConst::REFINANCE ||
+				$this->property->purchaseType == LoanerConst::COREFINANCE ) {
+					$returnVal = 0;
+				}
+				if ($this->property->purchaseType == LoanerConst::PURCHASE) {
+					$lenderInsuranceFee = $this->getLenderInsuranceFee();
+					$returnVal = round($this->property->marketPrice * 0.4/100 + 175 - $lenderInsuranceFee, 0 );
+				}
+				$this->fees[$feeName] = $returnVal;
+				return $returnVal;
+	}
+	
+	function getTotalFees($optionAmount=0) {
+		
+		$this->property->loanAmount = $optionAmount;
+		
 		Util::dump("Appraisal fee",       $this->getAppraisalFee());
 		Util::dump("Lender Insurance fee",$this->getLenderInsuranceFee());
 		Util::dump("Title Insurance fee" ,$this->getTitleInsuranceFee());
 		Util::dump("Recording fee",       $this->getRecordingFee());
 		Util::dump("Recording other fee", $this->getRecordingOtherFee());
 		Util::dump("Attorney fee",        $this->getAttoneyFee());
-		Util::dump("Fee Details ",        $this->fees);
 		Util::dump("Total Fee is " ,      Util::getSumValue($this->fees) );
 		return 	intVal (Util::getSumValue($this->fees)) ;	
 	}
