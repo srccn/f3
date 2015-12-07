@@ -11,15 +11,19 @@ class ViewRecord extends BaseController {
 	public $price;
 	public $loanTypeId;
 	public $loanTerm;
+	public $price_highrate;    //price at par rate - 1/8 
 	public $price_lowrate;    //price at par rate - 1/8 
 	public $price_lowlowrate; //price ar par rate - 1/4
 	public $credit;
+	public $credit_highrate;
 	public $credit_lowrate;
 	public $credit_lowlowrate;
 	public $lockDays;
+	public $lockDays_highrate;
 	public $lockDays_lowrate;
 	public $lockDays_lowlowrate;
 	public $monthlyPayment;
+	public $monthlyPayment_highrate;
 	public $monthlyPayment_lowrate;
 	public $monthlyPayment_lowlowrate;
 	public $margin;
@@ -44,7 +48,8 @@ class ViewRecord extends BaseController {
     		              and lock_days_id >= $this->lockDays
 				          and loan_type_id = $this->loanTypeId
 				     group by rate
-				       having rate < $this->rate
+				       having rate <= $this->rate + 0.125
+				          and rate <> $this->rate
 				     order by rate desc 
 				        limit 2
 				     ";

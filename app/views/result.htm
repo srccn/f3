@@ -7,37 +7,160 @@
         <link href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
 
         <style>
-            .closingoption{font-size: 1.25em; text-align:center; background-color:#111111; color:#eeeeee; margin-bottom:15px; width:100%; overflow-y: hidden !important  }
-            .timestamp{font-size: 0.5em; background-color:#111111; color:#eeeeee; margin-bottom:15px; }
-            .resultBlock {min-width: 100px; display:block; float:left; margin:2px; margin-bottom:20px; margin-right:10px; padding:1px; background-color:#eeeeee;}
-            .propertyBlock {min-width: 200px; display:block; float:left; margin:2px; margin-bottom:20px; margin-right:20px; padding:2px; width="40%"}
-            .feeBlock {min-width: 200px; display:block; float:left; margin:2px; margin-bottom:20px; margin-right:20px; padding:2px; width="40%"}
-            #rateArea {margin-left:2px}
-            .loanName {color:red;font-size:120%; font-style:bold;text-align:center;text-decoration: underline;}
-            .bottom-line { border-bottom:black;border-bottom-style: solid;padding-top:0px;padding-bottom:5px}
-            .text-cell { text-align: left;}
-            .hiddenDiv { display:none}
-            .hiddenCol { display:none ;}
-            .option0  { background-color:#fcf8e3;}
-            .option1 { background-color:#faebcc; }             
-            .option2 { background-color:#dff0d8; }             
-            td {padding-top:5px;padding-right:5px;text-align:right; }
-            th {padding-right: 5px; text-align:right; border-bottom:black;border-bottom-style: solid;}
-            hr { display: block;
-                 margin:0; 
-                 border-style: inset;   
-                 border-width: 1px;
-                 color: red
-                }
-           .btn{
-                 word-wrap:break-word;
-                 white-space:normal !important;
-                 max-width:70px;
-                }
-            #btnRateDetails {
-                 max-width:170px;
-                }
-        </style>
+.closingoption {
+	font-size: 1.25em;
+	text-align: center;
+	background-color: #111111;
+	color: #eeeeee;
+	margin-bottom: 15px;
+	width: 100%;
+	overflow-y: hidden !important
+}
+
+.timestamp {
+	font-size: 0.5em;
+	background-color: #111111;
+	color: #eeeeee;
+	margin-bottom: 15px;
+}
+
+.resultBlock {
+	min-width: 100px;
+	display: block;
+	float: left;
+	margin: 2px;
+	margin-bottom: 20px;
+	margin-right: 10px;
+	padding: 1px;
+	background-color: #eeeeee;
+}
+
+.propertyBlock {
+	min-width: 200px;
+	display: block;
+	float: left;
+	margin: 2px;
+	margin-bottom: 20px;
+	margin-right: 20px;
+	padding: 2px;
+	width
+	="40%"
+}
+
+.feeBlock {
+	min-width: 200px;
+	display: block;
+	float: left;
+	margin: 2px;
+	margin-bottom: 20px;
+	margin-right: 20px;
+	padding: 2px;
+	width
+	="40%"
+}
+
+#rateArea {
+	margin-left: 2px
+}
+
+.loanName {
+	color: red;
+	font-size: 120%;
+	font-style: bold;
+	text-align: center;
+	text-decoration: underline;
+}
+
+.bottom-line {
+	border-bottom: black;
+	border-bottom-style: solid;
+	padding-top: 0px;
+	padding-bottom: 5px
+}
+
+.text-cell {
+	text-align: left;
+}
+
+.hiddenDiv {
+	display: none
+}
+
+.hiddenCol {
+	display: none;
+}
+
+.option0 {
+	background-color: #fcf8e3;
+}
+
+.option1 {
+	background-color: #faebcc;
+}
+
+.option2 {
+	background-color: #dff0d8;
+}
+
+td {
+	padding-top: 5px;
+	padding-right: 5px;
+	text-align: right;
+}
+
+th {
+	padding-right: 5px;
+	text-align: right;
+	border-bottom: black;
+	border-bottom-style: solid;
+}
+
+hr {
+	display: block;
+	margin: 0;
+	border-style: inset;
+	border-width: 1px;
+	color: red
+}
+
+.btn {
+	word-wrap: break-word;
+	white-space: normal !important;
+	max-width: 70px;
+}
+
+#btnRateDetails {
+	max-width: 170px;
+}
+
+.black_overlay {
+	display: none;
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	z-index: 1001;
+	-moz-opacity: 0.8;
+	opacity: .70;
+	filter: alpha(opacity = 80);
+}
+
+.white_content {
+	display: none;
+	position: absolute;
+	top: 25%;
+	left: 25%;
+	width: 50%;
+	height: 50%;
+	padding: 16px;
+	border: 10px solid orange;
+	background-color: white;
+	z-index: 1002;
+	overflow: auto;
+}
+</style>
 </head>
 <body >
    <div id="closingOption" class="closingoption __navbar-fixed-top">
@@ -101,25 +224,25 @@
                        <tr class="option{{@SearchResult['option']}}">
                <td rowspan="4" class=" hiddenCol bottom-line text-cell" >
                  <button id="{{@loanType}}" type="button" class="btn btn-sm btn-link ">{{ (@SearchResult['part1']->purchaser) }} </button>
-                 <br>Fees: {{@feeOptions[@SearchResult['option']][2]}}
+                   <br>Fees:<a id="openPopup" href="#" onClick="showDialog( {{@feeOptions[@SearchResult['option']][3]}} );">{{@feeOptions[@SearchResult['option']][2]}} </a>
                </td> 
                <td > {{ (@SearchResult['part1']->loanAmount) }}</td>
-               <td > {{ (@SearchResult['part1']->rate) }}      </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->price) }}      </td>
-               <td > {{ (@SearchResult['part1']->credit) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment) }}   </td>
-               <td class="hiddenCol"> {{ sprintf ('%0.2f' ,(@SearchResult['part1']->monthlyPayment + @SearchResult['part2']->monthlyPayment) ) }}   </td>
-                       </tr>
-                       
-                       <tr class="option{{@SearchResult['option']}}">
-               <td></td>        
                <td > {{ (@SearchResult['part1']->rate_lowrate) }}      </td>
                <td class="hiddenCol"> {{ (@SearchResult['part1']->price_lowrate) }}      </td>
                <td > {{ (@SearchResult['part1']->credit_lowrate) }}    </td>
                <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays_lowrate) }}    </td>
                <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowrate) }}    </td>
                <td class="hiddenCol"> {{ sprintf ('%0.2f' ,(@SearchResult['part1']->monthlyPayment_lowrate + @SearchResult['part2']->monthlyPayment) ) }}   </td>
+                       </tr>
+                       
+                       <tr class="option{{@SearchResult['option']}}">
+               <td></td>        
+               <td > {{ (@SearchResult['part1']->rate) }}      </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->price) }}      </td>
+               <td > {{ (@SearchResult['part1']->credit) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment) }}   </td>
+               <td class="hiddenCol"> {{ sprintf ('%0.2f' ,(@SearchResult['part1']->monthlyPayment + @SearchResult['part2']->monthlyPayment) ) }}   </td>
                        </tr>
 
                        <tr class="option{{@SearchResult['option']}}">
@@ -146,24 +269,24 @@
                        <tr class="option0">
                <td rowspan="3" class="hiddenCol bottom-line "> 
                    <button id="{{@loanType}}" type="button" class="btn btn-sm btn-link text-cell">{{ (@SearchResult['part1']->purchaser) }} </button>
-                   <br>Fees: {{@feeOptions[@SearchResult['option']][2]}}
+                   <br>Fees:<a id="openPopup" href="#" onClick="showDialog( {{@feeOptions[@SearchResult['option']][3]}} );">{{@feeOptions[@SearchResult['option']][2]}} </a>
                </td > 
                <td rowspan="3" class="bottom-line"> {{ (@SearchResult['part1']->loanAmount) }}</td>
-               <td > {{ (@SearchResult['part1']->rate) }}      </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->price) }}      </td>
-               <td > {{ (@SearchResult['part1']->credit) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
-                       </tr>
-
-                       <tr class="option0">
                <td > {{ (@SearchResult['part1']->rate_lowrate) }}      </td>
                <td class="hiddenCol"> {{ (@SearchResult['part1']->price_lowrate) }}      </td>
                <td > {{ (@SearchResult['part1']->credit_lowrate) }}    </td>
                <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays_lowrate) }}    </td>
                <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowrate) }}    </td>
                <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowrate) }}    </td>
+                       </tr>
+
+                       <tr class="option0">
+               <td > {{ (@SearchResult['part1']->rate) }}      </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->price) }}      </td>
+               <td > {{ (@SearchResult['part1']->credit) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
+               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
                        </tr>
 
                        <tr class="option0 bottom-line">
@@ -185,6 +308,12 @@
    
    <div style="clear:both; margin:15px">
        <p></p>
-    </div> 
+    </div>
+    
+    <div id="light" class="white_content">Loan Closing Cost Details. 
+        <a id="clsoePopup" href ="#" onClick="closeDialog();">Close</a>
+        <hr>
+    </div>
+    <div id="fade" class="black_overlay"></div> 
 </body>
 </html>
