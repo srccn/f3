@@ -12,7 +12,7 @@ class FeeCalculator extends BaseController {
 		$this->setFixedFees();
 	}
 	
-	function setFixedFees () {
+	public function setFixedFees () {
 		$this->fees = array(
 				"804 credit_report" => 18.00 ,
 				"flood_certification" => 15.00 ,
