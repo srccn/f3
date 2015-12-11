@@ -13,7 +13,8 @@ class LoanProperty extends BaseController {
 	public $loanAmount;
 	public $lockDays;
 	public $creditScore;
-	public $loanName; //fixed30, fixed15, arm51, arm71
+	public $loanNameSelection; //all fixed30, fixed15, arm51, arm71
+	public $loanName; //all fixed30, fixed15, arm51, arm71
 	public $mincredit;
 	public $closingOption;
 	public $confirmingmargin;
@@ -47,7 +48,7 @@ class LoanProperty extends BaseController {
 		$this->zip=$inputs["zip"];
 		$this->marketPrice=intVal ($inputs["marketPrice"]);
 		$this->creditScore=intVal ($inputs["creditScore"]);
-		$this->loanName=$inputs["loanName"];
+		$this->loanNameSelection=$inputs["loanNameSelection"];
 		$this->lockDays=$inputs["lockDays"];
 		$this->confirmingmargin=$inputs["confirmingmargin"];
 		$this->jumbomargin=$inputs["jumbomargin"];
@@ -121,9 +122,13 @@ class LoanProperty extends BaseController {
 	
 	public function setLoanTypeId(){
 		
-		if ($this->loanName == "all") {
-			$this->loanTypeId = null; //will be set later.
-			return null;
+// 		if (in_array("all", $this->loanNameSelection)) {
+// 			$this->loanTypeId = null; //will be set later.
+// 			return null;
+// 		}
+		
+		if ( ! $this->loanName ) {
+			die ("set loanName first");
 		}
 		
 		$result = $this->runQuery("
@@ -250,7 +255,7 @@ class LoanProperty extends BaseController {
 		$this->setState();
 		$this->setLoanLimitByZipCode();
 		$this->setIsConfirming();
-		$this->setLoanTypeId();
+		//$this->setLoanTypeId();
 		$this->setLoanTerm();
 		$this->setMargin();
 		$this->loanLimitCheck = $this->loanLimitCheck();

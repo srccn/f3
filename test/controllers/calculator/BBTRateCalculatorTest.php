@@ -33,7 +33,9 @@ class BBTRateCalculatorTest extends PHPUnit_Framework_TestCase {
 		$testInputForm = new InputForm();
 		$testInputs = $testInputForm->getSampleForm();
 		$testLoanProperty = new LoanProperty($testInputs);
-	
+		$testLoanProperty->loanName = "fixed30";
+		$testLoanProperty->setLoanTypeId();
+		
 		$testCalculator = new BBTRateCalculator;
 		$testCalculator->setProperty($testLoanProperty);
 		$testCalculator->setTotalFee(2500);

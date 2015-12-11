@@ -10,6 +10,7 @@ class CHASERateCalculator extends AbstractRateCalculatorController {
 	}
 
 	public function getPurchaseRate() {
+		parent::calculateAllAdjusts();
 		Util::dump("Adjusts Details", $this->adjusts);
 		Util::dump("Total adjust is " , Util::getSumValue($this->adjusts) );
 		return parent::getPurchaseRateType1();

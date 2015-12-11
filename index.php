@@ -9,9 +9,9 @@ $f3->set('ONERROR',
 			// custom error handler code goes here
 			// use this if you want to display errors in a
 			// format consistent with your site's theme
-			echo $f3->get('ERROR.text') ."<br>";
-			// var_dump ($f3->get('ERROR'));
-			var_dump  ( $f3->get('EXCEPTION'));
+			//echo $f3->get('ERROR.text') ."<br>";
+			var_dump ($f3->get('ERROR.trace') );
+			//var_dump  ( $f3->get('EXCEPTION'));
 		}
 		);
 

@@ -50,6 +50,14 @@ class  PropertyController extends BaseController {
     		$this->setPurchasers($property->purchaserSelection);
     	}
 
+    	//determine loanName - what kind of loan selected.
+    	if (in_array("all", $property->loanNameSelection) ) {
+    		//do ntohing take default all;
+    	} else {
+    		$this->setLoanNames($property->loanNameSelection);
+    	}
+    	 
+    	
     	//find loan amount options
     	$myoptions = $property->loanAmountOptions;
 
@@ -76,7 +84,7 @@ class  PropertyController extends BaseController {
      	//$purchasers=["BOKF"];
      	    foreach ($purchasers as $purchaser) {
                 $myRecord = new ViewRecord;
-                $myRecord->product = $property->loanName;
+                $myRecord->product = $loanName;
                 $myRecord->purchaser = $purchaser;
 				foreach ( $myoptions as $opt ) {
 					$property_clone = clone $property;
@@ -90,6 +98,7 @@ class  PropertyController extends BaseController {
 					
 					$property_clone->loanAmount = $opt [1];
 					$property_clone->calculateDerives ();
+					//Util::dump ( "Loan Property : ",  $property_clone);
 					$purchaserCalculatorName = $purchaser . "RateCalculator";
 					$myRateCalculator = new $purchaserCalculatorName ();
 					$myRateCalculator->setProperty ( $property_clone );
