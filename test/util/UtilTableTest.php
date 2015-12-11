@@ -105,5 +105,23 @@ class UtilTableTest extends PHPUnit_Framework_TestCase {
 		$sum = Util::getSumValue($testArray);
 		$this->assertEquals(5.0, $sum);
 	}
+
+	/**
+	 * @test
+	 */
+	public function testArrayComb() {
+		$testArray = array (
+             [1,2,3],
+			 [a,b,c],
+			 [x1,y2,z3]		
+		);
+		$result = Util::arrayComb($testArray);
+		//var_dump($result);
+		$this->assertEqual(27, count($result));
+		$this->assertEqual([3,'c','z3'], $result[26]);
+		$this->assertEqual([1,'a','x1'], $result[26]);
+		
+	}	
+	
 	
 }

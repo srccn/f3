@@ -43,7 +43,7 @@ class  PropertyController extends BaseController {
     	date_default_timezone_set('EST');
     	$this->f3->set('searchStamp', date("m-d-Y g:i a"));
     	
-    	//determine lender list
+    	//determine purchaser list
     	if (in_array("ALL", $property->purchaserSelection) ) {
     		//do ntohing take default all;
     	} else {
@@ -56,20 +56,23 @@ class  PropertyController extends BaseController {
     	} else {
     		$this->setLoanNames($property->loanNameSelection);
     	}
-    	 
     	
     	//find loan amount options
     	$myoptions = $property->loanAmountOptions;
 
+    	//build calculation target list use loanAmount, loanName, purchaser
+        $calTargetArray = Util::arrayComb(array (
+        		$this->loanNames,
+        		$myoptions,
+        		$this->purchasers
+        ));
+    	
     	//create fee calculator for property, set totalfee and fee details
      	$myFeeCalculator = new FeeCalculator($property);
      	//calculate fees for each option in an array
      	$totalFeeByOptions = $myFeeCalculator->getOptionsFee();
 
-     	//temporarily put fees for first option, just for display purpose
-//      	$this->f3->set('totalFee', $totalFeeByOption);
       	$this->f3->set('feeOptions', $totalFeeByOptions);
-//      	//echo "fees : " . $totalFee;
     	
      	//get all purchaser and loan names
      	$purchasers= $this->purchasers;
