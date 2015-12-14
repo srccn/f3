@@ -9,7 +9,7 @@ $f3->set('ONERROR',
 			// use this if you want to display errors in a
 			// format consistent with your site's theme
 			echo $f3->get('ERROR.text') ."<br>";
-			print_r ($f3->get('ERROR.trace') );
+			echo "<pre>" . $f3->get('ERROR.trace') . "</pre>" ;
 			//var_dump  ( $f3->get('EXCEPTION'));
 		}
 		);
