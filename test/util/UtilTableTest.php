@@ -117,9 +117,9 @@ class UtilTableTest extends PHPUnit_Framework_TestCase {
 		);
 		$result = Util::arrayComb($testArray);
 		//var_dump($result);
-		$this->assertEqual(27, count($result));
-		$this->assertEqual([3,'c','z3'], $result[26]);
-		$this->assertEqual([1,'a','x1'], $result[26]);
+		$this->assertEquals(27, count($result));
+		$this->assertEquals([3,'c','z3'], $result[26]);
+		$this->assertEquals([1,'a','x1'], $result[0]);
 		
 	}	
 	

@@ -15,7 +15,7 @@ class InputForm {
 	public $creditScore;
 	public $loanName; //fixed30, fixed15, arm51, arm71
 	public $confirmingmargin;
-	public $jumbogmargin;
+	public $jumbomargin;
 	public $mincredit;
 	public $closingOption;	
 	
@@ -56,7 +56,7 @@ class InputForm {
 				"creditScore"   => $this->creditScore,
 				"confirmingmargin"	=> $this->confirmingmargin,
 				"loanName"	    => $this->loanName,
-				"jumbogmargin"		=> $this->jumbogmargin,
+				"jumbomargin"		=> $this->jumbomargin,
 				"mincredit"	    => $this->mincredit,
 				"closingOption"	=> $this->closingOption
 		);		

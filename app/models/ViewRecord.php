@@ -28,6 +28,8 @@ class ViewRecord extends BaseController {
 	public $monthlyPayment_lowlowrate;
 	public $margin;
 	public $minCredit;
+	public $adjusts;
+	public $SRP;
 	
 	public function __construct() {
 		parent::__construct();
@@ -53,6 +55,7 @@ class ViewRecord extends BaseController {
 				     order by rate desc 
 				        limit 2
 				     ";
+    		
     		$result = $this->runQuery($query);
     		
     		$this->price_lowrate = $result[0]['price'];

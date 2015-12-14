@@ -132,9 +132,7 @@ class Util extends BaseController {
     		}
     	}
     	
-            	
-    	
-    	//package resturn array
+    	//package return array
     	$saveViewRecord[0]['part1']->populateLowRateData();
     	$returnArray = array($saveViewRecord[0]) ;
 

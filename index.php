@@ -1,5 +1,4 @@
 <?php
-
 $f3 = require('../fatfree-master/lib/base.php');
 $f3->set('CACHE',FALSE);
 $f3->config('config/config.ini');
@@ -9,8 +8,8 @@ $f3->set('ONERROR',
 			// custom error handler code goes here
 			// use this if you want to display errors in a
 			// format consistent with your site's theme
-			//echo $f3->get('ERROR.text') ."<br>";
-			var_dump ($f3->get('ERROR.trace') );
+			echo $f3->get('ERROR.text') ."<br>";
+			print_r ($f3->get('ERROR.trace') );
 			//var_dump  ( $f3->get('EXCEPTION'));
 		}
 		);

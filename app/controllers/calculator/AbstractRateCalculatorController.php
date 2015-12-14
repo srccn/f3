@@ -82,6 +82,16 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		return $returnVal;
 		
 	}
+
+	private function getMiscAdj(){
+		$adjName = "MiscAdj";
+		$returnVal = 0;
+		
+		//normally no such adjust, in case needed can be overritten
+		
+		$this->adjusts[$adjName] = $returnVal;
+	}
+	
 	
 	private function getLtvOtherAdj(){
 		$adjName = "LtvOtherAdj";
@@ -191,7 +201,9 @@ abstract class AbstractRateCalculatorController extends BaseController {
 				"lockDays" => $result[0]['lockdays'],
 				"margin"    => 	$margin,
 				"minCredit"	=>  $minCredit,
-				"monthlyPayment" => Util::calMonthlyPayment($loanAmount, $result[0]['rate'], $this->property->loanTerm)
+				"monthlyPayment" => Util::calMonthlyPayment($loanAmount, $result[0]['rate'], $this->property->loanTerm),
+				"adjusts" => json_encode($this->adjusts),
+				"SRP" => $SRP
 		);
 	}	
 
@@ -319,7 +331,7 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		if ( $this->property->isConfirming == 0) { //non confirming case
 			$query = "SELECT SRP  as result
 			FROM  state_srp_full_list
-			WHERE  start_amount = 'confirming'
+			WHERE  start_amount = 'confirming' 
 			AND  loan_type_id = $loanTypeId
 			AND  purchaser_id = $this->purchaserId
 			AND  state = '$state'
@@ -335,11 +347,11 @@ abstract class AbstractRateCalculatorController extends BaseController {
 				AND state = '$state'
 				";
 			}
-	
-	    if ( $this->property->isConfirming == 1 ) {
+
+	    if ( $this->property->isConfirming == 1 ) { //confirming
 				$query = "SELECT SRP as result
 				FROM  state_srp_full_list
-				WHERE  $loanAmount > convert(start_amount, UNSIGNED)
+				WHERE  $loanAmount >= convert(start_amount, UNSIGNED)
 				AND  loan_type_id = $loanTypeId
 				AND  purchaser_id = $this->purchaserId
 				AND  state = '$state'
@@ -372,20 +384,10 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		Util::dump("ltv cc adjust", $this->getLtvCcAdj());
 		Util::dump("ltv cc pmi adjust",$this->getLtvCcPmiAdj());
 		Util::dump("ltv other adjust",$this->getLtvOtherAdj());
+		Util::dump("Misc adjust",$this->getMiscAdj());
 		return true;
 	}
-	
-	public function calculteSecondaryRate($secondaryAmount) {
-		$rate = 4.49;
-		Util::dump( "Secondary loan $secondaryAmount at hard coded Rate 4.49 % ");
-		return array (
-				"purchaser" => "PartiotsBank",
-				"rate" => $rate ,
-				"credit" => 0,
-				"localDays" => 45,
-				"monthlyPayment" => Util::calMonthlyPayment($secondaryAmount, $rate, $this->property->loanTerm)
-		);
-	}
+
 }
 
 ?>

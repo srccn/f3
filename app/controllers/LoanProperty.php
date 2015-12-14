@@ -18,7 +18,7 @@ class LoanProperty extends BaseController {
 	public $mincredit;
 	public $closingOption;
 	public $confirmingmargin;
-	public $jumbogmargin;
+	public $jumbomargin;
 	public $purchaserSelection;
 	
 	//calculated value

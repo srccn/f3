@@ -43,8 +43,11 @@
 	margin-bottom: 20px;
 	margin-right: 20px;
 	padding: 2px;
-	width
-	="40%"
+	width : "40%";
+	font-size : "0.75em"
+}
+.divLoanProperty {
+	font-size : 0.75em
 }
 
 .feeBlock {
@@ -169,7 +172,7 @@ hr {
    
    <div id="prop" class="propertyBlock" >
      <p>Property {{@propertyLabel}}  </p>
-     <div id="divLoanProperty" name="divLoanProperty" class="hiddenDiv">
+     <div id="divLoanProperty" name="divLoanProperty" class="hiddenDiv divLoanProperty">
        <table style="border-collapse: collapse;"">
            <repeat group="{{ @loanProperty }}" key= "{{@ikey}}" value="{{ @ivalue }}">
                <tr>
@@ -223,7 +226,7 @@ hr {
                    <true>       
                        <tr class="option{{@SearchResult['option']}}">
                <td rowspan="4" class=" hiddenCol bottom-line text-cell" >
-                 <button id="{{@loanType}}" type="button" class="btn btn-sm btn-link ">{{ (@SearchResult['part1']->purchaser) }} </button>
+                 <button id="{{@loanType}}" type="button" class="btn btn-sm btn-link " onClick="showDialog( {{ @SearchResult['part1']->adjusts }} ,  {{ @SearchResult['part1']->SRP }} );" > {{ (@SearchResult['part1']->purchaser) }} </button>
                    <br>Fees:<a id="openPopup" href="#" onClick="showDialog( {{@feeOptions[@SearchResult['option']][3]}} );">{{@feeOptions[@SearchResult['option']][2]}} </a>
                </td> 
                <td > {{ (@SearchResult['part1']->loanAmount) }}</td>
@@ -268,7 +271,7 @@ hr {
                    <false>
                        <tr class="option0">
                <td rowspan="3" class="hiddenCol bottom-line "> 
-                   <button id="{{@loanType}}" type="button" class="btn btn-sm btn-link text-cell">{{ (@SearchResult['part1']->purchaser) }} </button>
+                 <button id="{{@loanType}}" type="button" class="btn btn-sm btn-link " onClick="showDialog( {{ @SearchResult['part1']->adjusts }} ,  {{ @SearchResult['part1']->SRP }} );" > {{ (@SearchResult['part1']->purchaser) }} </button>
                    <br>Fees:<a id="openPopup" href="#" onClick="showDialog( {{@feeOptions[@SearchResult['option']][3]}} );">{{@feeOptions[@SearchResult['option']][2]}} </a>
                </td > 
                <td rowspan="3" class="bottom-line"> {{ (@SearchResult['part1']->loanAmount) }}</td>

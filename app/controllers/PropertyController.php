@@ -63,15 +63,15 @@ class  PropertyController extends BaseController {
     	//build calculation target list use loanAmount, loanName, purchaser
         $calTargetArray = Util::arrayComb(array (
         		$this->loanNames,
-        		$myoptions,
+        		$property->loanAmountOptions,
         		$this->purchasers
         ));
     	
-    	//create fee calculator for property, set totalfee and fee details
-     	$myFeeCalculator = new FeeCalculator($property);
+        //var_dump($calTargetArray);
+        
      	//calculate fees for each option in an array
+        $myFeeCalculator = new FeeCalculator($property);
      	$totalFeeByOptions = $myFeeCalculator->getOptionsFee();
-
       	$this->f3->set('feeOptions', $totalFeeByOptions);
     	
      	//get all purchaser and loan names
@@ -101,6 +101,7 @@ class  PropertyController extends BaseController {
 					
 					$property_clone->loanAmount = $opt [1];
 					$property_clone->calculateDerives ();
+					$property_clone->setLoanTypeId();
 					//Util::dump ( "Loan Property : ",  $property_clone);
 					$purchaserCalculatorName = $purchaser . "RateCalculator";
 					$myRateCalculator = new $purchaserCalculatorName ();
@@ -119,7 +120,10 @@ class  PropertyController extends BaseController {
 					if ($opt [2] > 0) {
 						Util::dump ( "=== Secondary loan" );
 					    $myRecord2 = clone $myRecord;
-						$myresult2 = $myRateCalculator->calculteSecondaryRate ($opt [2]);
+					    
+					    $mySecondaryRateCalculator = new SecondaryRateCalculator($opt[2], $property_clone->loanTerm);
+					    
+						$myresult2 = $mySecondaryRateCalculator->getSecondaryRate();
 						
 						$myRecord2->loanAmount = $opt [2];
 						$this->setResultRecord($myRecord2, $myresult2) ;
@@ -144,6 +148,36 @@ class  PropertyController extends BaseController {
      	//$this->f3->set('SearchResults', $bestResult);
     }
     
+    function searchPrimaryRate($loanProperty, $loanName, $purchaser, $optLoanAmount, $optTotalFee){
+    	
+    	$returnViewRecord = new ViewRecord;
+    	$returnViewRecord->product = $loanName;
+    	$returnViewRecord->purchaser = $purchaser;
+    	$returnViewRecord->loanAmount = $optLoanAmount;
+    	 
+    	$property_clone = clone $loanProperty;
+
+    	$property_clone->loanName = $loanName;
+    	$property_clone->loanAmount = $optLoanAmount;
+    	$property_clone->setLoanTypeId();
+    	$property_clone->calculateDerives ();
+    	
+    	$purchaserCalculatorName = $purchaser . "RateCalculator";
+    	$myRateCalculator = new $purchaserCalculatorName ();
+    	$myRateCalculator->setProperty ( $property_clone ); 
+    	//set fees
+    	$myRateCalculator->setTotalFee ($optTotalFee);
+    	//calculate rate
+    	$myresult = $myRateCalculator->calculteRate ();
+    	setResultRecord($returnViewRecord, $myresult);
+    	
+    	return $returnViewRecord;
+    }
+    
+    function searchSecondaryRate() {
+    	
+    }
+    
     function setResultRecord (ViewRecord $record ,  array $arr) { //$record will be modified
     	
     	$record->purchaser = $arr ['purchaser'];
@@ -157,6 +191,8 @@ class  PropertyController extends BaseController {
     	$record->margin = $arr['margin'];
     	$record->minCredit = $arr['minCredit'];    	
     	$record->monthlyPayment = sprintf('%0.2f' , $arr['monthlyPayment']);    	
+    	$record->adjusts = $arr['adjusts'];    	
+    	$record->SRP = sprintf('%0.3f' , $arr['SRP']);    	
     }
 
 }
