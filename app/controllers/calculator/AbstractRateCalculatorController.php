@@ -187,6 +187,9 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		//var_dump($result);
 		
 		if (!$result) {
+			echo "get null result <br>";
+			echo $query . "<br>";
+			var_dump($this->adjusts);
 			return null;
 		}
 		
