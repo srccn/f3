@@ -185,14 +185,18 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		$result = $this->runQuery($query);
 		Util::dump ( "Rate = " .$result[0]['rate'] ."  Credit = " .intVal($result[0]['credit']) . " LockDays = " .$result[0]['lockdays'] . " purchase_price = ". $result[0]['price']);
 		//var_dump($result);
+        
+		echo '<hr style="margin:10px;border-width: 3px;">';
+		echo $this->purchaserName .", " . $loanAmount.", " . $this->property->loanName .", " . $this->property->LTV.", " .$this->property->creditScore ."<br>";
+		//echo $query . "<br>";
+		var_dump($this->adjusts);
+		var_dump($SRP);
+		var_dump($this->fees);
+		var_dump($result);
 		
 		if (!$result) {
-			echo "get null result <br>";
-			echo $query . "<br>";
-			var_dump($this->adjusts);
 			return null;
 		}
-		
 		return array (
 				"purchaser" => $this->purchaserName,
 				"purchaserId" => $this->purchaserId,
