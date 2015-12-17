@@ -13,7 +13,14 @@
         
     </head>
     <body >
-        <div style="width:25%" id="left"></div>
+        <div style="width:25%; float:left; margin: 10 auto;" id="left"; >
+            <select id="sampleDataList" name="sampleDataList" size="10" style="margin:10px">
+                <option value="conforming741"     >Conforming fico=741 ltv=81 </option>
+                <option value="superConforming741">Super Conforming fico=741 ltv=81</option>
+                <option value="nonConforming741"  >Non Conforming fico=741 ltv=81 </option>
+            </select>
+        
+        </div>
         <div style="min-width:250px; width:50%; margin: 10 auto;">
             <h3>Find Mortgage Rate</h3>
             <hr>
@@ -104,10 +111,10 @@
                     <label for="purchaserSelection">Select Specific Lender</label>
                     <select id="purchaserSelection" name="purchaserSelection[]" size="8" multiple>
                         <option value="ALL" >All Lenders</option>
-                        <option value="BBT" >BBT</option>
+                        <option value="BBT"  selected >BBT</option>
                         <option value="BOKF">BOKF</option>
                         <option value="WELLSFARGO" >Wells Fargo</option>
-                        <option value="CHASE" selected>Chase</option>
+                        <option value="CHASE" >Chase</option>
                     </select>                    
                 </div>
                 <button id="brokerOptionLink" type="button" class="btn btn-link" >Broker's Option</button><br> 
