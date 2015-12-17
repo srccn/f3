@@ -190,8 +190,8 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		echo $this->purchaserName .", " . $loanAmount.", " . $this->property->loanName .", " . $this->property->LTV.", " .$this->property->creditScore ."<br>";
 		//echo $query . "<br>";
 		var_dump($this->adjusts);
-		var_dump($SRP);
-		var_dump($this->fees);
+		var_dump(array ("SRP"=>$SRP));
+		var_dump(array ("total fee" => $this->fees));
 		var_dump($result);
 		
 		if (!$result) {
