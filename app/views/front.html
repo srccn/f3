@@ -9,22 +9,31 @@
         <style>
             label {display:block; margin-top:10px}
             #brokerOptionDiv {display:none}
+            #optionsDiv {}
         </style>
         
     </head>
     <body >
-        <div style="width:25%; float:left; margin: 10 auto;" id="left"; >
-            <select id="sampleDataList" name="sampleDataList" size="10" style="margin:10px">
+        <form name="inputForm" method="post" action="/f3/calculate">
+        <div style="width:25%; float:left; margin: 10 ; display:block; background-color:yellow; min-width:300px" id="left" >
+            <select id="sampleDataList" name="sampleDataList" size="20" style="margin:10px">
                 <option value="conforming741"     >Conforming fico=741 ltv=81 </option>
                 <option value="superConforming741">Super Conforming fico=741 ltv=81</option>
                 <option value="nonConforming741"  >Non Conforming fico=741 ltv=81 </option>
+                <option value="-"  disabled > ==================== </option>
+                <option value="conforming741_65"     >Conforming fico=741 ltv=65 </option>
+                <option value="superConforming741_65">Super Conforming fico=741 ltv=65</option>
+                <option value="nonConforming741_65"  >Non Conforming fico=741 ltv=65</option>
+                <option value="-"  disabled > ==================== </option>
+                <option value="conforming681_91"     >Conforming fico=681 ltv=91 </option>
+                <option value="superConforming681_91">Super Conforming fico=681 ltv=91</option>
+                <option value="nonConforming681_91"  >Non Conforming fico=681 ltv=91 </option>
             </select>
         
         </div>
-        <div style="min-width:250px; width:50%; margin: 10 auto;">
+        <div style="float:left; width:40%; min-width:400px; margin: 10 auto; display:inline-block">
             <h3>Find Mortgage Rate</h3>
             <hr>
-            <form name="inputForm" method="post" action="/f3/calculate">
                 <label for="type">Property Type</label>
                   <input type="radio" id="type" name="type" value="house" checked>House
                  <label for="numberUnit" style="display:inline">Unit</label>
@@ -42,30 +51,21 @@
                 <label for="zip">Zip</label>
                 <input type=text value="02460" id="zip" name="zip"><br>
 
-                <label for="loanName" style="display:none">Loan Type</label>
-                <select id="loanName" name="loanName" style="display:none">
-                    <option value="fixed30">30 years fixed</option>
-                    <option value="fixed15">15 years fixed</option>
-                    <option value="arm51">5/1 arm</option>
-                    <option value="arm71">7/1 arm</option>
-                </select>
                 <label for="closingOption">Closing Cost Option</label>
                 <select id="closingOption" name="closingOption">
                     <option value="npncc">No Points No Closing Cost</option>
                     <option value="paycc">Pay Closing Cost</option>
                     <option value="bymincredit">By Minimum Credit/Debts</option>
                 </select>
-                <label id = "formincredit" for="mincredit" hidden> Minimum Credit/Debts</label>
-                <input type="text" name="mincredit" id="mincredit" value="0" size='6' style="display:none" ><br>
- 
-                <div id="optionsDiv" style="margin-top: 10px; padding:10px; border-style: solid; border-color:grey; background-color:#eeeeee; display:none">
-
                 <label for="purchaseType">Mortgage Type</label>
                   <input type="radio" id="purchaseType" name="purchaseType" value="purchase" checked>Puchase <br>
                   <input type="radio" name="purchaseType" value="rtrefinance"> Rate Term Refinance<br> 
-                  <input type="radio" name="purchaseType" value="corefinance"> Cash Out Refinance <br>
-
-
+                  <input type="radio" name="purchaseType" value="corefinance"> Cash Out Refinance <br>                
+        <hr>
+                <button type="submit" name="submit" id="submit" class="btn btn-info">Find Rates</button>
+        </div>
+        <div style="background-color:yellow; width:25%; mincth:300px; float:right; display:inline-block" id="right">
+             <div id="optionsDiv"> 
                     <label for="occType">Property Occupancy</label>
                     <select id="occType" name="occType">
                         <option value="primary">Primary Home</option>
@@ -91,10 +91,7 @@
                     <option value="arm51">5/1 arm</option>
                     <option value="arm71">7/1 arm</option>
                 </select>
-                
-                </div> 
-                <button id="optionLink" type="button" class="btn btn-link" >Change Search Options:</button>
-        <!--          
+<!--                 
                 <ul id="optionsList">
                     <li>Mortgage Type(Purchase) </li> 
                     <li>Occupancy(Primary Home)</li> 
@@ -102,8 +99,11 @@
                     <li>lock days(45)</li> 
                     <li>Loan type(All)</li>
                 </ul>
-        -->        
+-->                
+<!-- 
+            </div>    
                 <div id="brokerOptionDiv">
+-->                
                     <label for="Margin">Confirming Margin</label>
                     <input type="text" name="confirmingmargin" id="confirmingmargin" value="1" size='3'>% ;
                     <label for="JumboMargin"> NonConfirming  Margin</label>
@@ -117,13 +117,10 @@
                         <option value="CHASE" >Chase</option>
                     </select>                    
                 </div>
-                <button id="brokerOptionLink" type="button" class="btn btn-link" >Broker's Option</button><br> 
-                <hr>
-                <button type="submit" name="submit" id="submit" class="btn btn-info">Find Rates</button>
-
-            </form>
+                <button id="optionLink" type="button" class="btn btn-link" >Change Search Options:</button>
+<!--                 <button id="brokerOptionLink" type="button" class="btn btn-link" >Broker's Option</button><br> 
+-->
         </div>
-        <div style="width:25%" id="right"></div>
+            </form>
     </body>
-
 </html>
