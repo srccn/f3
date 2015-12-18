@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.14, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.46, for debian-linux-gnu (x86_64)
 --
 -- Host: 127.0.0.1    Database: loaner
 -- ------------------------------------------------------
--- Server version	5.6.17
+-- Server version	5.5.46-0ubuntu0.14.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -111,7 +111,7 @@ CREATE TABLE `adj_ltv_super_confirming` (
   `purchaser_id` int(11) NOT NULL,
   `ltv_value` decimal(10,3) NOT NULL,
   `purchase` decimal(10,3) DEFAULT NULL,
-  `refinance` decimal(10,3) DEFAULT NULL,
+  `rtrefinance` decimal(10,3) DEFAULT NULL,
   `corefinance` decimal(10,3) DEFAULT NULL,
   PRIMARY KEY (`purchaser_id`,`ltv_value`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1036,4 +1036,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-14 17:20:06
+-- Dump completed on 2015-12-18  8:52:55
