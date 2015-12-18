@@ -41,6 +41,40 @@ class WELLSFARGO extends BasePurchaser {
     	"range" => "K24:M34"
     );
     
+    
+    //supfixed30
+    private $supfixed30 = array (
+    		"sheetName" => "High Bal",
+    		"lock_days" => 	[30,60],
+    		"loan_type" => 23,
+    		"range" => "B20:D37"
+    );
+
+    //supfixed15
+    private $supfixed15 = array (
+    		"sheetName" => "High Bal",
+    		"lock_days" => 	[30,60],
+    		"loan_type" => 25,
+    		"range" => "E20:G34"
+    );
+
+    //suparm51
+    private $suparm51 = array (
+    		"sheetName" => "High Bal",
+    		"lock_days" => 	[30,60],
+    		"loan_type" => 30,
+    		"range" => "H20:J37"
+    );
+
+    //suparm71
+    private $suparm71 = array (
+    		"sheetName" => "High Bal",
+    		"lock_days" => 	[30,60],
+    		"loan_type" => 31,
+    		"range" => "K20:M35"
+    );
+    
+    
     //ncfixed30
     private $ncfixed30 = array (
     		"sheetName" => "Non-Conf Pricing",
@@ -84,7 +118,7 @@ class WELLSFARGO extends BasePurchaser {
     //ncarm51
     private $ncarm51 = array (
     		"sheetName" => "Non-Conf Pricing",
-    		"lock_days" => 	[30, 60],
+    		"lock_days" => 	[60],
     		"loan_type" => 20,
     		"range" => "K17:L32"
     );
@@ -92,7 +126,7 @@ class WELLSFARGO extends BasePurchaser {
     //ncarm71
     private $ncarm71 = array (
     		"sheetName" => "Non-Conf Pricing",
-    		"lock_days" => 	[30, 60],
+    		"lock_days" => 	[60],
     		"loan_type" => 21,
     		"range" => "M17:N32"
     );
@@ -100,7 +134,7 @@ class WELLSFARGO extends BasePurchaser {
     //ncarm101
     private $ncarm101 = array (
     		"sheetName" => "Non-Conf Pricing",
-    		"lock_days" => 	[30, 60],
+    		"lock_days" => 	[60],
     		"loan_type" => 22,
     		"range" => "O17:P32"
     );
@@ -151,7 +185,11 @@ class WELLSFARGO extends BasePurchaser {
             "ncfixed30" => $this->ncfixed30, 
 	        "ncfixed15" => $this->ncfixed15, 
 	        //"arm31" => $this->arm31, 
-	        "arm51" => $this->arm51, 
+            "supfixed30" => $this->supfixed30, 
+            "supfixed15" => $this->supfixed15, 
+            "suparm51" => $this->suparm51, 
+            "suparm71" => $this->suparm71, 
+	    	"arm51" => $this->arm51, 
 	    	"arm71" => $this->arm71, 
 	    	"arm101" => $this->arm101, 
 	        //"ncarm31" => $this->ncarm31, 

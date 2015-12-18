@@ -1,1 +1,1 @@
-mysqldump  --user=root -p --max_allowed_packet=1G --host=127.0.0.1 --port=3306 --default-character-set=utf8 --single-transaction=TRUE --routines "loaner"
+mysqldump.exe --defaults-file="c:\users\bingfang\appdata\local\temp\tmpgd2nmu.cnf"  --user=root --host=localhost --protocol=tcp --port=3306 --default-character-set=utf8 --skip-triggers "loaner"

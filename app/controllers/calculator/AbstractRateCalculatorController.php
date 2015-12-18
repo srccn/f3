@@ -189,10 +189,12 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		echo '<hr style="margin:10px;border-width: 3px;">';
 		echo $this->purchaserName .", " . $loanAmount.", " . $this->property->loanName .", " . $this->property->LTV.", " .$this->property->creditScore ."<br>";
 		//echo $query . "<br>";
-		var_dump($this->adjusts);
-		var_dump(array ("SRP"=>$SRP));
-		var_dump(array ("total fee" => $this->fees));
-		var_dump($result);
+		echo "<pre>";
+		print_r($this->adjusts);
+		print_r(array ("SRP"=>$SRP));
+		print_r(array ("total fee" => $this->fees));
+		print_r($result[0]);
+		echo "</pre>";
 		
 		if (!$result) {
 			return null;
@@ -334,6 +336,13 @@ abstract class AbstractRateCalculatorController extends BaseController {
 	
 		$loanTypeId = $this->getSRPLoanTypeId();//$this->property->loanTypeId ;//getLoanTypeId();
 		//echo "loan type id is : $loanTypeId <br>";
+		
+		//convert non confirming id to base id
+		if ($loanTypeId == 13 ) $loanTypeId = 1; //fixed30
+		if ($loanTypeId == 15 ) $loanTypeId = 3; //fixed15
+		if ($loanTypeId == 20 ) $loanTypeId = 8; //arm51
+		if ($loanTypeId == 21 ) $loanTypeId = 9; //arm71
+		
 	
 		if ( $this->property->isConfirming == 0) { //non confirming case
 			$query = "SELECT SRP  as result
