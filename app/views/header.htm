@@ -3,15 +3,27 @@
     <head>
         <base href="{{ @BASE.'/'.@UI }}" />
         <title>{{ @site }}</title>
+
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <meta name="description" content="">
+	    <meta name="author" content="">
+        
         <!-- Bootstrap -->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="{{@BASE}}/lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+        
+        <!-- Custom CSS -->
+        <link href="{{@BASE}}/lib/css/modern-business.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="{{@BASE}}/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     </head>
  
     <body>
- 
-        <div class="container">
-            <div>{{ @message }}</div>
+        <include href="customer/nav.htm" />
+        <div>{{ @message }}</div>
+        <div style="font-size:0.75em;">
     		<check if="{{ @SESSION['username'] }}">
 			    <true>
 			        <p>You are signed in as {{ @SESSION['username'] }}  , <a href="{{ @BASE.'/signout' }}">Sign Out</a></p>
@@ -22,15 +34,12 @@
 			        <button id="btnSignin" type="button" class="btn btn-link">Sign In</button> to get current rate quote in MA</p>
 			    </false>
 			</check>
-		<!-- Sinin form -->	
+    	</div>
         <include href="signin.htm" />
-        
-        <!-- Sign up form -->
         <include href="signup.htm" />
-        		            
-            <div class="jumbotron">
-                <h1>{{ @page_head }}</h1>
-            </div>
-            <include href="customer/nav.htm" />
+        
+           
+
+            
 
             
