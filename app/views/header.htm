@@ -4,16 +4,33 @@
         <base href="{{ @BASE.'/'.@UI }}" />
         <title>{{ @site }}</title>
         <!-- Bootstrap -->
-        <link href="../../lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="{{@BASE}}/lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
     </head>
  
     <body>
  
         <div class="container">
+            <div>{{ @message }}</div>
+    		<check if="{{ @SESSION['username'] }}">
+			    <true>
+			        <p>You are signed in as {{ @SESSION['username'] }}  , <a href="{{ @BASE.'/signout' }}">Sign Out</a></p>
+			    </true>
+			    <false>
+			        <p>You are not signed in. 
+			        <button id="btnSignup" type="button" class="btn btn-link">Sign up</button> or 
+			        <button id="btnSignin" type="button" class="btn btn-link">Sign In</button> to get current rate quote in MA</p>
+			    </false>
+			</check>
+		<!-- Sinin form -->	
+        <include href="signin.htm" />
+        
+        <!-- Sign up form -->
+        <include href="signup.htm" />
+        		            
             <div class="jumbotron">
                 <h1>{{ @page_head }}</h1>
             </div>
-            <div>{{ @message }}</div>
             <include href="customer/nav.htm" />
-            <include href="home.htm" />
+
             

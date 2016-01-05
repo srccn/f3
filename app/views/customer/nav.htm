@@ -1,13 +1,21 @@
-<div class="navbar">
-    <div class="navbar-inner">
-        <ul class="nav">
- 
-            <li <check if="{{ @page_head == 'Customer List' }}">class="active"</check>><a href="{{ @BASE.'/customer' }}"><i class="icon-th icon-black"></i> Read</a></li>
-            <li <check if="{{ @page_head == 'Create Customer' }}">class="active"</check>><a href="{{ @BASE.'/customer/create' }}"><i class="icon-plus-sign icon-black"></i> Create</a></li>
- 
-            <check if="{{ @page_head == 'Update Customer' }}">
-            <li class="active"><a href="javascript:void(0);"><i class="icon-plus-sign icon-black"></i> Update</a></li>
-            </check>
-        </ul>
-    </div>
+<nav class="navbar navbar-default">
+<div class="navbar-collapse collapse">
+<ul class="nav navbar-nav">
+    <li class="active">
+        <a href="#">Home</a>
+    </li>
+    <li class="active">
+        <a href="#">About</a>
+    </li>
+    <li class="active">
+        <a href="#">Contact</a>
+    </li>
+    <check if="{{ @SESSION['username'] }}"> 
+	    <li class="active">
+	        <a href="#">Secret</a>
+	    </li>
+    </check>
+</ul>
 </div>
+</nav>
+

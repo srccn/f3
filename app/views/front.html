@@ -15,8 +15,8 @@
     </head>
     <body >
         <form name="inputForm" method="post" action="/f3/calculate">
-        <div style="width:25%; float:left; margin: 10 ; display:block; background-color:yellow; min-width:300px" id="left" >
-            <select id="sampleDataList" name="sampleDataList" size="20" style="margin:10px">
+        <div style="width:25%; float:left; margin: 10 ; display:block; background-color:lightgray; min-width:300px" id="left" >
+            <select id="sampleDataList" name="sampleDataList" size="20" style="margin:10px; width:95%">
                 <option value="conforming741_81"     >Conforming fico=741 ltv=81 </option>
                 <option value="superConforming741_81">Super Conforming fico=741 ltv=81</option>
                 <option value="nonConforming741_81"  >Non Conforming fico=741 ltv=81 </option>
@@ -44,10 +44,10 @@
                     <option value="four_unit">Four Unit</option>
                 </select> <br>
                   <input type="radio" name="type" value="condo"> Condo<br>
-                <label for="marketPrice">Market Pricece</label>
-                <input type=text value="300000" id="marketPrice" name="marketPrice"> <br>
+                <label for="marketPrice">Market Price</label>
+                <input type=text value="300000" id="marketPrice" name="marketPrice" style="color:red;font-weight: bold;background-color:yellow"> <br>
                 <label for="loanAmount">Loan Amount</label>
-                <input type=text value="237000" id="loanAmount" name="loanAmount"><br>
+                <input type=text value="237000" id="loanAmount" name="loanAmount" style="color:red;font-weight: bold;background-color:yellow"><br>
                 <label for="zip">Zip</label>
                 <input type=text value="02460" id="zip" name="zip"><br>
 
@@ -64,7 +64,7 @@
         <hr>
                 <button type="submit" name="submit" id="submit" class="btn btn-info">Find Rates</button>
         </div>
-        <div style="background-color:yellow; width:25%; min-width:200px; float:left; margin: 10px; display:inline-block" id="right">
+        <div style="background-color:lightgray; width:25%; min-width:200px; float:left; margin: 10px; display:inline-block" id="right">
              <div id="optionsDiv"> 
                     <label for="occType">Property Occupancy</label>
                     <select id="occType" name="occType">
@@ -74,7 +74,7 @@
                     </select> <br>
                     
                     <label for="crediteScore">Credite Score</label>
-                    <input type="text" name="creditScore" id="creditScore" value="701"></input><br>
+                    <input type="text" name="creditScore" id="creditScore" value="701" style="color:red;font-weight: bold;background-color:yellow"></input><br>
                 
                     <label for="lockDays">Lock Days</label>
                     <select id="lockDays" name="lockDays">
