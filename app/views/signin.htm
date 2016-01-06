@@ -1,4 +1,6 @@
         <form name="frmSignin" id="frmSignin" action="{{ @BASE.'/verifysignin' }}" method="post" style="display:none">
+                <fieldset>
+                <legend>Sign in</legend>
                 <label>
                     User Name
                     <input type="text" name="username">
@@ -9,5 +11,6 @@
                 </label>
             <input type="submit" value="Sign In">
             <button id="Cancel" onclick="location.href='http://localhost/f3/home'" type="reset" >Cancel</button>
+            </fieldset>
         </form>	
 

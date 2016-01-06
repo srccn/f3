@@ -18,20 +18,24 @@
 
         <!-- Custom Fonts -->
         <link href="{{@BASE}}/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        
+        <!-- loaner css -->
+        <link href="{{@BASE}}/lib/css/loaner.css" rel="stylesheet" type="text/css">
+        
     </head>
  
     <body>
         <include href="customer/nav.htm" />
-        <div>{{ @message }}</div>
-        <div style="font-size:0.75em;">
+        <div style="color:red; font-size:0.8em;">{{ @message }}</div>
+        <div style="font-size:0.8em;">
     		<check if="{{ @SESSION['username'] }}">
 			    <true>
 			        <p>You are signed in as {{ @SESSION['username'] }}  , <a href="{{ @BASE.'/signout' }}">Sign Out</a></p>
 			    </true>
 			    <false>
 			        <p>You are not signed in. 
-			        <button id="btnSignup" type="button" class="btn btn-link">Sign up</button> or 
-			        <button id="btnSignin" type="button" class="btn btn-link">Sign In</button> to get current rate quote in MA</p>
+			        <a id="btnSignup" type="button">Sign up</a> or 
+			        <a id="btnSignin" type="button">Sign In</a> to get current rate quote in MA</p>
 			    </false>
 			</check>
     	</div>

@@ -1,0 +1,164 @@
+//front page
+            label {display:block; margin-top:10px}
+            #brokerOptionDiv {display:none}
+            #optionsDiv {}
+//end front page            
+            
+//result page
+.closingoption {
+	font-size: 1.25em;
+	text-align: center;
+	background-color: #111111;
+	color: #eeeeee;
+	margin-bottom: 15px;
+	width: 100%;
+	overflow-y: hidden !important
+}
+
+.timestamp {
+	font-size: 0.5em;
+	background-color: #111111;
+	color: #eeeeee;
+	margin-bottom: 15px;
+}
+
+.resultBlock {
+	min-width: 100px;
+	display: block;
+	float: left;
+	margin: 2px;
+	margin-bottom: 20px;
+	margin-right: 10px;
+	padding: 1px;
+	background-color: #eeeeee;
+}
+
+.propertyBlock {
+	min-width: 200px;
+	display: block;
+	float: left;
+	margin: 2px;
+	margin-bottom: 20px;
+	margin-right: 20px;
+	padding: 2px;
+	width : "40%";
+	font-size : "0.75em"
+}
+.divLoanProperty {
+	font-size : 0.75em
+}
+
+.feeBlock {
+	min-width: 200px;
+	display: block;
+	float: left;
+	margin: 2px;
+	margin-bottom: 20px;
+	margin-right: 20px;
+	padding: 2px;
+	width
+	="40%"
+}
+
+#rateArea {
+	margin-left: 2px
+}
+
+.loanName {
+	color: red;
+	font-size: 120%;
+	font-style: bold;
+	text-align: center;
+	text-decoration: underline;
+}
+
+.bottom-line {
+	border-bottom: black;
+	border-bottom-style: solid;
+	padding-top: 0px;
+	padding-bottom: 5px
+}
+
+.text-cell {
+	text-align: left;
+}
+
+.hiddenDiv {
+	display: block
+}
+
+.hiddenCol {
+	display: table-cell;
+}
+
+.option0 {
+	background-color: #fcf8e3;
+}
+
+.option1 {
+	background-color: #faebcc;
+}
+
+.option2 {
+	background-color: #dff0d8;
+}
+
+td {
+	padding-top: 5px;
+	padding-right: 5px;
+	text-align: right;
+}
+
+th {
+	padding-right: 5px;
+	text-align: right;
+	border-bottom: black;
+	border-bottom-style: solid;
+}
+
+hr {
+	display: block;
+	margin: 0;
+	border-style: inset;
+	border-width: 1px;
+	color: red
+}
+
+.btn {
+	word-wrap: break-word;
+	white-space: normal !important;
+	max-width___: 70px;
+}
+
+#btnRateDetails {
+	max-width: 170px;
+}
+
+.black_overlay {
+	display: none;
+	position: fixed;
+	bottom : 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	z-index: 1001;
+	-moz-opacity: 0.8;
+	opacity: .70;
+	filter: alpha(opacity = 80);
+}
+
+.white_content {
+	display: none;
+	position: fixed;
+	bottom: 25%;
+	left: 25%;
+	width: 50%;
+	height: 50%;
+	padding: 16px;
+	border: 5px solid orange;
+	background-color: white;
+	z-index: 1002;
+	overflow: auto;
+}
+//end result page            

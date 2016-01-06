@@ -83,6 +83,10 @@ class myClass extends BaseController {
     	$this->f3->reroute('/home');
     }
     
+    function showFront(){
+    	$this->gotoPage('front.html');
+    }
+    
     function showStatic() {
         $view = new view;
         echo $view->render('front.html');
@@ -129,6 +133,19 @@ class myClass extends BaseController {
         $myv->getIDByNameAndConfirming("fixed30",0);
         //var_dump ($myv->all());
     }
+    
+    function gotoPage( $pageUrl ) {
+    	if (isset($this->f3->SESSION['username']) && !empty($this->f3->SESSION['username'] )) {
+    		//$this->f3->reroute('/customer');
+    		$this->f3->set('view',$pageUrl);
+    	} else {
+    		$this->f3->set('message', 'You are trying to access restricted area, please sign in first');
+    		$this->f3->set('view','home.htm');
+    	}
+    	echo Template::instance()->render('layout.htm');
+    	 
+    }
+    
 }
 
 ?>
