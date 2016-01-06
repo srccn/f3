@@ -26,7 +26,7 @@
  
     <body>
         <include href="customer/nav.htm" />
-        <div style="color:red; font-size:0.8em;">{{ @message }}</div>
+        <div id="message" name="message" style="color:red; font-size:0.8em;">{{ @message }}</div>
         <div style="font-size:0.8em;">
     		<check if="{{ @SESSION['username'] }}">
 			    <true>
