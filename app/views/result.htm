@@ -1,12 +1,13 @@
 <html>
 <head>
+<!-- 
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="lib/js/jquery-1.11.3.min.js"></script>
         <script src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
         <script src="lib/js/loaner.js"></script>
         <link href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
-
-        <style>
+-->
+<style>
 .closingoption {
 	font-size: 1.25em;
 	text-align: center;
@@ -126,13 +127,13 @@ hr {
 	color: red
 }
 
-.btn {
+.btn_obsolete {
 	word-wrap: break-word;
 	white-space: normal !important;
 	max-width: 70px;
 }
 
-#btnRateDetails {
+#btnRateDetails_obsolete {
 	max-width: 170px;
 }
 
@@ -164,12 +165,14 @@ hr {
 	overflow: auto;
 }
 </style>
+
 </head>
 <body >
    <div id="closingOption" class="closingoption __navbar-fixed-top">
        {{@ClosingOption}} <span class="timestamp"> {{@searchStamp}} EST</span>
    </div>
-   
+
+<!--    
    <div id="prop" class="propertyBlock" >
      <p>Property {{@propertyLabel}}  </p>
      <div id="divLoanProperty" name="divLoanProperty" class="hiddenDiv divLoanProperty">
@@ -184,7 +187,7 @@ hr {
      </div>
    </div>
    <div id="fees" name="fees" class="feeBlock">
-<!--    
+    
        <p>Closing Cost : {{@totalFee}} </p>
        <div id="divFeeDetails" class="hiddenDiv">
            <table style="border-collapse: collapse;"">
@@ -200,10 +203,11 @@ hr {
                </repeat>
            </table>
        </div>
--->
+
    </div>
   <button id="btnFeeDetails" type="button" class="btn btn-link">Show Details</button> 
    <div style="clear:both"></div>
+-->
    
 <!-- <button id="btnRateDetails" type="button" class="btn btn-link">Expend</button> -->
    <div id="rateArea" >
@@ -272,7 +276,7 @@ hr {
                        <tr class="option0">
                <td rowspan="3" class="hiddenCol bottom-line "> 
                  <button id="{{@loanType}}" type="button" class="btn btn-sm btn-link " onClick="showDialog( {{ @SearchResult['part1']->adjusts }} ,  {{ @SearchResult['part1']->SRP }} );" > {{ (@SearchResult['part1']->purchaser) }} </button>
-                   <br>Fees:<a id="openPopup" href="#" onClick="showDialog( {{@feeOptions[@SearchResult['option']][3]}} );">{{@feeOptions[@SearchResult['option']][2]}} </a>
+                   <br>Fees:<button id="openPopup" href__="#" onClick="showDialog( {{@feeOptions[@SearchResult['option']][3]}} );">{{@feeOptions[@SearchResult['option']][2]}} </button>
                </td > 
                <td rowspan="3" class="bottom-line"> {{ (@SearchResult['part1']->loanAmount) }}</td>
                <td > {{ (@SearchResult['part1']->rate_lowrate) }}      </td>

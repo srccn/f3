@@ -1,7 +1,23 @@
-    <div style="float:left; display:block;width:25%; min-width:250px; margin: 10px; ">    
+<!-- 
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="lib/js/jquery-1.11.3.min.js"></script>
+        <script src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+        <script src="lib/js/loaner.js"></script>
+        <link href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+        
+        <style>
+            label {display:block; margin-top:10px}
+            #brokerOptionDiv {display:none}
+            #optionsDiv {}
+        </style>
+        
+    </head>
+    <body >
+-->    
         <form name="inputForm" id="inputForm" method="post" action="/f3/calculate">
-        <!-- 
-            <div style="width:25%; float:left; margin: 10 ; display:block; background-color:lightgray; min-width:300px" id="left" >
+        <div style="width:25%; float:left; margin: 10 ; display:block; background-color:lightgray; min-width:300px" id="left" >
             <select id="sampleDataList" name="sampleDataList" size="20" style="margin:10px; width:95%">
                 <option value="conforming741_81"     >Conforming fico=741 ltv=81 </option>
                 <option value="superConforming741_81">Super Conforming fico=741 ltv=81</option>
@@ -17,9 +33,8 @@
             </select>
         
         </div>
-    -->
-        <div >
-            <h4>Find Mortgage Rate</h4>
+        <div style="float:left; width:40%; min-width:400px; margin: 10 auto; display:inline-block">
+            <h3>Find Mortgage Rate</h3>
             <hr>
                 <label for="type">Property Type</label>
                   <input type="radio" id="type" name="type" value="house" checked>House
@@ -48,8 +63,11 @@
                   <input type="radio" id="purchaseType" name="purchaseType" value="purchase" checked>Puchase <br>
                   <input type="radio" name="purchaseType" value="rtrefinance"> Rate Term Refinance<br> 
                   <input type="radio" name="purchaseType" value="corefinance"> Cash Out Refinance <br>                
+        <hr>
+                <button type="submit" name="submit" id="submit" class="btn btn-info">Find Rates</button>
+                <button type="button" name="SaveInput" id="SaveInput" class="btn btn-info">Set this inputs for Email Alert</button>
         </div>
-        <div id="right">
+        <div style="background-color:lightgray; width:25%; min-width:200px; float:left; margin: 10px; display:inline-block" id="right">
              <div id="optionsDiv"> 
                     <label for="occType">Property Occupancy</label>
                     <select id="occType" name="occType">
@@ -85,9 +103,10 @@
                     <li>Loan type(All)</li>
                 </ul>
 -->                
- 
+<!-- 
             </div>    
                 <div id="brokerOptionDiv">
+-->                
                     <label for="Margin">Confirming Margin</label>
                     <input type="text" name="confirmingmargin" id="confirmingmargin" value="1" size='3'>% ;
                     <label for="JumboMargin"> NonConfirming  Margin</label>
@@ -105,16 +124,8 @@
 <!--                 <button id="brokerOptionLink" type="button" class="btn btn-link" >Broker's Option</button><br> 
 -->
         </div>
-        
-                <button type="submit" name="submit" id="submit" class="btn btn-info">Find Rates</button>
-                <button type="button" name="SaveInput" id="SaveInput" class="btn btn-info">Set Email Alert</button>
-        
             </form>
-        </div>     
-
-<!-- result panel -->
-<div id="resultPanel" style="font-size__:30pt; float:left; background-color:yellow; width:70%; display:block">
-Select your loan , then click Find Rates
-</div>
-            
-            
+<!--             
+    </body>
+</html>
+-->

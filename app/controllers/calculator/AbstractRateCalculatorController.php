@@ -185,16 +185,17 @@ abstract class AbstractRateCalculatorController extends BaseController {
 		$result = $this->runQuery($query);
 		Util::dump ( "Rate = " .$result[0]['rate'] ."  Credit = " .intVal($result[0]['credit']) . " LockDays = " .$result[0]['lockdays'] . " purchase_price = ". $result[0]['price']);
 		//var_dump($result);
-        
-		echo '<hr style="margin:10px;border-width: 3px;">';
-		echo $this->purchaserName .", " . $loanAmount.", " . $this->property->loanName .", " . $this->property->LTV.", " .$this->property->creditScore ."<br>";
+//following block print out key debug message to result        
+// 		echo '<hr style="margin:10px;border-width: 3px;">';
+// 		echo $this->purchaserName .", " . $loanAmount.", " . $this->property->loanName .", " . $this->property->LTV.", " .$this->property->creditScore ."<br>";
 		//echo $query . "<br>";
-		echo "<pre>";
-		print_r($this->adjusts);
-		print_r(array ("SRP"=>$SRP));
-		print_r(array ("total fee" => $this->fees));
-		print_r($result[0]);
-		echo "</pre>";
+//following block print out key debug message to result
+// 		echo "<pre>";
+// 		print_r($this->adjusts);
+// 		print_r(array ("SRP"=>$SRP));
+// 		print_r(array ("total fee" => $this->fees));
+// 		print_r($result[0]);
+// 		echo "</pre>";
 		
 		if (!$result) {
 			return null;

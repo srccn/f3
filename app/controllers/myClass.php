@@ -86,7 +86,12 @@ class myClass extends BaseController {
     function showFront(){
     	$this->gotoPage('front.html');
     }
-
+    
+    function showFront_t(){
+    	$this->f3->set('view','front_t.html');
+    	echo Template::instance()->render('layout.htm');
+    }
+    
     function showRestricted(){
     	$this->gotoPage('restricted.html');
     }
@@ -99,9 +104,9 @@ class myClass extends BaseController {
     function calculate() {
         $myRequest = $this->f3->get('REQUEST');
         
-        if (! isset($myRequest['submit'])) { //in case call calculate directly, redirect to front
-        	$this->f3->reroute('/front');
-        }
+//         if (! isset($myRequest['submit'])) { //in case call calculate directly, redirect to front
+//         	$this->f3->reroute('/front');
+//         }
         
         $myProperty = new PropertyController($myRequest);
         $myProperty->searchRate();
@@ -148,6 +153,10 @@ class myClass extends BaseController {
     	}
     	echo Template::instance()->render('layout.htm');
     	 
+    }
+    
+    function saveForm(){
+    	echo "succeeded from saveForm";
     }
     
 }
