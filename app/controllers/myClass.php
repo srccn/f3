@@ -12,12 +12,12 @@ class myClass extends BaseController {
         //echo "Hello World";
         //return;
         $this->f3->set('page_head','Home');
-    	if (isset($this->f3->SESSION['username']) && !empty($this->f3->SESSION['username'] )) {
-    		//$this->f3->reroute('/customer');
-    		$this->f3->set('view','restricted.html');
-    	} else {
-    	    $this->f3->set('view','home.htm');
-    	}
+//     	if (isset($this->f3->SESSION['username']) && !empty($this->f3->SESSION['username'] )) {
+//     		$this->f3->set('view','restricted.html');
+//     	} else {
+//     	    $this->f3->set('view','home.htm');
+//     	}
+   	    $this->f3->set('view','home.htm');
         echo Template::instance()->render('layout.htm');
     }
     
@@ -85,6 +85,10 @@ class myClass extends BaseController {
     
     function showFront(){
     	$this->gotoPage('front.html');
+    }
+
+    function showRestricted(){
+    	$this->gotoPage('restricted.html');
     }
     
     function showStatic() {
