@@ -21,7 +21,7 @@
         <div >
             <h4>Find Mortgage Rate</h4>
             <hr>
-                <label for="type">Property Type</label>
+                <label for="type">Property Type</label><br>
                   <input type="radio" id="type" name="type" value="house" checked>House
                  <label for="numberUnit" style="display:inline">Unit</label>
                 <select id="numberUnit" name="numberUnit">
@@ -38,19 +38,19 @@
                 <label for="zip">Zip</label>
                 <input type=text value="02460" id="zip" name="zip"><br>
 
-                <label for="closingOption">Closing Cost Option</label>
+                <label for="closingOption">Closing Option</label>
                 <select id="closingOption" name="closingOption">
                     <option value="npncc">No Points No Closing Cost</option>
                     <option value="paycc">Pay Closing Cost</option>
-                    <option value="bymincredit">By Minimum Credit/Debts</option>
                 </select>
-                <label for="purchaseType">Mortgage Type</label>
-                  <input type="radio" id="purchaseType" name="purchaseType" value="purchase" checked>Puchase <br>
-                  <input type="radio" name="purchaseType" value="rtrefinance"> Rate Term Refinance<br> 
-                  <input type="radio" name="purchaseType" value="corefinance"> Cash Out Refinance <br>                
         </div>
         <div id="right">
              <div id="optionsDiv"> 
+                  <label for="purchaseType">Mortgage Type</label><br>
+                  <input type="radio" id="purchaseType" name="purchaseType" value="purchase" checked>Puchase <br>
+                  <input type="radio" name="purchaseType" value="rtrefinance"> Rate Term Refinance<br> 
+                  <input type="radio" name="purchaseType" value="corefinance"> Cash Out Refinance <br>                
+
                     <label for="occType">Property Occupancy</label>
                     <select id="occType" name="occType">
                         <option value="primary">Primary Home</option>
@@ -68,7 +68,7 @@
                         <option value="60">60 Days</option>
                     </select> <br>
 
-                <label for="loanName">select loan Type</label>
+                <label for="loanName">Loan Type</label>
                 <select id="loanNameSelection" name="loanNameSelection[]"  size="3" multiple>
                     <option value="all" >All Loan Type</option>
                     <option value="fixed30" selected>30 years fixed</option>
@@ -101,10 +101,10 @@
                         <option value="CHASE" >Chase</option>
                     </select>                    
                 </div>
-                <button id="optionLink" type="button" class="btn btn-link" >Open/Close Options Panel:</button>
 <!--                 <button id="brokerOptionLink" type="button" class="btn btn-link" >Broker's Option</button><br> 
 -->
         </div>
+                <button id="optionLink" type="button" class="btn btn-info" >Open/Close Options Panel:</button> <br><br>
         
                 <button type="submit" name="submit" id="submit" class="btn btn-info">Find Rates</button>
                 <button type="button" name="SaveInput" id="SaveInput" class="btn btn-info">Set Email Alert</button>
@@ -113,7 +113,7 @@
         </div>     
 
 <!-- result panel -->
-<div id="resultPanel" style="font-size__:30pt; float:left; background-color:yellow; width:70%; display:block">
+<div id="resultPanel" style="font-size__:30pt; float:left; background-color:yellow; min-width:400px; width:60%; display:block">
 Select your loan , then click Find Rates
 </div>
             
