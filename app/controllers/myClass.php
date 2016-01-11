@@ -185,7 +185,12 @@ class myClass extends BaseController {
 	    	$inputForm = new UserInputForm($this->db);
 	    	$inputForm->getByUserId($userId);
 	    	//print_r($this->f3->get('myForm'));
-	    	echo json_encode($this->f3->get('myForm'));
+	    	
+	    	$theForm = $this->f3->get('myForm');
+	    	unset ($theForm['id'] );
+	    	unset ($theForm['user_id'] );
+	    	
+	    	echo json_encode($theForm);
     	} else {
     		$this->f3->set("message","please log in first.");
     		die("unknow login user");

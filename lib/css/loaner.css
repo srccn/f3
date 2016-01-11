@@ -13,12 +13,14 @@ label {
             
 /* result page */
 .closingoption {
-	font-size: 1.25em;
+	font-size: 1.5em;
 	text-align: center;
 	background-color: #111111;
 	color: #eeeeee;
 	margin-bottom: 15px;
 	width: 100%;
+	padding-top:5px;
+	padding-bottom:5px;
 	overflow-y: hidden !important
 }
 
