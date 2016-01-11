@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.46, for debian-linux-gnu (x86_64)
 --
 -- Host: 127.0.0.1    Database: loaner
 -- ------------------------------------------------------
--- Server version	5.6.17
+-- Server version	5.5.46-0ubuntu0.14.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -761,7 +761,7 @@ CREATE TABLE `user` (
   `email` varchar(45) DEFAULT NULL,
   `isactive` int(11) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -770,7 +770,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','admin2',1445538430,NULL,1),(2,'bfang','bing12',1445538430,NULL,1),(3,'aa','$2y$10$abC.bX9hpSPYfq7xKKcoM.Rpcc9H7o8JT9pujMYi1iCkZ8TfvulPG',1452008609,'a@b.com',1),(4,'','$2y$10$bbFFRw5vTlyFUufWiDp4ke0gX6QBKKw7GxOAwT2JChMoJ2j./aRgS',1452027637,'',1),(5,'bb','$2y$10$jHDTYAbbVOCgKdMmBO.hvOdGLObsdpfDdeVfP/ER4GivEbXN8ZW46',1452027734,'bb@cc.com',1),(6,'','$2y$10$ekMijWqLz1Is89gDQr.TlOrT.Xr4lqe6To35.Xdiqky3T06APsgbe',1452111822,'',1),(7,'abc','$2y$10$Us.9B0C2d6q0rxoT2nEam.gBksEY3bouvjKKswTHwhloDqRcYkEIW',1452112018,'abc@def.com',1);
+INSERT INTO `user` VALUES (1,'admin','admin2',1445538430,NULL,1),(2,'bfang','bing12',1445538430,NULL,1),(3,'aa','$2y$10$abC.bX9hpSPYfq7xKKcoM.Rpcc9H7o8JT9pujMYi1iCkZ8TfvulPG',1452008609,'a@b.com',1),(9,'qq','$2y$10$8daA0SeR5wZYVgKrlKKf8.A1KC0DnpZS0ZXAKx.KAABLtWqVGo0OC',1452451631,'qq@ww.com',1),(10,'hy','$2y$10$f7URTEDAZIVIr65X6yWVn.Iu1TGwTtmHd40SH8dFaPLISCoBrsbYC',1452452359,'hy@hotmail.com',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -785,20 +785,20 @@ CREATE TABLE `user_input_form` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `zip` varchar(45) DEFAULT NULL,
-  `market_price` varchar(45) DEFAULT NULL,
-  `number_unit` varchar(45) DEFAULT 'one_unit',
+  `marketPrice` varchar(45) DEFAULT NULL,
+  `numberUnit` varchar(45) DEFAULT 'one_unit',
   `type` varchar(45) DEFAULT 'house',
-  `occ_type` varchar(45) DEFAULT 'primary',
-  `purchase_type` varchar(45) DEFAULT 'purchase',
-  `loan_amount` varchar(45) DEFAULT NULL,
-  `lock_days` varchar(45) DEFAULT '45',
-  `credit_score` int(11) DEFAULT '740',
-  `loan_name` varchar(45) DEFAULT 'fixed30',
-  `closeing_option` varchar(45) DEFAULT 'npncc',
-  `target_rate` decimal(10,3) DEFAULT NULL,
+  `occType` varchar(45) DEFAULT 'primary',
+  `purchaseType` varchar(45) DEFAULT 'purchase',
+  `loanAmount` varchar(45) DEFAULT NULL,
+  `lockDays` varchar(45) DEFAULT '45',
+  `creditScore` int(11) DEFAULT '740',
+  `loanNameSelection` varchar(45) DEFAULT 'fixed30',
+  `closingOption` varchar(45) DEFAULT 'npncc',
+  `targetRate` decimal(10,3) DEFAULT NULL,
   `isAlertActive` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -807,6 +807,7 @@ CREATE TABLE `user_input_form` (
 
 LOCK TABLES `user_input_form` WRITE;
 /*!40000 ALTER TABLE `user_input_form` DISABLE KEYS */;
+INSERT INTO `user_input_form` VALUES (1,3,'02460','300000','one_unit','house','primary','purchase','237000','45',701,'fixed30','npncc',4.250,1),(6,9,'02460','300000','one_unit','house','primary','purchase','237000','45',701,'fixed30','npncc',4.250,1),(7,10,'02460','600000','one_unit','house','commercial','rtrefinance','437000','45',740,'arm51','paycc',4.250,1);
 /*!40000 ALTER TABLE `user_input_form` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1074,4 +1075,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-06 17:02:04
+-- Dump completed on 2016-01-10 22:32:58

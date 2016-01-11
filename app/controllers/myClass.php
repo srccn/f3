@@ -35,15 +35,17 @@ class myClass extends BaseController {
         		
         		//if check passwrod succeeded
         		$query = "
-        				SELECT password
+        				SELECT password, id
         				FROM   user
         				WHERE  name = '$name'
         				";
         		$result=$this->runQuery($query);
         		$regpassword = $result[0]['password']; 
+        		$userId = $result[0]['id'];
+        		echo $userId;
         		
         		if (Util::verifyHash($this->f3->POST['password'], $regpassword)) {
-        			$this->f3->SESSION['username'] = $this->f3->POST['username'];        			
+        			$this->f3->SESSION['username'] = $this->f3->POST['username'];
         		} else {
         			echo "Sign in Failed. ";
         		}
@@ -156,8 +158,18 @@ class myClass extends BaseController {
     }
     
     function saveForm(){
+    	
+    	$name=$this->f3->SESSION['username'];
+    	$name = str_replace (";", "", $name );
+
+    	$query = "select id from user where name = '" .$name."'";
+    	$result = $this->runQuery($query);
+    	
+    	$input = new UserInputForm($this->db);
+    	$input->edit($result[0]['id']);
     	echo "succeeded from saveForm";
     }
+    
     
 }
 

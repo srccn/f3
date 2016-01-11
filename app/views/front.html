@@ -25,14 +25,14 @@
                   <input type="radio" id="type" name="type" value="house" checked>House
                  <label for="numberUnit" style="display:inline">Unit</label>
                 <select id="numberUnit" name="numberUnit">
-                    <option value="one_unit">One Unit</option>
-                    <option value="two_unit">Two Unit</option>
+                    <option value="one_unit" >One Unit</option>
+                    <option value="two_unit" {{"selected"}} >Two Unit</option>
                     <option value="three_unit">Three Unit</option>
                     <option value="four_unit">Four Unit</option>
                 </select> <br>
                   <input type="radio" name="type" value="condo"> Condo<br>
                 <label for="marketPrice">Market Price</label>
-                <input type=text value="300000" id="marketPrice" name="marketPrice" style="color:red;font-weight: bold;background-color:yellow"> <br>
+                <input type=text value="{{ @myForm->marketPrice }}" id="marketPrice" name="marketPrice" style="color:red;font-weight: bold;background-color:yellow"> <br>
                 <label for="loanAmount">Loan Amount</label>
                 <input type=text value="237000" id="loanAmount" name="loanAmount" style="color:red;font-weight: bold;background-color:yellow"><br>
                 <label for="zip">Zip</label>
