@@ -30,7 +30,7 @@
         <div style="font-size:0.8em;">
     		<check if="{{ @SESSION['username'] }}">
 			    <true>
-			        <p>You are signed in as {{ @SESSION['username'] }}  , <a href="{{ @BASE.'/signout' }}" onClick="return cleanRatePageVisit();">Sign Out</a></p>
+			        <p>You are signed in as <span style="font-size:1.5em ; font-weight: bold"> {{ @SESSION['username'] }} </span> , <a href="{{ @BASE.'/signout' }}" onClick="return cleanRatePageVisit();">Sign Out</a></p>
 			    </true>
 			    <false>
 			        <p>You are not signed in. 

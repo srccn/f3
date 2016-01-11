@@ -27,7 +27,7 @@ class UserInputForm extends DB\SQL\Mapper {
 	
 	public function getByUserId($userId) {
 		$this->load(array('user_id=?',$userId));
-		$this->copyTo('POST');
+		$this->copyto('myForm');
 	}
 	
 }

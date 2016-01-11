@@ -26,19 +26,19 @@
                  <label for="numberUnit" style="display:inline">Unit</label>
                 <select id="numberUnit" name="numberUnit">
                     <option value="one_unit" >One Unit</option>
-                    <option value="two_unit" {{"selected"}} >Two Unit</option>
+                    <option value="two_unit" >Two Unit</option>
                     <option value="three_unit">Three Unit</option>
                     <option value="four_unit">Four Unit</option>
                 </select> <br>
                   <input type="radio" name="type" value="condo"> Condo<br>
                 <label for="marketPrice">Market Price</label>
-                <input type=text value="{{ @myForm->marketPrice }}" id="marketPrice" name="marketPrice" style="color:red;font-weight: bold;background-color:yellow"> <br>
+                <input type=text value="300000" id="marketPrice" name="marketPrice" style="color:red;font-weight: bold;background-color:yellow"> <br>
                 <label for="loanAmount">Loan Amount</label>
                 <input type=text value="237000" id="loanAmount" name="loanAmount" style="color:red;font-weight: bold;background-color:yellow"><br>
                 <label for="zip">Zip</label>
                 <input type=text value="02460" id="zip" name="zip"><br>
 
-                <label for="closingOption">Closing Option</label>
+                <label for="closingOption">Close Option</label>
                 <select id="closingOption" name="closingOption">
                     <option value="npncc">No Points No Closing Cost</option>
                     <option value="paycc">Pay Closing Cost</option>
@@ -106,14 +106,14 @@
         </div>
                 <button id="optionLink" type="button" class="btn btn-info" >Open/Close Options Panel:</button> <br><br>
         
-                <button type="submit" name="submit" id="submit" class="btn btn-info">Find Rates</button>
-                <button type="button" name="SaveInput" id="SaveInput" class="btn btn-info">Set Email Alert</button>
+                <button type="submit" name="submit" id="submit" class="btn btn-xs btn-info">Find Rates</button>
+                <button type="button" name="SaveInput" id="SaveInput" class="btn btn-xs btn-info">Set Email Alert</button>
         
             </form>
         </div>     
 
 <!-- result panel -->
-<div id="resultPanel" style="font-size__:30pt; float:left; background-color:yellow; min-width:400px; width:60%; display:block">
+<div id="resultPanel" style="font-size__:30pt; float:left; background-color__:yellow; min-width:300px; width:70%; display:block">
 Select your loan , then click Find Rates
 </div>
             

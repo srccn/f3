@@ -170,6 +170,28 @@ class myClass extends BaseController {
     	echo "succeeded from saveForm";
     }
     
+    function loadInputForm(){
+    	if (isset($this->f3->SESSION['username']) && !empty($this->f3->SESSION['username'] )) {
+	    	$username = $this->f3->SESSION['username'];
+	    	//$username="qq";
+	    	$query = "
+			    	SELECT id
+			    	FROM   user
+			    	WHERE  name = '$username'
+		    	";
+	    	$result=$this->runQuery($query);
+	    	$userId = $result[0]['id'];
+	    	 
+	    	$inputForm = new UserInputForm($this->db);
+	    	$inputForm->getByUserId($userId);
+	    	//print_r($this->f3->get('myForm'));
+	    	echo json_encode($this->f3->get('myForm'));
+    	} else {
+    		$this->f3->set("message","please log in first.");
+    		die("unknow login user");
+    	}
+    }
+    
     
 }
 

@@ -1,173 +1,3 @@
-<html>
-<head>
-<!-- 
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="lib/js/jquery-1.11.3.min.js"></script>
-        <script src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
-        <script src="lib/js/loaner.js"></script>
-        <link href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
--->
-<!-- 
-<style>
-.closingoption {
-	font-size: 1.25em;
-	text-align: center;
-	background-color: #111111;
-	color: #eeeeee;
-	margin-bottom: 15px;
-	width: 100%;
-	overflow-y: hidden !important
-}
-
-.timestamp {
-	font-size: 0.6em;
-	background-color: #111111;
-	color: #eeeeee;
-	margin-bottom: 15px;
-}
-
-.resultBlock {
-	min-width: 100px;
-	width:100%;
-	display: block;
-	float: left;
-	margin: 10 auto;
-	padding: 10px;
-	background-color: #eeeeee;
-}
-
-.propertyBlock {
-	min-width: 200px;
-	display: block;
-	float: left;
-	margin: 2px;
-	margin-bottom: 20px;
-	margin-right: 20px;
-	padding: 2px;
-	width : "40%";
-	font-size : "0.75em"
-}
-.divLoanProperty {
-	font-size : 0.75em
-}
-
-.feeBlock {
-	min-width: 200px;
-	display: block;
-	float: left;
-	margin: 2px;
-	margin-bottom: 20px;
-	margin-right: 20px;
-	padding: 2px;
-	width
-	="40%"
-}
-
-#rateArea {
-	margin-left: 2px
-}
-
-.loanName {
-	color: red;
-	font-size: 120%;
-	font-style: bold;
-	text-align: center;
-	text-decoration: underline;
-}
-
-.bottom-line {
-	border-bottom: black;
-	border-bottom-style: solid;
-	padding-top: 0px;
-	padding-bottom: 5px
-}
-
-.text-cell {
-	text-align: left;
-}
-
-.hiddenDiv {
-	display: block
-}
-
-.hiddenCol {
-	display: table-cell;
-}
-
-.option0 {
-	background-color: #fcf8e3;
-}
-
-.option1 {
-	background-color: #faebcc;
-}
-
-.option2 {
-	background-color: #dff0d8;
-}
-
-td {
-	padding-top: 5px;
-	padding-right: 5px;
-	text-align: right;
-}
-
-th {
-	padding-right: 5px;
-	text-align: right;
-	border-bottom: black;
-	border-bottom-style: solid;
-}
-
-hr {
-	display: block;
-	margin: 0;
-	border-style: inset;
-	border-width: 1px;
-	color: red
-}
-
-.btn_obsolete {
-	word-wrap: break-word;
-	white-space: normal !important;
-	max-width: 70px;
-}
-
-#btnRateDetails_obsolete {
-	max-width: 170px;
-}
-
-.black_overlay {
-	display: none;
-	position: fixed;
-	bottom : 0%;
-	left: 0%;
-	width: 100%;
-	height: 100%;
-	background-color: black;
-	z-index: 1001;
-	-moz-opacity: 0.8;
-	opacity: .70;
-	filter: alpha(opacity = 80);
-}
-
-.white_content {
-	display: none;
-	position: fixed;
-	bottom: 25%;
-	left: 25%;
-	width: 50%;
-	height: 50%;
-	padding: 16px;
-	border: 5px solid orange;
-	background-color: white;
-	z-index: 1002;
-	overflow: auto;
-}
-</style>
--->
-</head>
-<body >
    <div id="closingOption" class="closingoption __navbar-fixed-top">
        {{@ClosingOption}} <span class="timestamp"> {{@searchStamp}} EST</span>
    </div>
@@ -213,8 +43,12 @@ hr {
    <div id="rateArea" >
    <repeat group="{{ @SearchResults }}" key="{{@loanType}}" value="{{@resords}}">
        <div id={{@loanType."Div"}} class="resultBlock" >
-           <p class="loanName" id={{@loanType."Label"}}>{{@loanType}}</p>
-              <table class="resultUnit" style="font-size:0.9em; border-collapse: collapse; width:100%;">
+          <table style="width:100%">
+              <td style="background-color:light-gray ;width:80px">
+               <div class="loanName" id={{@loanType."Label"}} >{{@loanType}}</div>
+              </td>
+              <td>
+              <table class="resultUnit" style="font-size:0.8em; border-collapse: collapse; width:100%;">
                   <tr>
                       <th class="hiddenCol text-cell" style="padding-left:12px">Lender</th>
                       <th>Amount</th>
@@ -230,8 +64,8 @@ hr {
                    <true>       
                        <tr class="option{{@SearchResult['option']}}">
                <td rowspan="4" class=" hiddenCol bottom-line text-cell" >
-                 <button id="{{@loanType}}" type="button" class="btn btn-sm btn-link " onClick="showDialog( {{ @SearchResult['part1']->adjusts }} ,  {{ @SearchResult['part1']->SRP }} );" > {{ (@SearchResult['part1']->purchaser) }} </button>
-                   <br>Fees:<button id="openPopup" class="btn btn-link " onClick="showDialog( {{@feeOptions[@SearchResult['option']][3]}} );">{{@feeOptions[@SearchResult['option']][2]}} </button>
+                 <button id="{{@loanType}}" type="button" class="btn btn-xs btn-link " onClick="showDialog( {{ @SearchResult['part1']->adjusts }} ,  {{ @SearchResult['part1']->SRP }} );" > {{ (@SearchResult['part1']->purchaser) }} </button>
+                   <br>Fees:<button id="openPopup" class="btn btn-xs btn-link " onClick="showDialog( {{@feeOptions[@SearchResult['option']][3]}} );">{{@feeOptions[@SearchResult['option']][2]}} </button>
                </td> 
                <td > {{ (@SearchResult['part1']->loanAmount) }}</td>
                <td > {{ (@SearchResult['part1']->rate_lowrate) }}      </td>
@@ -275,8 +109,8 @@ hr {
                    <false>
                        <tr class="option0">
                <td rowspan="3" class="hiddenCol bottom-line text-cell"> 
-                 <button id="{{@loanType}}" type="button" class="btn btn-link " onClick="showDialog( {{ @SearchResult['part1']->adjusts }} ,  {{ @SearchResult['part1']->SRP }} );" > {{ (@SearchResult['part1']->purchaser) }} </button>
-                   <br>Fees:<button id="openPopup" class="btn btn-link " onClick="showDialog( {{@feeOptions[@SearchResult['option']][3]}} );">{{@feeOptions[@SearchResult['option']][2]}} </button>
+                 <button id="{{@loanType}}" type="button" class="btn btn-xs btn-link " onClick="showDialog( {{ @SearchResult['part1']->adjusts }} ,  {{ @SearchResult['part1']->SRP }} );" > {{ (@SearchResult['part1']->purchaser) }} </button>
+                   <br>Fees:<button id="openPopup" class="btn btn-xs btn-link " onClick="showDialog( {{@feeOptions[@SearchResult['option']][3]}} );">{{@feeOptions[@SearchResult['option']][2]}} </button>
                </td > 
                <td rowspan="3" class="bottom-line"> {{ (@SearchResult['part1']->loanAmount) }}</td>
                <td > {{ (@SearchResult['part1']->rate_lowrate) }}      </td>
@@ -308,8 +142,11 @@ hr {
                    </false>
                </check>
                </repeat>
-           </table>
+           </table> <!-- resultUnit table -->
        </div>
+       </td>
+     </table> <!-- layout table -->
+     </div>
    </repeat>
    </div>
    
@@ -322,5 +159,3 @@ hr {
         <hr>
     </div>
     <div id="fade" class="black_overlay"></div> 
-</body>
-</html>

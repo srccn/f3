@@ -112,9 +112,11 @@ label {
 }
 
 td {
-	padding-top: 5px;
-	padding-right: 5px;
+	padding-top: 1px;
+	padding-right: 1px;
 	text-align: right;
+	height:50%;
+	vertical-align: center;
 }
 
 th {
