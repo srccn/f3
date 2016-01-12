@@ -1,55 +1,18 @@
-   <div id="closingOption" class="closingoption __navbar-fixed-top">
-       {{@ClosingOption}} <span class="timestamp"> {{@searchStamp}} EST</span>
-   </div>
+<div id="closingOption" class="closingoption __navbar-fixed-top">
+    {{@ClosingOption}} <span class="timestamp"> {{@searchStamp}} EST</span>
+</div>
 
-<!--    
-   <div id="prop" class="propertyBlock" >
-     <p>Property {{@propertyLabel}}  </p>
-     <div id="divLoanProperty" name="divLoanProperty" class="hiddenDiv divLoanProperty">
-       <table style="border-collapse: collapse;"">
-           <repeat group="{{ @loanProperty }}" key= "{{@ikey}}" value="{{ @ivalue }}">
-               <tr>
-                   <td>{{@ikey}}</td>
-                   <td>{{ @ivalue }}</td>
-               </tr>
-           </repeat>
-       </table>
-     </div>
-   </div>
-   <div id="fees" name="fees" class="feeBlock">
-    
-       <p>Closing Cost : {{@totalFee}} </p>
-       <div id="divFeeDetails" class="hiddenDiv">
-           <table style="border-collapse: collapse;"">
-               <repeat group="{{ @feeOptions }}" key= "{{@ikey}}" value="{{ @ifee }}">
-                   <tr>
-                       <td> {{@ikey}} </td>
-                       <td> 
-               <repeat group="{{ @ifee }}" key= "{{@iikey}}" value="{{ @iifee }}">
-                           {{@iifee}} 
-                           </repeat>
-                       </td>
-                   </tr>     
-               </repeat>
-           </table>
-       </div>
-
-   </div>
-  <button id="btnFeeDetails" type="button" class="btn btn-link">Show Details</button> 
-   <div style="clear:both"></div>
--->
-   
-<!-- <button id="btnRateDetails" type="button" class="btn btn-link">Expend</button> -->
-   <div id="rateArea" >
-   <repeat group="{{ @SearchResults }}" key="{{@loanType}}" value="{{@resords}}">
+<div id="rateArea" >
+    <repeat group="{{ @SearchResults }}" key="{{@loanType}}" value="{{@resords}}">
        <div id={{@loanType."Div"}} class="resultBlock" >
           <table style="width:100%">
               <td style="background-color:light-gray ;width:80px">
-               <div class="loanName" id={{@loanType."Label"}} >{{@loanType}}</div>
+                 <div class="loanName" id={{@loanType."Label"}} >{{@loanType}}</div>
               </td>
               <td>
-              <table class="resultUnit" style="font-size:0.8em; border-collapse: collapse; width:100%;">
+                  <table class="resultUnit" style="font-size:0.8em; border-collapse: collapse; width:100%;">
                   <tr>
+                      <th class="hiddenCol text-cell" style="width:12px">Select</th>
                       <th class="hiddenCol text-cell" style="padding-left:12px">Lender</th>
                       <th>Amount</th>
                       <th>Rate</th>
@@ -58,104 +21,145 @@
                       <th class="hiddenCol">Lock</th>
                       <th class="hiddenCol">MonPay</th>
                       <th class="hiddenCol">Total</th>
-               </tr>
-               <repeat group="{{@resords}}" value="{{ @SearchResult }}">
-                   <check if="{{  (@SearchResult['option']) != 0  }}">
-                   <true>       
-                       <tr class="option{{@SearchResult['option']}}">
-               <td rowspan="4" class=" hiddenCol bottom-line text-cell" >
-                 <button id="{{@loanType}}" type="button" class="btn btn-xs btn-link " onClick="showDialog( {{ @SearchResult['part1']->adjusts }} ,  {{ @SearchResult['part1']->SRP }} );" > {{ (@SearchResult['part1']->purchaser) }} </button>
-                   <br>Fees:<button id="openPopup" class="btn btn-xs btn-link " onClick="showDialog( {{@feeOptions[@SearchResult['option']][3]}} );">{{@feeOptions[@SearchResult['option']][2]}} </button>
-               </td> 
-               <td > {{ (@SearchResult['part1']->loanAmount) }}</td>
-               <td > {{ (@SearchResult['part1']->rate_lowrate) }}      </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->price_lowrate) }}      </td>
-               <td > {{ (@SearchResult['part1']->credit_lowrate) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays_lowrate) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowrate) }}    </td>
-               <td class="hiddenCol"> {{ sprintf ('%0.2f' ,(@SearchResult['part1']->monthlyPayment_lowrate + @SearchResult['part2']->monthlyPayment) ) }}   </td>
-                       </tr>
+                   </tr>
+                   <repeat group="{{@resords}}" value="{{ @SearchResult }}">
+                       <check if="{{  (@SearchResult['option']) != 0  }}">
+                           <true>       
+		                       <tr class="option{{@SearchResult['option']}}">
+					               <td rowspan="4" ><input type="radio" class="rg" name="saveOption" value="{{@loanType.'_'.@SearchResult['option']  }}"> </td>        
+					               <td rowspan="4" class=" hiddenCol bottom-line text-cell" >
+					                   <button id="{{@loanType.'_'.@SearchResult['option']  }}" type="button" class="btn btn-xs btn-link " onClick="showDialog( {{ @SearchResult['part1']->adjusts }} ,  {{ @SearchResult['part1']->SRP }} );" > {{ (@SearchResult['part1']->purchaser) }} </button>
+					                   <br>Fees:<button id="openPopup" class="btn btn-xs btn-link " onClick="showDialog( {{@feeOptions[@SearchResult['option']][3]}} );">{{@feeOptions[@SearchResult['option']][2]}} </button>
+					               </td> 
+					               <td > {{ (@SearchResult['part1']->loanAmount) }}</td>
+					               <td > {{ (@SearchResult['part1']->rate_lowrate) }}      </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->price_lowrate) }}      </td>
+					               <td > {{ (@SearchResult['part1']->credit_lowrate) }}    </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays_lowrate) }}    </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowrate) }}    </td>
+					               <td class="hiddenCol"> {{ sprintf ('%0.2f' ,(@SearchResult['part1']->monthlyPayment_lowrate + @SearchResult['part2']->monthlyPayment) ) }}   </td>
+		                       </tr>
                        
-                       <tr class="option{{@SearchResult['option']}}">
-               <td></td>        
-               <td > {{ (@SearchResult['part1']->rate) }}      </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->price) }}      </td>
-               <td > {{ (@SearchResult['part1']->credit) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment) }}   </td>
-               <td class="hiddenCol"> {{ sprintf ('%0.2f' ,(@SearchResult['part1']->monthlyPayment + @SearchResult['part2']->monthlyPayment) ) }}   </td>
-                       </tr>
+		                       <tr class="option{{@SearchResult['option']}}">
+					               <td></td>        
+					               <td > {{ (@SearchResult['part1']->rate) }}      </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->price) }}      </td>
+					               <td > {{ (@SearchResult['part1']->credit) }}    </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays) }}    </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment) }}   </td>
+					               <td class="hiddenCol"> {{ sprintf ('%0.2f' ,(@SearchResult['part1']->monthlyPayment + @SearchResult['part2']->monthlyPayment) ) }}   </td>
+		                       </tr>
 
-                       <tr class="option{{@SearchResult['option']}}">
-               <td></td>        
-               <td > {{ (@SearchResult['part1']->rate_lowlowrate) }}      </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->price_lowlowrate) }}      </td>
-               <td > {{ (@SearchResult['part1']->credit_lowlowrate) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays_lowlowrate) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowlowrate) }}    </td>
-               <td class="hiddenCol"> {{ sprintf ('%0.2f' ,(@SearchResult['part1']->monthlyPayment_lowlowrate + @SearchResult['part2']->monthlyPayment) ) }}   </td>
-                       </tr>
+		                       <tr class="option{{@SearchResult['option']}}">
+					               <td></td>        
+					               <td > {{ (@SearchResult['part1']->rate_lowlowrate) }}      </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->price_lowlowrate) }}      </td>
+					               <td > {{ (@SearchResult['part1']->credit_lowlowrate) }}    </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays_lowlowrate) }}    </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowlowrate) }}    </td>
+					               <td class="hiddenCol"> {{ sprintf ('%0.2f' ,(@SearchResult['part1']->monthlyPayment_lowlowrate + @SearchResult['part2']->monthlyPayment) ) }}   </td>
+		                       </tr>
                        
-                       <tr class="option{{@SearchResult['option']}} bottom-line">
-               <td > {{ (@SearchResult['part2']->loanAmount) }}</td>
-               <td > {{ (@SearchResult['part2']->rate) }}      </td>
-               <td class="hiddenCol"></td>
-               <td > </td>
-               <td class="hiddenCol"> </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part2']->monthlyPayment) }} </td>
-               <td class="hiddenCol"></td>
-                       </tr>
-                   </true>
-                   <false>
-                       <tr class="option0">
-               <td rowspan="3" class="hiddenCol bottom-line text-cell"> 
-                 <button id="{{@loanType}}" type="button" class="btn btn-xs btn-link " onClick="showDialog( {{ @SearchResult['part1']->adjusts }} ,  {{ @SearchResult['part1']->SRP }} );" > {{ (@SearchResult['part1']->purchaser) }} </button>
-                   <br>Fees:<button id="openPopup" class="btn btn-xs btn-link " onClick="showDialog( {{@feeOptions[@SearchResult['option']][3]}} );">{{@feeOptions[@SearchResult['option']][2]}} </button>
-               </td > 
-               <td rowspan="3" class="bottom-line"> {{ (@SearchResult['part1']->loanAmount) }}</td>
-               <td > {{ (@SearchResult['part1']->rate_lowrate) }}      </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->price_lowrate) }}      </td>
-               <td > {{ (@SearchResult['part1']->credit_lowrate) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays_lowrate) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowrate) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowrate) }}    </td>
-                       </tr>
+		                       <tr class="option{{@SearchResult['option']}} bottom-line">
+					               <td > {{ (@SearchResult['part2']->loanAmount) }}</td>
+					               <td > {{ (@SearchResult['part2']->rate) }}      </td>
+					               <td class="hiddenCol"></td>
+					               <td > </td>
+					               <td class="hiddenCol"> </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part2']->monthlyPayment) }} </td>
+					               <td class="hiddenCol"></td>
+		                       </tr>
+                           </true>
+                           <false>
+		                       <tr class="option0">
+					               <td rowspan="3"><input type="radio" class="rg" name="saveOption" value="{{@loanType.'_'.@SearchResult['option']  }}"> </td>        
+					               <td rowspan="3" class="hiddenCol bottom-line text-cell"> 
+					                   <button id="{{@loanType.'_'.@SearchResult['option']}}" type="button" class="btn btn-xs btn-link " onClick="showDialog( {{ @SearchResult['part1']->adjusts }} ,  {{ @SearchResult['part1']->SRP }} );" > {{ (@SearchResult['part1']->purchaser) }} </button>
+					                   <br>Fees:<button id="openPopup" class="btn btn-xs btn-link " onClick="showDialog( {{@feeOptions[@SearchResult['option']][3]}} );">{{@feeOptions[@SearchResult['option']][2]}} </button>
+					               </td > 
+					               <td rowspan="3" class="bottom-line"> {{ (@SearchResult['part1']->loanAmount) }}</td>
+					               <td > {{ (@SearchResult['part1']->rate_lowrate) }}      </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->price_lowrate) }}      </td>
+					               <td > {{ (@SearchResult['part1']->credit_lowrate) }}    </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays_lowrate) }}    </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowrate) }}    </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowrate) }}    </td>
+		                       </tr>
 
-                       <tr class="option0">
-               <td > {{ (@SearchResult['part1']->rate) }}      </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->price) }}      </td>
-               <td > {{ (@SearchResult['part1']->credit) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
-                       </tr>
+		                       <tr class="option0">
+					               <td > {{ (@SearchResult['part1']->rate) }}      </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->price) }}      </td>
+					               <td > {{ (@SearchResult['part1']->credit) }}    </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays) }}    </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment) }}    </td>
+		                       </tr>
 
-                       <tr class="option0 bottom-line">
-               <td > {{ (@SearchResult['part1']->rate_lowlowrate) }}      </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->price_lowlowrate) }}      </td>
-               <td > {{ (@SearchResult['part1']->credit_lowlowrate) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays_lowlowrate) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowlowrate) }}    </td>
-               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowlowrate) }}    </td>
-                       </tr>
+		                       <tr class="option0 bottom-line">
+					               <td > {{ (@SearchResult['part1']->rate_lowlowrate) }}      </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->price_lowlowrate) }}      </td>
+					               <td > {{ (@SearchResult['part1']->credit_lowlowrate) }}    </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->lockDays_lowlowrate) }}    </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowlowrate) }}    </td>
+					               <td class="hiddenCol"> {{ (@SearchResult['part1']->monthlyPayment_lowlowrate) }}    </td>
+		                       </tr>
  
-                   </false>
-               </check>
-               </repeat>
-           </table> <!-- resultUnit table -->
+                           </false>
+                       </check>
+                   </repeat>
+               </table> <!-- resultUnit table -->
+              </td>
+          </table> <!-- layout table -->
        </div>
-       </td>
-     </table> <!-- layout table -->
-     </div>
-   </repeat>
-   </div>
+    </repeat>
+</div>
    
-   <div style="clear:both; margin:15px">
-       <p></p>
-    </div>
+<div style="clear:both; margin:15px">
+    <p></p>
+</div>
     
-    <div id="light" class="white_content">Loan Calculation Details. 
-        <a id="clsoePopup" href="#rateArea" onClick="closeDialog();">Close</a>
-        <hr>
-    </div>
-    <div id="fade" class="black_overlay"></div> 
+<div id="light" class="white_content">Loan Calculation Details. 
+    <a id="clsoePopup" href="#rateArea" onClick="closeDialog();">Close</a>
+    <hr>
+</div>
+<div id="fade" class="black_overlay"></div>
+<button type="button" name="SaveInput" id="SaveInput" class="btn btn-xs btn-info" disabled >Set Email Alert</button>
+
+
+<!-- customer loaner javascripts 
+<script src="{{@BASE}}/lib/js/loaner.js"></script>
+-->
+<script>
+
+$('#SaveInput').click ( function() {
+	var target_rate = prompt("Please enter your target rate for recieving email alert\n" +
+			"For example 4.25 ", "4.25")
+	if (target_rate != null && !isNaN(target_rate) ) {
+		document.getElementById("message").innerHTML="Set " + target_rate + " for alert.";
+		inputForm =$('#inputForm').serialize();
+		
+		//document.getElementById("message").innerHTML += "<br>Form details : " + inputForm;
+		
+		$.ajax ({
+			url : "/f3/saveForm" ,
+			type: "POST",
+			data: inputForm + "&targetRate="+target_rate,
+			success: function (data, textStatus, jqXHR) {
+				document.getElementById("message").innerHTML +="  saved successfully";
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				document.getElementById("message").innerHTML +="  save failed";
+			}
+		});		
+	} 
+	else {
+		document.getElementById("message").innerHTML="No alert set or updated.";
+	}
+});
+
+$('.rg').change(function(){
+	alert($('input:radio[name="saveOption"]:checked').val());
+	$('#SaveInput').removeAttr('disabled');
+});
+</script>
+
