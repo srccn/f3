@@ -76,7 +76,7 @@ label {
 
 .loanName {
 	color: red;
-	font-size: 120%;
+	font-size: 150%;
 	font-style: bold;
 	text-align: center;
 	text-decoration: underline;
@@ -90,7 +90,8 @@ label {
 }
 
 .text-cell {
-	text-align: left;
+	text-align: center;
+	width:100px;
 }
 
 .hiddenDiv {
@@ -117,7 +118,6 @@ td {
 	padding-top: 1px;
 	padding-right: 1px;
 	text-align: right;
-	height:50%;
 	vertical-align: center;
 }
 

@@ -38,7 +38,10 @@ class LoanProperty extends BaseController {
 	}
 	
 	function setInput( $inputs ){
-	    
+
+		$this->validateInputs($inputs);
+		
+		
 		//taken from inouts
 		$this->numberUnit = $inputs["numberUnit"];
 		$this->type=$inputs["type"];
@@ -312,6 +315,30 @@ class LoanProperty extends BaseController {
 	public function getPropertLabel(){
 		return "$this->loanAmount / $this->marketPrice at zip $this->zip";
 
+	}
+	
+	private function validateInputs($inputs){
+	    //market price
+	    if (! is_numeric($inputs['marketPrice'])) {
+	    	die("market price is not valide : " . $inputs['marketPrice'] );
+	    }
+		
+		//loan amount
+	    if (! is_numeric($inputs['loanAmount'])) {
+	    	die("loan amount is not valide : " . $inputs['loanAmount'] );
+	    	throw new Exception("Failed validate inputs.");
+	    }
+	     
+		//zip
+		
+		//credit score
+	    if (! is_numeric($inputs['creditScore'])) {
+	    	die("Credit score is not valide : " . $inputs['creditScore'] );
+	    }
+	    if ($inputs['creditScore'] > 800 || $inputs['creditScore'] < 600) {
+	    	die("credit score is not in valid range : ". $inputs['creditScore'] );
+	    }
+		
 	}
 	
 }
