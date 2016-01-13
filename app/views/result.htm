@@ -124,11 +124,12 @@
 </div>
 <div id="fade" class="black_overlay"></div>
 <button type="button" name="SaveInput" id="SaveInput" class="btn btn-xs btn-info" disabled >Set Email Alert</button>
-
+<div style="margin-bottom:10px"></div>
 
 <!-- customer loaner javascripts 
-<script src="{{@BASE}}/lib/js/loaner.js"></script>
+  <script src="{{@BASE}}/lib/js/loaner.js"></script>
 -->
+
 <script>
 
 $('#SaveInput').click ( function() {
@@ -158,7 +159,7 @@ $('#SaveInput').click ( function() {
 });
 
 $('.rg').change(function(){
-	alert($('input:radio[name="saveOption"]:checked').val());
+	//alert($('input:radio[name="saveOption"]:checked').val());
 	$('#SaveInput').removeAttr('disabled');
 });
 </script>

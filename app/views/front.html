@@ -38,7 +38,16 @@
                 <label for="zip">Zip</label>
                 <input type=text value="02460" id="zip" name="zip" size="6"><br>
 
-                <label for="closingOption">Close Option</label>
+                <!--  <label for="loanName">Loan Type</label> -->
+                <select id="loanNameSelection" name="loanNameSelection[]"  size="5" multiple style="width: 150px;">
+                    <option value="all" >All Loan Type</option>
+                    <option value="fixed30" selected>30 years fixed</option>
+                    <option value="fixed15">15 years fixed</option>
+                    <option value="arm51">5/1 arm</option>
+                    <option value="arm71">7/1 arm</option>
+                </select><br>
+
+                <label for="closingOption">Closing </label>
                 <select id="closingOption" name="closingOption">
                     <option value="npncc">No Points No Closing Cost</option>
                     <option value="paycc">Pay Closing Cost</option>
@@ -59,7 +68,7 @@
                     </select> <br>
                     
                     <label for="crediteScore">Credite Score</label>
-                    <input type="text" name="creditScore" id="creditScore" value="701" style="color:red;font-weight: bold;background-color:yellow"></input><br>
+                    <input type="text" name="creditScore" id="creditScore" size="5" value="701" style="color:red;font-weight: bold;background-color:yellow"></input><br>
                 
                     <label for="lockDays">Lock Days</label>
                     <select id="lockDays" name="lockDays">
@@ -68,14 +77,6 @@
                         <option value="60">60 Days</option>
                     </select> <br>
 
-                <label for="loanName">Loan Type</label>
-                <select id="loanNameSelection" name="loanNameSelection[]"  size="3" multiple>
-                    <option value="all" >All Loan Type</option>
-                    <option value="fixed30" selected>30 years fixed</option>
-                    <option value="fixed15">15 years fixed</option>
-                    <option value="arm51">5/1 arm</option>
-                    <option value="arm71">7/1 arm</option>
-                </select>
 <!--                 
                 <ul id="optionsList">
                     <li>Mortgage Type(Purchase) </li> 
@@ -88,12 +89,14 @@
  
             </div>    
                 <div id="brokerOptionDiv">
+<!--                 
                     <label for="Margin">Confirming Margin</label>
                     <input type="text" name="confirmingmargin" id="confirmingmargin" value="1" size='3'>% ;
                     <label for="JumboMargin"> NonConfirming  Margin</label>
                     <input type="text" name="jumbomargin" id="jumbomargin" value="0.5" size='3'>% <br>
-                    <label for="purchaserSelection">Select Specific Lender</label>
-                    <select id="purchaserSelection" name="purchaserSelection[]" size="3" multiple>
+-->
+                    <label for="purchaserSelection">Select Lender</label>
+                    <select id="purchaserSelection" name="purchaserSelection[]" size="5" multiple>
                         <option value="ALL" >All Lenders</option>
                         <option value="BBT"  selected >BBT</option>
                         <option value="BOKF">BOKF</option>
