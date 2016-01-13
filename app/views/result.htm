@@ -10,9 +10,9 @@
                  <div class="loanName" id={{@loanType."Label"}} >{{@loanType}}</div>
               </td>
               <td>
-                  <table class="resultUnit" style="font-size:0.8em; border-collapse: collapse; width:100%;">
+                  <table class="resultUnit " style="font-size:0.8em; border-collapse: collapse; width:100%;">
                   <tr>
-                      <th class="hiddenCol text-cell" style="width:12px">Select</th>
+                      <th class="hiddenCol" style="width:12px ">Select</th>
                       <th class="hiddenCol text-cell" style="padding-left:12px">Lender</th>
                       <th>Amount</th>
                       <th>Rate</th>
@@ -26,7 +26,9 @@
                        <check if="{{  (@SearchResult['option']) != 0  }}">
                            <true>       
 		                       <tr class="option{{@SearchResult['option']}}">
-					               <td rowspan="4" ><input type="radio" class="rg" name="saveOption" value="{{@loanType.'_'.@SearchResult['option']  }}"> </td>        
+					               <td rowspan="4" style="text-align:center">
+					                   <input type="radio" class="rg" name="saveOption" value="{{@loanType.'_'.@SearchResult['option']  }}"> 
+					               </td>        
 					               <td rowspan="4" class=" hiddenCol bottom-line text-cell" >
 					                   <button id="{{@loanType.'_'.@SearchResult['option']  }}" type="button" class="btn btn-xs btn-link " onClick="showDialog( {{ @SearchResult['part1']->adjusts }} ,  {{ @SearchResult['part1']->SRP }} );" > {{ (@SearchResult['part1']->purchaser) }} </button>
 					                   <br>Fees:<button id="openPopup" class="btn btn-xs btn-link " onClick="showDialog( {{@feeOptions[@SearchResult['option']][3]}} );">{{@feeOptions[@SearchResult['option']][2]}} </button>
@@ -72,7 +74,9 @@
                            </true>
                            <false>
 		                       <tr class="option0">
-					               <td rowspan="3"><input type="radio" class="rg" name="saveOption" value="{{@loanType.'_'.@SearchResult['option']  }}"> </td>        
+					               <td rowspan="3" style="text-align:center">
+					                   <input type="radio" class="rg" name="saveOption" value="{{@loanType.'_'.@SearchResult['option']  }}"> 
+					               </td>        
 					               <td rowspan="3" class="hiddenCol bottom-line text-cell"> 
 					                   <button id="{{@loanType.'_'.@SearchResult['option']}}" type="button" class="btn btn-xs btn-link " onClick="showDialog( {{ @SearchResult['part1']->adjusts }} ,  {{ @SearchResult['part1']->SRP }} );" > {{ (@SearchResult['part1']->purchaser) }} </button>
 					                   <br>Fees:<button id="openPopup" class="btn btn-xs btn-link " onClick="showDialog( {{@feeOptions[@SearchResult['option']][3]}} );">{{@feeOptions[@SearchResult['option']][2]}} </button>
