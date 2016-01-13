@@ -53,8 +53,8 @@ class LoanProperty extends BaseController {
 		$this->creditScore=intVal ($inputs["creditScore"]);
 		$this->loanNameSelection=$inputs["loanNameSelection"];
 		$this->lockDays=$inputs["lockDays"];
-		$this->confirmingmargin=$inputs["confirmingmargin"];
-		$this->jumbomargin=$inputs["jumbomargin"];
+		$this->confirmingmargin= 1.0; //$inputs["confirmingmargin"];
+		$this->jumbomargin= 0.5; //$inputs["jumbomargin"];
 		$this->mincredit=$inputs["mincredit"];
 		$this->closingOption=$inputs["closingOption"];
 		$this->purchaserSelection = $inputs["purchaserSelection"];
