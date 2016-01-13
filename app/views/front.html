@@ -1,5 +1,3 @@
-    <div style="float:left; display:block;width:25%; min-width:250px; margin: 10px; ">    
-        <form name="inputForm" id="inputForm" method="post" action="/f3/calculate">
         <!-- 
             <div style="width:25%; float:left; margin: 10 ; display:block; background-color:lightgray; min-width:300px" id="left" >
             <select id="sampleDataList" name="sampleDataList" size="20" style="margin:10px; width:95%">
@@ -18,100 +16,113 @@
         
         </div>
     -->
+
+<div style="float:left; display:block;width:25%; min-width:250px; margin: 10px; ">    
+    <form name="inputForm" id="inputForm" method="post" action="/f3/calculate" class="form-inline">
+        <h4>Find Mortgage Rate</h4> <hr>
+
+        <!-- search inputs -->
         <div >
-            <h4>Find Mortgage Rate</h4>
-            <hr>
-                <label for="type">Property Type</label><br>
-                  <input type="radio" id="type" name="type" value="house" checked>House
-                 <label for="numberUnit" style="display:inline">Unit</label>
-                <select id="numberUnit" name="numberUnit">
-                    <option value="one_unit" >One Unit</option>
-                    <option value="two_unit" >Two Unit</option>
-                    <option value="three_unit">Three Unit</option>
-                    <option value="four_unit">Four Unit</option>
-                </select> <br>
-                  <input type="radio" name="type" value="condo"> Condo<br>
+            <!-- property type -->
+            <div class="col-xs-12">
+	            <label for="type">Property Type</label><br>
+	            <input type="radio" id="type" name="type" value="house" checked>House
+	            <label for="numberUnit" style="display:inline" >Unit</label>
+	            <select id="numberUnit" name="numberUnit" class="form-control">
+	                <option value="one_unit" >One Unit</option>
+	                <option value="two_unit" >Two Unit</option>
+	                <option value="three_unit">Three Unit</option>
+	                <option value="four_unit">Four Unit</option>
+	            </select>
+                <br><input type="radio" name="type" value="condo"> Condo<br>
+            </div>
+
+            <div class="col-xs-12">
                 <label for="marketPrice">Market Price</label>
-                <input type=text value="300000" id="marketPrice" name="marketPrice" size="7" style="color:red;font-weight: bold;background-color:yellow"> <br>
+                <input type=text value="300000" id="marketPrice" name="marketPrice" size="7" class="form-control" style_="color:red;font-weight: bold;background-color:yellow">
+            </div>
+            
+            <div class="col-xs-12">
                 <label for="loanAmount">Loan Amount</label>
-                <input type=text value="237000" id="loanAmount" name="loanAmount" size="7" style="color:red;font-weight: bold;background-color:yellow"><br>
-                <label for="zip">Zip</label>
-                <input type=text value="02460" id="zip" name="zip" size="6"><br>
+                <input type=text value="237000" id="loanAmount" name="loanAmount" size="7" class="form-control" style_="color:red;font-weight: bold;background-color:yellow">
+            </div>
+            
+	        <div class="col-xs-12">
+	            <label for="zip">Zip</label>
+	            <input type=text value="02460" id="zip" name="zip" size="6" class="form-control">
+            </div>
+            <div class="col-xs-12">
+                    <label for="crediteScore">Credite Score</label>
+                    <input type="text" name="creditScore" id="creditScore" size="5" value="701" class="form-control" style__="color:red;font-weight: bold;background-color:yellow"></input><br>
+            </div>
 
-                <!--  <label for="loanName">Loan Type</label> -->
-                <select id="loanNameSelection" name="loanNameSelection[]"  size="5" multiple style="width: 150px;">
-                    <option value="all" >All Loan Type</option>
-                    <option value="fixed30" selected>30 years fixed</option>
-                    <option value="fixed15">15 years fixed</option>
-                    <option value="arm51">5/1 arm</option>
-                    <option value="arm71">7/1 arm</option>
-                </select><br>
-
-                <label for="closingOption">Closing </label>
-                <select id="closingOption" name="closingOption">
-                    <option value="npncc">No Points No Closing Cost</option>
-                    <option value="paycc">Pay Closing Cost</option>
-                </select>
+			<div class="col-xs-12">
+	            <label for="loanName">Loan Type</label>
+	            <select id="loanNameSelection" name="loanNameSelection[]"  size="5" multiple class="form-control" style="width: 150px; margin-top:5px">
+	                <option value="all" >All Loan Type</option>
+	                <option value="fixed30" selected>30 years fixed</option>
+	                <option value="fixed15">15 years fixed</option>
+	                <option value="arm51">5/1 arm</option>
+	                <option value="arm71">7/1 arm</option>
+	            </select>
+            </div>
+            <div class="col-xs-12">
+	            <label for="closingOption">Closing </label>
+	            <select id="closingOption" name="closingOption" class="form-control">
+	                <option value="npncc">No Points No Closing Cost</option>
+	                <option value="paycc">Pay Closing Cost</option>
+	            </select>
+            </div>
         </div>
-        <div id="right">
+        <div style="clear:both"></div>
+
+        <!-- search option -->
+        <div id="right" style="margin-top:10px">
              <div id="optionsDiv"> 
                   <label for="purchaseType">Mortgage Type</label><br>
-                  <input type="radio" id="purchaseType" name="purchaseType" value="purchase" checked>Puchase <br>
-                  <input type="radio" name="purchaseType" value="rtrefinance"> Rate Term Refinance<br> 
-                  <input type="radio" name="purchaseType" value="corefinance"> Cash Out Refinance <br>                
+                  <input type="radio" id="purchaseType" name="purchaseType" value="purchase" class="form-control" checked >Puchase <br>
+                  <input type="radio" name="purchaseType" value="rtrefinance" class="form-control" > Rate Term Refinance<br> 
+                  <input type="radio" name="purchaseType" value="corefinance" class="form-control"> Cash Out Refinance <br>                
 
-                    <label for="occType">Property Occupancy</label>
-                    <select id="occType" name="occType">
+                    <label for="occType">Occupancy</label>
+                    <select id="occType" name="occType" class="form-control">
                         <option value="primary">Primary Home</option>
                         <option value="commercial">Commercial</option>
                         <option value="investment">Investment</option>
                     </select> <br>
                     
-                    <label for="crediteScore">Credite Score</label>
-                    <input type="text" name="creditScore" id="creditScore" size="5" value="701" style="color:red;font-weight: bold;background-color:yellow"></input><br>
-                
                     <label for="lockDays">Lock Days</label>
-                    <select id="lockDays" name="lockDays">
+                    <select id="lockDays" name="lockDays" class="form-control">
                         <option value="30">30 Days</option>
                         <option value="45" selected>45 Days</option>
                         <option value="60">60 Days</option>
                     </select> <br>
-
-<!--                 
-                <ul id="optionsList">
-                    <li>Mortgage Type(Purchase) </li> 
-                    <li>Occupancy(Primary Home)</li> 
-                    <li>Credit score(>740)</li>
-                    <li>lock days(45)</li> 
-                    <li>Loan type(All)</li>
-                </ul>
--->                
  
             </div>    
-                <div id="brokerOptionDiv">
+             <div id="brokerOptionDiv" style="padding-bottom:10px; padding-top:10px">
 <!--                 
                     <label for="Margin">Confirming Margin</label>
                     <input type="text" name="confirmingmargin" id="confirmingmargin" value="1" size='3'>% ;
                     <label for="JumboMargin"> NonConfirming  Margin</label>
                     <input type="text" name="jumbomargin" id="jumbomargin" value="0.5" size='3'>% <br>
 -->
-                    <label for="purchaserSelection">Select Lender</label>
-                    <select id="purchaserSelection" name="purchaserSelection[]" size="5" multiple>
-                        <option value="ALL" >All Lenders</option>
-                        <option value="BBT"  selected >BBT</option>
-                        <option value="BOKF">BOKF</option>
-                        <option value="WELLSFARGO" >Wells Fargo</option>
-                        <option value="CHASE" >Chase</option>
-                    </select>                    
-                </div>
-<!--                 <button id="brokerOptionLink" type="button" class="btn btn-link" >Broker's Option</button><br> 
--->
+                 <label for="purchaserSelection">Select Lender</label>
+                 <select id="purchaserSelection" name="purchaserSelection[]" size="5" multiple class="form-control">
+                     <option value="ALL" >All Lenders</option>
+                     <option value="BBT"  selected >BBT</option>
+                     <option value="BOKF">BOKF</option>
+                     <option value="WELLSFARGO" >Wells Fargo</option>
+                     <option value="CHASE" >Chase</option>
+                 </select>                    
+             </div>
         </div>
-                <button id="optionLink" type="button" class="btn btn-xs btn-info" >Open/Close Options Panel:</button> <br><br>
-        
-                <button type="submit" name="submit" id="submit" class="btn btn-xs btn-info">Find Rates</button>
-            </form>
-        </div>     
+        <!-- button group -->
+        <div style="margin-top:10px">
+            <button id="optionLink" type="button" class="btn btn-xs btn-info" >Open/Close Options Panel:</button> <br><br>
+            <button type="submit" name="submit" id="submit" class="btn btn-xs btn-info">Find Rates</button>
+        </div>
+    </form>
+</div>     
 
 <!-- result panel -->
 <div id="resultPanel" style="font-size__:30pt; float:left; background-color__:yellow; min-width:300px; width:70%; display:block">
