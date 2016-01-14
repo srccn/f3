@@ -5,7 +5,7 @@
 <div id="rateArea" >
     <repeat group="{{ @SearchResults }}" key="{{@loanType}}" value="{{@resords}}">
        <div id={{@loanType."Div"}} class="resultBlock" >
-          <table style="width:100%"  class="table-hover">
+          <table style="width:100%"  class="table-hover table-condensed ">
               <td style="background-color:light-gray ;width:80px">
                  <div class="loanName" id={{@loanType."Label"}} >{{@loanType}}</div>
               </td>
@@ -42,7 +42,7 @@
 					               <td class="hiddenCol"> {{ sprintf ('%0.2f' ,(@SearchResult['part1']->monthlyPayment_lowrate + @SearchResult['part2']->monthlyPayment) ) }}   </td>
 		                       </tr>
                        
-		                       <tr class="option{{@SearchResult['option']}}" style="color:red;font-weight: bold;">
+		                       <tr class="option{{@SearchResult['option']}}" style="color:red;">
 					               <td></td>        
 					               <td > {{ (@SearchResult['part1']->rate) }}      </td>
 					               <td class="hiddenCol"> {{ (@SearchResult['part1']->price) }}      </td>

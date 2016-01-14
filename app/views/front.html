@@ -17,7 +17,7 @@
         </div>
     -->
 
-<div style="float:left; display:block;width:25%; min-width:250px; margin: 10px; ">    
+<div style="float:left; font-size:0.9em ; display:block;width:30%; min-width:250px; margin: 10px; ">    
     <form name="inputForm" id="inputForm" method="post" action="/f3/calculate" class="form-inline">
         <h4>Find Mortgage Rate</h4> <hr>
 
@@ -39,33 +39,23 @@
 
             <div class="col-xs-12">
                 <label for="marketPrice">Market Price</label>
-                <input type=text value="300000" id="marketPrice" name="marketPrice" size="7" class="form-control" style_="color:red;font-weight: bold;background-color:yellow">
+                <input type=text value="300000" id="marketPrice" name="marketPrice" size="7" class="form-control input-sm" style_="color:red;font-weight: bold;background-color:yellow">
             </div>
             
             <div class="col-xs-12">
                 <label for="loanAmount">Loan Amount</label>
-                <input type=text value="237000" id="loanAmount" name="loanAmount" size="7" class="form-control" style_="color:red;font-weight: bold;background-color:yellow">
+                <input type=text value="237000" id="loanAmount" name="loanAmount" size="7" class="form-control input-sm" style_="color:red;font-weight: bold;background-color:yellow">
             </div>
             
 	        <div class="col-xs-12">
 	            <label for="zip">Zip</label>
-	            <input type=text value="02460" id="zip" name="zip" size="6" class="form-control">
+	            <input type=text value="02460" id="zip" name="zip" size="6" class="form-control input-sm">
             </div>
             <div class="col-xs-12">
                     <label for="crediteScore">Credite Score</label>
-                    <input type="text" name="creditScore" id="creditScore" size="5" value="701" class="form-control" style__="color:red;font-weight: bold;background-color:yellow"></input><br>
+                    <input type="text" name="creditScore" id="creditScore" size="5" value="701" class="form-control input-sm" style__="color:red;font-weight: bold;background-color:yellow"></input><br>
             </div>
 
-			<div class="col-xs-12">
-	            <label for="loanName">Loan Type</label>
-	            <select id="loanNameSelection" name="loanNameSelection[]"  size="5" multiple class="form-control" style="width: 150px; margin-top:5px">
-	                <option value="all" >All Loan Type</option>
-	                <option value="fixed30" selected>30 years fixed</option>
-	                <option value="fixed15">15 years fixed</option>
-	                <option value="arm51">5/1 arm</option>
-	                <option value="arm71">7/1 arm</option>
-	            </select>
-            </div>
             <div class="col-xs-12">
 	            <label for="closingOption">Closing </label>
 	            <select id="closingOption" name="closingOption" class="form-control">
@@ -78,25 +68,44 @@
 
         <!-- search option -->
         <div id="right" style="margin-top:10px">
-             <div id="optionsDiv"> 
-                  <label for="purchaseType">Mortgage Type</label><br>
-                  <input type="radio" id="purchaseType" name="purchaseType" value="purchase" class="form-control" checked >Puchase <br>
-                  <input type="radio" name="purchaseType" value="rtrefinance" class="form-control" > Rate Term Refinance<br> 
-                  <input type="radio" name="purchaseType" value="corefinance" class="form-control"> Cash Out Refinance <br>                
-
+             <div id="optionsDiv">
+                 <div class="col-xs-12">   
+                  <label for="purchaseType">Mortgage Type</label>
+                  <ul style="list-style: none;">
+                  <li><input type="radio" id="purchaseType" name="purchaseType" value="purchase" class_="form-control" checked >Puchase </li>
+                  <li><input type="radio" name="purchaseType" value="rtrefinance" class_="form-control" > Rate Term Refinance </li>
+                  <li><input type="radio" name="purchaseType" value="corefinance" class_="form-control"> Cash Out Refinance </li>               
+                  </ul>
+                 </div>
+                 <div class="col-xs-12">   
+                 
                     <label for="occType">Occupancy</label>
                     <select id="occType" name="occType" class="form-control">
                         <option value="primary">Primary Home</option>
                         <option value="commercial">Commercial</option>
                         <option value="investment">Investment</option>
-                    </select> <br>
+                    </select>
+                  </div>  
+
+					<div class="col-xs-12">
+			            <label for="loanName">Loan Type</label>
+			            <select id="loanNameSelection" name="loanNameSelection[]"  size="5" multiple class="form-control" style="width: 150px; margin-top:5px">
+			                <option value="all" >All Loan Type</option>
+			                <option value="fixed30" selected>30 years fixed</option>
+			                <option value="fixed15">15 years fixed</option>
+			                <option value="arm51">5/1 arm</option>
+			                <option value="arm71">7/1 arm</option>
+			            </select>
+		            </div>
                     
+					<div class="col-xs-12">
                     <label for="lockDays">Lock Days</label>
                     <select id="lockDays" name="lockDays" class="form-control">
                         <option value="30">30 Days</option>
                         <option value="45" selected>45 Days</option>
                         <option value="60">60 Days</option>
-                    </select> <br>
+                    </select> 
+                    </div>
  
             </div>    
              <div id="brokerOptionDiv" style="padding-bottom:10px; padding-top:10px">
@@ -118,16 +127,16 @@
         </div>
         <!-- button group -->
         <div style="margin-top:10px">
-            <button id="optionLink" type="button" class="btn btn-info" >
+            <button id="optionLink" type="button" class="btn btn-info btn-xs" >
                 <span id="openCloseOptionIcon" class="glyphicon glyphicon-menu-down" aria-hidden="true"></span> More Search Options 
-            </button> <br><br>
-            <button type="submit" name="submit" id="submit" class="btn btn-info">Find Rates</button>
+            </button> 
+            <button type="submit" name="submit" id="submit" class="btn btn-info btn-xs">Find Rates</button>
         </div>
     </form>
 </div>     
 
 <!-- result panel -->
-<div id="resultPanel" style="font-size__:30pt; float:left; background-color__:yellow; min-width:300px; width:70%; display:block">
+<div id="resultPanel" style="font-size__:30pt; float:left; background-color__:yellow; min-width:300px; width:65%; display:block">
 Enter your loan data, then click Find Rates to search best rate.
 </div>
             

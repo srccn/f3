@@ -18,7 +18,6 @@ label {
 	text-align: center;
 	background-color: #111111;
 	color: #eeeeee;
-	margin-bottom: 15px;
 	width: 100%;
 	padding-top:5px;
 	padding-bottom:5px;
@@ -37,9 +36,9 @@ label {
 	width:100%;
 	display: block;
 	margin: 2px;
-	margin-bottom: 20px;
-	margin-right: 10px;
-	padding: 1px;
+	margin-bottom: 5px;
+	margin-right: 5px;
+	padding: 0px;
 	background-color: #eeeeee;
 }
 
@@ -116,7 +115,6 @@ label {
 }
 
 td {
-	padding-top: 1px;
 	padding-right: 1px;
 	text-align: right;
 	vertical-align: center;

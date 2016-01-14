@@ -7,8 +7,8 @@
 	    <meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    <meta name="description" content="">
-	    <meta name="author" content="">
+	    <meta name="description" content="Provide mortgage rate search service to signed in customer for free">
+	    <meta name="author" content="MortgagePro">
         
         <!-- Bootstrap -->
         <link href="{{@BASE}}/lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
@@ -26,19 +26,8 @@
  
     <body>
         <include href="customer/nav.htm" />
+        <div ><br></div>
         <div id="message" name="message" style="color:red; font-size:0.8em;">{{ @message }}</div>
-        <div style="font-size:0.8em;">
-    		<check if="{{ @SESSION['username'] }}">
-			    <true>
-			        <p>You are signed in as <span style="font-size:1.5em ; font-weight: bold"> {{ @SESSION['username'] }} </span> , <a href="{{ @BASE.'/signout' }}" onClick="return cleanRatePageVisit();">Sign Out</a></p>
-			    </true>
-			    <false>
-			        <p>You are not signed in. 
-			        <a id="btnSignup" type="button">Sign up</a> or 
-			        <a id="btnSignin" type="button">Sign In</a> to get current rate quote in MA</p>
-			    </false>
-			</check>
-    	</div>
         <include href="signin.htm" />
         <include href="signup.htm" />
         

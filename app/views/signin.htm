@@ -1,16 +1,14 @@
-        <form name="frmSignin" id="frmSignin" action="{{ @BASE.'/verifysignin' }}" method="post" class="form-inline" style="font-size:0.9em; display:none">
+        <form name="frmSignin" id="frmSignin" action="{{ @BASE.'/verifysignin' }}" method="post" class="form-inline" style="font-size:0.8em; display:none">
                 <fieldset>
-                <legend>Sign in</legend>
-                <label>
-                    User Name
-                    <input type="text" name="username" class="form-control input-sm">
-                </label>
-                <label>
-                    Password
-                    <input type="password" name="password" class="form-control input-sm">
-                </label>
+                <label style="font-size:1.5em">Sign in : </label>
+                <label> Name</label>
+                <input type="text" name="username" size="10" class="form-control input-sm">
+                
+                <label>Password </label>
+                <input type="password" name="password" size="10" class="form-control input-sm">
             <input type="submit" value="Sign In" class="btn btn-info btn-sm">
             <button id="Cancel" onclick="location.href='http://localhost/f3/home'" class="btn btn-warning btn-sm" >Cancel</button>
             </fieldset>
+            <br>
         </form>	
 

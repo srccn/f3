@@ -26,12 +26,13 @@
                     </li>
               		<check if="{{ @SESSION['username'] }}">
 	                    <li >
-	                        <a href="{{@BASE}}/front">Rate</a>
+	                        <a style="color:#eee" href="{{@BASE}}/front">Rate</a>
 	                    </li>
 	                    <li >
-	                        <a href="{{@BASE}}/restricted">Trend & News</a>
+	                        <a style="color:#eee" href="{{@BASE}}/restricted">Trend & News</a>
 	                    </li>
 	                </check>
+	                
 	            <!--     
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Blog <b class="caret"></b></a>
@@ -68,6 +69,18 @@
                         </ul>
                     </li>
                 -->
+		       <div class="navbar-text navbar-right" > 
+		    		<check if="{{ @SESSION['username'] }}">
+					    <true>
+					        <p >Your signin as <span style="color:#fff font-weight: bold"> {{ @SESSION['username'] }} </span> , <a style="color:#eee" href="{{ @BASE.'/signout' }}" onClick="return cleanRatePageVisit();">Sign Out</a></p>
+					    </true>
+					    <false>
+					        <p >  
+					        <a id="btnSignup" type="button" style="color:#eee">Free Sign up</a> or 
+					        <a id="btnSignin" type="button" style="color:#eee">Sign In</a> </p>
+					    </false>
+					</check>
+		     	</div> 
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
