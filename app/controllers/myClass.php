@@ -65,17 +65,28 @@ class myClass extends BaseController {
     	$name=$this->f3->POST['username'];
     	$email = $this->f3->POST['email'];
     	$passwrod = Util::hashString($this->f3->POST['password']);
+    	$phone = $this->f3->POST['phone'];
 		$timeStamp = time();
-    	$query = "
-    			INSERT into user 
-    			            (name, email,password,regdate)
-    			VALUES ('$name' , '$email', '$passwrod', $timeStamp)
-    			" ;
-    	
-    	$this->runQuery($query);
-    	
-    	$this->f3->SESSION['username'] = $name;
-    	$this->f3->reroute('/home');
+		
+		//check user existence 
+		$query = "select count(*) as result from user where name = '$name'";
+		$result = $this->runQuery($query);
+
+		if ($result[0]['result'] > 0 ) {
+            $this->f3->set('message', 'Sing up failed. User name is already exist, try to choose antoher one.')	;
+            $this->f3->set('view','home.htm');
+            echo Template::instance()->render('layout.htm');
+		} else {
+			$query = "
+				INSERT into user
+				(name, email,password,regdate,phone)
+				VALUES ('$name' , '$email', '$passwrod', $timeStamp, '$phone')
+			" ;
+			 
+			$this->runQuery($query);
+			$this->f3->SESSION['username'] = $name;
+			$this->f3->reroute('/home');
+		}
     }
     
     function signout() {
