@@ -178,6 +178,7 @@ class myClass extends BaseController {
     	
     	$input = new UserInputForm($this->db);
     	$input->edit($result[0]['id']);
+    	$this->f3->set('message','alert saved.');
     	echo "succeeded from saveForm";
     }
     

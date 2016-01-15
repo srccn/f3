@@ -12,7 +12,7 @@
               <td>
                   <table class="resultUnit " style="font-size:0.8em; border-collapse: collapse; width:100%;">
                   <tr>
-                      <th class="hiddenCol" style="width:12px ">Select</th>
+                      <th class="hiddenCol" style="width:60px "></th>
                       <th class="hiddenCol text-cell" style="padding-left:12px">Lender</th>
                       <th>Amount</th>
                       <th>Rate</th>
@@ -27,7 +27,8 @@
                            <true>       
 		                       <tr class="option{{@SearchResult['option']}}">
 					               <td rowspan="4" style="text-align:center">
-					                   <input type="radio" class="rg" name="saveOption" value="{{@loanType.'_'.@SearchResult['option']  }}"> 
+					           <!--    <input type="radio" class="rg_ btn btn-primary" name="saveOption" value="{{@loanType.'_'.@SearchResult['option']  }}">  -->
+					                   <button type="button" class="btn btn-info btn-xs" name="saveOption" value="{{@loanType.'_'.@SearchResult['option']  }}">Alert Me</button>
 					               </td>        
 					               <td rowspan="4" class=" hiddenCol bottom-line text-cell" >
 					                   <button id="{{@loanType.'_'.@SearchResult['option']  }}" type="button" class="btn btn-xs btn-link " onClick="showDialog( {{ @SearchResult['part1']->adjusts }} ,  {{ @SearchResult['part1']->SRP }} );" > {{ (@SearchResult['part1']->purchaser) }} </button>
@@ -75,7 +76,7 @@
                            <false>
 		                       <tr class="option0">
 					               <td rowspan="3" style="text-align:center">
-					                   <input type="radio" class="rg" name="saveOption" value="{{@loanType.'_'.@SearchResult['option']  }}"> 
+					                   <button type="button" class="btn btn-xs btn-info" name="saveOption" value="{{@loanType.'_'.@SearchResult['option']  }}">Alert Me</button>
 					               </td>        
 					               <td rowspan="3" class="hiddenCol bottom-line text-cell"> 
 					                   <button id="{{@loanType.'_'.@SearchResult['option']}}" type="button" class="btn btn-xs btn-link " onClick="showDialog( {{ @SearchResult['part1']->adjusts }} ,  {{ @SearchResult['part1']->SRP }} );" > {{ (@SearchResult['part1']->purchaser) }} </button>
@@ -127,7 +128,10 @@
     <hr>
 </div>
 <div id="fade" class="black_overlay"></div>
+
+<!-- 
 <button type="button" name="SaveInput" id="SaveInput" class="btn btn-info" disabled >Set Email Alert for selected result</button>
+-->
 <div style="margin-bottom:10px"></div>
 
 <!-- customer loaner javascripts 
@@ -135,22 +139,30 @@
 -->
 
 <script>
-
-$('#SaveInput').click ( function() {
+$( 'button[name="saveOption"]' ).click ( function() {
+	console.log("clicked");
 	var target_rate = prompt("Please enter your target rate for recieving email alert\n" +
 			"For example 4.25 ", "4.25")
 	if (target_rate != null && !isNaN(target_rate) ) {
 		document.getElementById("message").innerHTML="Set " + target_rate + " for alert.";
+		var saveOption = $(this).attr("value");
+
 		inputForm =$('#inputForm').serialize();
+		inputForm += "&targetRate="+target_rate;
+		inputForm += "&saveOption="+saveOption;
+		
+		document.getElementById("message").innerHTML += "Option selection is " + saveOption ;
 		
 		//document.getElementById("message").innerHTML += "<br>Form details : " + inputForm;
 		
 		$.ajax ({
 			url : "/f3/saveForm" ,
 			type: "POST",
-			data: inputForm + "&targetRate="+target_rate,
+			data: inputForm,
 			success: function (data, textStatus, jqXHR) {
 				document.getElementById("message").innerHTML +="  saved successfully";
+				$('#message').show().delay(2000).fadeOut();
+				$(this).removeClass("btn-info");
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				document.getElementById("message").innerHTML +="  save failed";
@@ -162,9 +174,5 @@ $('#SaveInput').click ( function() {
 	}
 });
 
-$('.rg').change(function(){
-	//alert($('input:radio[name="saveOption"]:checked').val());
-	$('#SaveInput').removeAttr('disabled');
-});
-</script>
 
+</script>
