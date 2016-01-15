@@ -69,15 +69,16 @@
                         </ul>
                     </li>
                 -->
-		       <div class="navbar-text navbar-right" > 
+		       <div class="navbar-text" style="margin:0;" > 
 		    		<check if="{{ @SESSION['username'] }}">
 					    <true>
-					        <p >Your signin as <span style="color:#fff font-weight: bold"> {{ @SESSION['username'] }} </span> , <a style="color:#eee" href="{{ @BASE.'/signout' }}" onClick="return cleanRatePageVisit();">Sign Out</a></p>
+					        <p style="margin-top:15px">Your signin as <span style="color:#fff font-weight: bold"> {{ @SESSION['username'] }} </span> , <a style="color:#eee" href="{{ @BASE.'/signout' }}" onClick="return cleanRatePageVisit();">Sign Out</a></p>
 					    </true>
 					    <false>
-					        <p >  
-					        <a id="btnSignup" type="button" style="color:#eee">Free Sign up</a> or 
-					        <a id="btnSignin" type="button" style="color:#eee">Sign In</a> </p>
+					        <p style="margin-top:8px">
+					        <button id="btnSignup" type="button" class="btn btn-link" style="color:#eee">Free Sign up</button> or 
+					        <button id="btnSignin" type="button" class="btn btn-link" style="color:#eee">Sign In</button> 
+					        </p>
 					    </false>
 					</check>
 		     	</div> 

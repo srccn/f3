@@ -2,12 +2,14 @@
 
 .img-instruction{
     opacity: 0.4;
-    filter: alpha(opacity=40);	
+    filter: alpha(opacity=40);
+    border-radius : 10px;	
 }
 
 .img-instruction:hover {
     opacity: 0.9;
-    filter: alpha(opacity=90);	
+    filter: alpha(opacity=90);
+    border-radius : 10px;	
 }
 /* front page */
 label { 
@@ -174,10 +176,10 @@ hr {
 .white_content {
 	display: none;
 	position: fixed;
-	bottom: 25%;
-	left: 25%;
-	width: 50%;
-	height: 50%;
+	bottom: 20%;
+	left: 20%;
+	width: 60%;
+	height: 60%;
 	padding: 16px;
 	border: 5px solid orange;
 	background-color: white;
