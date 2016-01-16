@@ -57,7 +57,7 @@ class LoanProperty extends BaseController {
 		$this->jumbomargin= 0.5; //$inputs["jumbomargin"];
 		$this->mincredit=$inputs["mincredit"];
 		$this->closingOption=$inputs["closingOption"];
-		$this->purchaserSelection = $inputs["purchaserSelection"];
+		$this->purchaserSelection = (["ALL"]) ;//$inputs["purchaserSelection"];
 		
 		$this->calculateDerives();
 		
