@@ -148,7 +148,7 @@ class  PropertyController extends BaseController {
      	//$this->f3->set('SearchResults', $bestResult);
     }
     
-    function searchPrimaryRate($loanProperty, $loanName, $purchaser, $optLoanAmount, $optTotalFee){
+    function searchPrimaryRate($loanProperty, $loanName, $saveOption){
     	
     	$returnViewRecord = new ViewRecord;
     	$returnViewRecord->product = $loanName;

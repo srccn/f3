@@ -15,7 +15,7 @@ class UserInputForm extends DB\SQL\Mapper {
 		$this->load(array('user_id=?',$userId));
 		$this->copyFrom('POST');
 		$this->isAlertActive=1;
-		$this->loanNameSelection= $_POST['loanNameSelection'][0];
+		$this->loanNameSelection= implode(",", $_POST['loanNameSelection']);
 		if (! $this->dry()) {
 			$this->update();
 		} else {

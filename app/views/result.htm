@@ -28,7 +28,7 @@
 		                       <tr class="option{{@SearchResult['option']}}">
 					               <td rowspan="4" style="text-align:center">
 					           <!--    <input type="radio" class="rg_ btn btn-primary" name="saveOption" value="{{@loanType.'_'.@SearchResult['option']  }}">  -->
-					                   <button type="button" class="btn btn-info btn-xs" name="saveOption" value="{{@loanType.'_'.@SearchResult['option']  }}">Alert Me</button>
+					                   <button type="button" class="btn btn-xs btn-info" name="saveOption" value="{{@loanType.'_'.@SearchResult['option']  }}" onClick="saveOptionClick(event);">Alert Me</button>
 					               </td>        
 					               <td rowspan="4" class=" hiddenCol bottom-line text-cell" >
 					                   <button id="{{@loanType.'_'.@SearchResult['option']  }}" type="button" class="btn btn-xs btn-link " onClick="showDialog( {{ @SearchResult['part1']->adjusts }} ,  {{ @SearchResult['part1']->SRP }} );" > {{ (@SearchResult['part1']->purchaser) }} </button>
