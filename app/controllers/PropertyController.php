@@ -148,11 +148,22 @@ class  PropertyController extends BaseController {
      	//$this->f3->set('SearchResults', $bestResult);
     }
     
-    function searchPrimaryRate($loanProperty, $loanName, $saveOption){
+    function searchPrimaryRate($loanProperty, $saveOption){
+    	//option o: no split, 1: split at jumbo amount; 2: split at conforming amount
+    	//saveOption $loanName_$option
+    	
+    	//decode saveOption
+    	$temp_array = explode('_', $saveOption);
+    	if (count($temp_array) != 2) {
+    		die ("in valid saveOption : " . $saveOption );
+    	}
+    	$loanName = $temp_array[0];
+    	$option = $temp_array[1];
+    	
     	
     	$returnViewRecord = new ViewRecord;
     	$returnViewRecord->product = $loanName;
-    	$returnViewRecord->purchaser = $purchaser;
+    	$returnViewRecord->purchaser = $this->purchasers ; //use all purchaser as default
     	$returnViewRecord->loanAmount = $optLoanAmount;
     	 
     	$property_clone = clone $loanProperty;
