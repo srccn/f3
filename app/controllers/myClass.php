@@ -209,6 +209,28 @@ class myClass extends BaseController {
     	}
     }
     
+    function uploadFile(){
+    	$this->f3->set('view','uploadfile.html');
+    	echo Template::instance()->render('layout.htm');    	
+    }
+    
+    function upload() {
+    	$target_dir = "data/";
+    	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+    	
+    	if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+    		echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+    	} else {
+    		echo "Sorry, there was an error uploading your file.";
+    	}
+    	
+    	echo "<br><br>start update DB for " . $this->f3->get('POST.purchaserName') . " please wait...<br><br>";
+    	
+    	$myloader = new LoadPurchaseController ;
+    	$myloader->setExcelMapFile("data/BBT.php");
+    	$myloader->reloadData();    	
+    	
+    }
     
 }
 

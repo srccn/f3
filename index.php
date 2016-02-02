@@ -19,3 +19,4 @@ if ( empty($f3->SESSION) || $f3->SESSION == null ) {
 }
 
 $f3->run();
+
