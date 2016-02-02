@@ -24,7 +24,7 @@ class LoanPropertyTest extends PHPUnit_Framework_TestCase {
         
         //verify result
         $this->assertEquals($testLoanProperty->getState(), "MA");
-        $this->assertEquals($testLoanProperty->confirmingUpperLimit, 517500);
+        $this->assertEquals($testLoanProperty->confirmingUpperLimit, 523250);
         $this->assertEquals($testLoanProperty->isConfirming, 1);
         $this->assertEquals($testLoanProperty->LTV, 0.80);
         $this->assertEquals($testLoanProperty->mincredit, 0); //default npncc

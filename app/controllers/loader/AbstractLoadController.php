@@ -40,6 +40,14 @@ abstract class AbstractLoadController extends BaseController {
 
 	}
 	
+	public function setRateSheetFile($rateSheetFileName){
+		if (!file_exists($rateSheetFileName)) {
+			die ("Rate sheet does not exist ". $rateSheetFileName );
+		} else {
+			$this->mapData->setRateSheetFile($rateSheetFileName);
+		}
+	}
+	
 	public function defineObjPHPExcel ($excelFileName) { //example "data/wells.xls"
 		require_once 'lib/Classes/PHPExcel/IOFactory.php';
 		try {

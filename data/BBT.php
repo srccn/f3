@@ -4,7 +4,7 @@ class BBT extends BasePurchaser {
 	
 	protected $purchaserName="BBT";
 	protected $purchaserId = 1;
-	protected $excelFile = "data/BBT.xlsx";
+//	protected $excelFile = "data/BBT.xlsx";
 	protected $lockdays = [15, 30, 45, 60] ;
 	protected $superConfirmingCalculateMethod = LoanerConst::ADJUST;
 	
@@ -120,6 +120,11 @@ class BBT extends BasePurchaser {
     		"range" => "J135:L154"
     );
 
+    
+    public function __construct(){
+    	setRateSheetFile("data/BBT.xlsx");
+    }
+    
     public function isConfirmingEligible(PropertyController $property) { //take property argument return if eligible
     	$minCreditScore[LoanerConst::PURCHASE] = 680;
     	$minCreditScore[LoanerConst::REFINANCE] = 680;
